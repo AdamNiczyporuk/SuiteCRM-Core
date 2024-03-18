@@ -1,0 +1,28 @@
+version: '3'
+services:
+
+  web:
+    build: .
+    volumes: [ 'www:/var/www/html' ]
+    ports: [ '8000:8000', '9003:9003' ]
+    depends_on: [ 'db', 'mail' ]
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+      - 'esbtest.net.pp:194.99.117.8'
+  db:
+    image: mysql:8.0.34
+    volumes: [ 'db:/var/lib/mysql', './db/testcrm.sql:/docker-entrypoint-initdb.d/dump.sql'] #/temp/var/db
+    ports: [ '3307:3306' ]
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: testcrm
+      MYSQL_PASSWORD: 1234
+      MYSQL_USER: testcrm
+
+  mail:
+    image: mailhog/mailhog:latest
+    ports: [ '8025:8025' ]
+
+volumes:
+  db:
+  www:
