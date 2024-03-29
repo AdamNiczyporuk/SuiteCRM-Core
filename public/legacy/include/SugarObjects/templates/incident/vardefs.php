@@ -126,6 +126,7 @@ $vardefs = array(
             'comment' => 'An indication of how the issue was resolved',
             'inline_edit' => false,
         ),
+
         'service_poi' => array(
             'name' => 'service_poi',
             'vname' => 'LBL_SERVICE_POI',
@@ -404,7 +405,8 @@ $vardefs = array(
             'len' => '100',
             'size' => '20',
         ),
-        'applicants_taxid' =>array(
+        'applicants_taxid' =>
+        array(
             'required' => false,
             'name' => 'applicants_taxid',
             'source' => 'custom_fields',
@@ -496,7 +498,6 @@ $vardefs = array(
         'assigned_user_name' => array(
             'name' => 'assigned_user_name',
             'vname' => 'LBL_ASSIGNED_USER_NAME',
-
             'type' => 'varchar',
             'len' => 100,
             'size' => '20',
@@ -516,7 +517,9 @@ $vardefs = array(
             'merge_filter' => 'enabled',
 
         ),
-       //Domyślne
+
+
+        //Domyślne
         '_number' => array(
             'name' => '_number',
             'vname' => 'LBL_NUMBER',
