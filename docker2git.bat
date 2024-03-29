@@ -6,9 +6,9 @@ rd /s /q %PATHGIT%\public\legacy\custom\Extension
 rd /s /q %PATHGIT%\public\legacy\custom\modules
 rd /s /q %PATHGIT%\public\legacy\custom\themes
 rd /s /q %PATHGIT%\public\legacy\include\SugarObjects\templates\incident
-rd /s /q %PATHGIT%\public\legacy\modules\it_incident
-rd /s /q %PATHGIT%\public\legacy\modules\it_claim
-rd /s /q %PATHGIT%\public\legacy\modules\it_complaiant
+rd /s /q %PATHGIT%\public\legacy\modules\it_Incidents
+rd /s /q %PATHGIT%\public\legacy\modules\it_Claims
+rd /s /q %PATHGIT%\public\legacy\modules\it_Complaiants
 ::rd /s /q %PATHGIT%\public\legacy\service
 
 @echo on
@@ -30,9 +30,9 @@ docker cp  %DOCKER%:/bitnami/suitecrm/public/legacy/include/SugarObjects/templat
 @echo ---------------
 @echo modules
 @echo off
-docker cp  %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_incident %PATHGIT%\public\legacy\modules
-docker cp  %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_claim %PATHGIT%\public\legacy\modules
-docker cp  %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_complaiant  %PATHGIT%\public\legacy\modules
+docker cp  %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_Incidents %PATHGIT%\public\legacy\modules
+docker cp  %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_Claims %PATHGIT%\public\legacy\modules
+docker cp  %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_Complaiants  %PATHGIT%\public\legacy\modules
 
 
 ::@echo on

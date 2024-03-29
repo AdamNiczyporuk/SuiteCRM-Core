@@ -52,7 +52,7 @@ $viewdefs[$module_name]['DetailView'] = array(
 
  
     'panels' => array(
-        'default' => array(
+        'LBL_BASIC' => array(
             array(
                 array('name' => 'name', 'type' => 'readonly',),
                 array('name' => '_number','type' => 'readonly'),
@@ -75,7 +75,7 @@ $viewdefs[$module_name]['DetailView'] = array(
             ),          
         ),
 
-        'applicants' => array(
+        'LBL_APPLICANTS' => array(
             array(
                 'applicants_name',
                 'applicants_name2',
@@ -110,7 +110,7 @@ $viewdefs[$module_name]['DetailView'] = array(
             ),
 
         ),
-        'flow' => array(
+        'LBL_PROCESS' => array(
             array(
                 'section',
                 'assigned_user_name',

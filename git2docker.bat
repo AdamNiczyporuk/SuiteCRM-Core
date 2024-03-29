@@ -8,9 +8,9 @@ docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/custom/themes
 
 docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/include/SugarObjects/templates/incident
 
-docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/modules/it_incident
-docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/modules/it_claim
-docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/modules/it_complaiant
+docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/modules/it_Incidents
+docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/modules/it_Claims
+docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/modules/it_Complaiants
 ::docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/service
 
 @echo on
@@ -31,9 +31,9 @@ docker cp %PATHGIT%\public\legacy\include\SugarObjects\templates\incident %DOCKE
 @echo ---------------
 @echo modules
 @echo off
-docker cp %PATHGIT%\public\legacy\modules\it_incident %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_incident
-docker cp %PATHGIT%\public\legacy\modules\it_claim %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_claim
-docker cp %PATHGIT%\public\legacy\modules\it_complaiant %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_complaiant
+docker cp %PATHGIT%\public\legacy\modules\it_Incidents %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_Incidents
+docker cp %PATHGIT%\public\legacy\modules\it_Claims %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_Claims
+docker cp %PATHGIT%\public\legacy\modules\it_Complaiants %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_Complaiants
 
 ::@echo on
 ::@echo ---------------
