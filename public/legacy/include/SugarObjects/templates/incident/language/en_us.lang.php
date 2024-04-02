@@ -74,6 +74,7 @@ $mod_strings = array(
     'LBL_APPLICANTS' => 'Applicant',
     'LBL_PROCESS' => 'Stage',
     'LBL_BASIC' => 'Basic',
+    'LBL_ASSIGNED' => 'Assigned to',
 
     //Domyślne
     'LBL_NAME' => 'Name',

@@ -113,7 +113,7 @@ $viewdefs[$module_name]['DetailView'] = array(
         'LBL_PROCESS' => array(
             array(
                 'section',
-                'assigned_user_name',
+                'assigned_to_name',
             ),
             array(
                 'priority',

@@ -67,7 +67,9 @@ class Incident extends Basic
     public $applicants_signature;
     public $response_method;
     public $section;
-    public $assigned_user_name;
+    //public $assigned_user_name;
+    public $assigned_to_name;
+    public $assigned_to;
     public $resolution;
     public $name;
     public $_number;
