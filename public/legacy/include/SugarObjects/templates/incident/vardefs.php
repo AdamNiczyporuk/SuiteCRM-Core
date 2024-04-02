@@ -495,15 +495,7 @@ $vardefs = array(
             'studio' => 'visible',
             'dependency' => false,
         ),
-        'assigned_user_name' => array(
-            'name' => 'assigned_user_name',
-            'vname' => 'LBL_ASSIGNED_USER_NAME',
-            'type' => 'varchar',
-            'len' => 100,
-            'size' => '20',
-            'studio' => 'visible',
-            'comment' => 'User name of the user assigned to the note',
-        ),
+        
 
 
         'resolution' => array(
@@ -517,7 +509,36 @@ $vardefs = array(
             'merge_filter' => 'enabled',
 
         ),
-
+        'assigned_to' => array(
+            'name' => 'assigned_to',
+            'rname' => 'user_name',
+            'id_name' => 'assigned_user_id',
+            'vname' => 'LBL_ASSIGNED',
+            'type' => 'assigned_user_name',
+            'table' => 'users',
+            'isnull' => 'false',
+            'dbType' => 'id',
+            'group' => 'assigned_to_name',
+            'comment' => 'User who is assigned to this',
+            'massupdate' => false,
+            'inline_edit' => false,
+        ),
+        'assigned_to_name' => array(
+            'name' => 'created_to_name',
+            'vname' => 'LBL_ASSIGNED',
+            'type' => 'relate',
+            'reportable' => false,
+            'link' => 'created_by_link',
+            'rname' => 'user_name',
+            'source' => 'non-db',
+            'table' => 'users',
+            'id_name' => 'assigned_to',
+            'module' => 'Users',
+            'duplicate_merge' => 'disabled',
+            'importable' => 'false',
+            'massupdate' => false,
+            'inline_edit' => false,
+        ),
 
         //Domyślne
         '_number' => array(
@@ -564,5 +585,15 @@ $vardefs = array(
             'fields' => array('_number')
         )
     ),
-
+    'relationships' => array(
+        strtolower($module) . '_assigned_to' => array(
+            'lhs_module' => 'Users',
+            'lhs_table' => 'users',
+            'lhs_key' => 'id',
+            'rhs_module' => $module,
+            'rhs_table' => $table_name,
+            'rhs_key' => 'assigned_to',
+            'relationship_type' => 'one-to-many',
+        ),
+    ),
 );
