@@ -37,7 +37,7 @@
 node_modules
 
 # Compiled Output
-/public/
+#/public/
 /dist/
 
 # Custom
