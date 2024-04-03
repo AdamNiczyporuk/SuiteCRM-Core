@@ -15,5 +15,10 @@ $beanFiles['it_Claims'] = 'modules/it_Claims/it_Claims.php';
 $moduleList[] = 'it_Claims';
 
 
+$beanList['it_serviceElectronic'] = 'it_serviceElectronic';
+$beanFiles['it_serviceElectronic'] = 'modules/it_serviceElectronic/it_serviceElectronic.php';
+$moduleList[] = 'it_serviceElectronic';
+
+
 
 ?>

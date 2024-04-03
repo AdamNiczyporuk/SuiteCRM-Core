@@ -11,6 +11,7 @@ docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/include/SugarObj
 docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/modules/it_Incidents
 docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/modules/it_Claims
 docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/modules/it_Complaiants
+docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/modules/it_serviceElectronic
 ::docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/service
 
 @echo on
@@ -34,14 +35,15 @@ docker cp %PATHGIT%\public\legacy\include\SugarObjects\templates\incident %DOCKE
 docker cp %PATHGIT%\public\legacy\modules\it_Incidents %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_Incidents
 docker cp %PATHGIT%\public\legacy\modules\it_Claims %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_Claims
 docker cp %PATHGIT%\public\legacy\modules\it_Complaiants %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_Complaiants
+docker cp %PATHGIT%\public\legacy\modules\it_Complaiants %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_serviceElectronic
 
-::@echo on
-::@echo ---------------
-::@echo service
-::@echo off
-::
-::docker cp %PATHGIT%\public\legacy\service %DOCKER%:/bitnami/suitecrm/public/legacy/
-::@echo off
+@echo on
+@echo ---------------
+@echo service
+@echo off
+
+docker cp %PATHGIT%\public\legacy\service %DOCKER%:/bitnami/suitecrm/public/legacy/
+@echo off
 
 docker exec -it %DOCKER% sh -c "find /bitnami/suitecrm/public/legacy -type f -exec chown daemon {} + -o -type d -exec chown -R daemon {} +"
 ::docker exec sh -c "apt-get update -y && apt-get install mc"
