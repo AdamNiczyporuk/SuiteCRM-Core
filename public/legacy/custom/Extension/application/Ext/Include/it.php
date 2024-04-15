@@ -1,5 +1,8 @@
 <?php 
  //WARNING: The contents of this file are auto-generated
+$beanList['it_Test'] = 'it_Test';
+$beanFiles['it_Test'] = 'modules/it_Test/it_Test.php';
+$moduleList[] = 'it_Test';
 $beanList['it_Incidents'] = 'it_Incidents';
 $beanFiles['it_Incidents'] = 'modules/it_Incidents/it_Incidents.php';
 $moduleList[] = 'it_Incidents';
