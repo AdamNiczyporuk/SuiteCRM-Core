@@ -9,6 +9,7 @@ rd /s /q %PATHGIT%\public\legacy\include\SugarObjects\templates\incident
 rd /s /q %PATHGIT%\public\legacy\modules\it_Incidents
 rd /s /q %PATHGIT%\public\legacy\modules\it_Claims
 rd /s /q %PATHGIT%\public\legacy\modules\it_Complaiants
+rd /s /q %PATHGIT%\public\legacy\modules\it_serviceElectronic
 ::rd /s /q %PATHGIT%\public\legacy\service
 
 @echo on
@@ -33,7 +34,7 @@ docker cp  %DOCKER%:/bitnami/suitecrm/public/legacy/include/SugarObjects/templat
 docker cp  %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_Incidents %PATHGIT%\public\legacy\modules
 docker cp  %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_Claims %PATHGIT%\public\legacy\modules
 docker cp  %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_Complaiants  %PATHGIT%\public\legacy\modules
-
+docker cp  %DOCKER%:/bitnami/suitecrm/public/legacy/modules/it_serviceElectronic  %PATHGIT%\public\legacy\modules
 
 ::@echo on
 ::@echo ---------------
