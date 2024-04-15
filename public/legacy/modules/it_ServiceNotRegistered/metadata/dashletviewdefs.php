@@ -38,48 +38,42 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once 'include/SugarObjects/templates/basic/Basic.php';
-
-class Incident extends Basic
-{
-    public $source_incident;
-    public $filing_date;
-    public $required_end_date;
-    public $status;
-    public $priority;
-    public $entry_date;
-    public $service_POI;
-    public $service_start_date;
-    public $description;
-    public $applicants_name;
-    public $applicants_name2;
-    public $applicants_country;
-    public $applicants_postal_code;
-    public $applicants_region;
-    public $applicants_city;
-    public $applicants_street;
-    public $applicants_house_number;
-    public $applicants_local_number;
-    public $applicants_phone;
-    public $applicants_email;
-    public $applicants_taxid;
-    public $invoice_number;
-    public $applicants_signature;
-    public $response_method;
-    public $section;
-    //public $assigned_user_name;
-    public $assigned_to_name;
-    public $assigned_to;
-    public $resolution;
-    public $name;
-    public $_number;
-    /**
-     * Incident constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
+
+global $current_user;
+
+$dashletData['it_ServiceNotRegisteredDashlet']['searchFields'] = array(
+    'date_entered' => array('default' => ''),
+    'date_modified' => array('default' => ''),
+    'assigned_user_id' => array(
+        'type' => 'assigned_user_name',
+        'default' => $current_user->name
+    )
+);
+$dashletData['it_ServiceNotRegisteredDashlet']['columns'] = array(
+    'name' => array(
+        'width' => '40',
+        'label' => 'LBL_LIST_NAME',
+        'link' => true,
+        'default' => true
+    ),
+    'date_entered' => array(
+        'width' => '15',
+        'label' => 'LBL_DATE_ENTERED',
+        'default' => true
+    ),
+    'date_modified' => array(
+        'width' => '15',
+        'label' => 'LBL_DATE_MODIFIED'
+    ),
+    'created_by' => array(
+        'width' => '8',
+        'label' => 'LBL_CREATED'
+    ),
+    'assigned_user_name' => array(
+        'width' => '8',
+        'label' => 'LBL_LIST_ASSIGNED_USER'
+    ),
+);

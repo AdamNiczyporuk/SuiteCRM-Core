@@ -1,6 +1,6 @@
 @echo off
-set PATHGIT=I:\Gitlab\SuiteCRM-Core
-set DOCKER=cb3f91d4a3d229f89817043a702e8d914ea70ca31b5cc5ed867cecea84435017
+set PATHGIT=D:\Praca\SUIT\SuiteCRM-Core\app
+set DOCKER=a9d68624fad714062293466b0cd2c3ec4e9f7e9a64bc7f6bc1906ffebd0a4498
  
 docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/custom/Extension
 docker exec -it %DOCKER% rm -rf /bitnami/suitecrm/public/legacy/custom/modules

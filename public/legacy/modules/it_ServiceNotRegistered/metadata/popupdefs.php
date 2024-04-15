@@ -38,48 +38,20 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once 'include/SugarObjects/templates/basic/Basic.php';
-
-class Incident extends Basic
-{
-    public $source_incident;
-    public $filing_date;
-    public $required_end_date;
-    public $status;
-    public $priority;
-    public $entry_date;
-    public $service_POI;
-    public $service_start_date;
-    public $description;
-    public $applicants_name;
-    public $applicants_name2;
-    public $applicants_country;
-    public $applicants_postal_code;
-    public $applicants_region;
-    public $applicants_city;
-    public $applicants_street;
-    public $applicants_house_number;
-    public $applicants_local_number;
-    public $applicants_phone;
-    public $applicants_email;
-    public $applicants_taxid;
-    public $invoice_number;
-    public $applicants_signature;
-    public $response_method;
-    public $section;
-    //public $assigned_user_name;
-    public $assigned_to_name;
-    public $assigned_to;
-    public $resolution;
-    public $name;
-    public $_number;
-    /**
-     * Incident constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
+
+$module_name = 'it_ServiceNotRegistered';
+$object_name = 'it_ServiceNotRegistered';
+$_module_name = 'it_servicenotregistered';
+$popupMeta = array(
+    'moduleMain' => $module_name,
+    'varName' => $object_name,
+    'orderBy' => $_module_name . '.name',
+    'whereClauses' => array(
+        'name' => $_module_name . '.name',
+    ),
+    'searchInputs' => array($_module_name . '_number', 'name', 'priority', 'status'),
+
+);

@@ -37,7 +37,7 @@
 node_modules
 
 # Compiled Output
-/public/
+#/public/
 /dist/
 
 # Custom
@@ -65,3 +65,6 @@ composer.phar
 docker2git.bat
 git2docker.bat
 .gitignore
+docker2git.bat
+git2docker.bat
+docker2git.bat

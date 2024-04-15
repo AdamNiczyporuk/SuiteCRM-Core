@@ -37,49 +37,22 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-require_once 'include/SugarObjects/templates/basic/Basic.php';
-
-class Incident extends Basic
-{
-    public $source_incident;
-    public $filing_date;
-    public $required_end_date;
-    public $status;
-    public $priority;
-    public $entry_date;
-    public $service_POI;
-    public $service_start_date;
-    public $description;
-    public $applicants_name;
-    public $applicants_name2;
-    public $applicants_country;
-    public $applicants_postal_code;
-    public $applicants_region;
-    public $applicants_city;
-    public $applicants_street;
-    public $applicants_house_number;
-    public $applicants_local_number;
-    public $applicants_phone;
-    public $applicants_email;
-    public $applicants_taxid;
-    public $invoice_number;
-    public $applicants_signature;
-    public $response_method;
-    public $section;
-    //public $assigned_user_name;
-    public $assigned_to_name;
-    public $assigned_to;
-    public $resolution;
-    public $name;
-    public $_number;
-    /**
-     * Incident constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-
-}
+$mod_strings = array (
+  'LBL_TYPE' => 'Type',
+  'LBL_LIST_FORM_TITLE' => 'ServiceNotRegistered List',
+  'LBL_MODULE_NAME' => 'ServiceNotRegistered',
+  'LBL_MODULE_TITLE' => 'ServiceNotRegistered',
+  'LBL_HOMEPAGE_TITLE' => 'My ServiceNotRegistered',
+  'LNK_NEW_RECORD' => 'Create ServiceNotRegistered',
+  'LNK_LIST' => 'View ServiceNotRegistered',
+  'LNK_IMPORT_IT_SERVICENOTREGISTERED' => 'Import ServiceNotRegistered',
+  'LBL_SEARCH_FORM_TITLE' => 'Search ServiceNotRegistered',
+  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
+  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
+  'LBL_IT_SERVICENOTREGISTERED_SUBPANEL_TITLE' => 'ServiceNotRegistered',
+  'LBL_NEW_FORM_TITLE' => 'New ServiceNotRegistered',
+  'LBL_HOWMUCH ' => 'how much',
+  'LBL_NAMEOFSERVICE' => 'Name Of Service',
+  'LBL_ADDITIONALSERVICES' => 'Additional Services',
+  'LBL_REASONFORREPORTING' => 'Reason For Reporting',
+);
