@@ -30,20 +30,21 @@ import {Subscription} from 'rxjs';
 import {RecordViewStore} from '../../store/record-view/record-view.store';
 import {ModuleNavigation} from '../../../../services/navigation/module-navigation/module-navigation.service';
 import {RecordActionsAdapter} from '../../adapters/actions.adapter';
-import {ActionContext, Record, ViewMode} from 'common';
+import {ActionContext, ButtonInterface, Record, ViewMode} from 'common';
+import {AppStateStore} from "../../../../store/app-state/app-state.store";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'scrm-record-header',
-    templateUrl: 'record-header.component.html',
-    providers: [RecordActionsAdapter]
+    templateUrl: 'record-header.component.html'
 })
 export class RecordHeaderComponent implements OnInit, OnDestroy {
 
     record: Record;
-    displayResponsiveTable = false;
     mode: ViewMode = 'detail';
     loading: boolean = true;
     isScrolled: boolean = false;
+    backButtonConfig: ButtonInterface;
 
     protected subs: Subscription[] = [];
 
@@ -65,12 +66,16 @@ export class RecordHeaderComponent implements OnInit, OnDestroy {
     constructor(
         public actionsAdapter: RecordActionsAdapter,
         protected recordViewStore: RecordViewStore,
-        protected moduleNavigation: ModuleNavigation
+        protected moduleNavigation: ModuleNavigation,
+        protected appState: AppStateStore,
+        protected router: Router
     ) {
     }
 
     ngOnInit(): void {
         this.mode = this.recordViewStore.getMode();
+        this.setBackButtonConfig();
+
         this.subs.push(this.recordViewStore.mode$.subscribe(mode => {
             this.mode = mode;
         }));
@@ -115,5 +120,17 @@ export class RecordHeaderComponent implements OnInit, OnDestroy {
             module: record.module || '',
             record
         } as ActionContext
+    }
+
+    setBackButtonConfig(): void {
+        const moduleRoute= this.moduleNavigation.getModuleRoute(this.recordViewStore.vm.appData.module);
+
+        this.backButtonConfig = {
+            icon: 'paginate_previous',
+            klass: 'back-button',
+            onClick: () => {
+                this.router.navigateByUrl(moduleRoute.route).then();
+            }
+        }
     }
 }

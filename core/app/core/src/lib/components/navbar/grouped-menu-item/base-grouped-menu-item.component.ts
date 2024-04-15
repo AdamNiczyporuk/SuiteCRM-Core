@@ -24,24 +24,157 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
 import {MenuItem} from 'common';
+import {Subject, Subscription} from "rxjs";
+import {AppStateStore} from "../../../store/app-state/app-state.store";
+import {MenuItemLinkConfig} from "../menu-item-link/menu-item-link-config.model";
+import {ModuleNavigation} from "../../../services/navigation/module-navigation/module-navigation.service";
+import {SubMenuRecentlyViewedConfig} from "../sub-menu-recently-viewed/sub-menu-recently-viewed-config.model";
+import {SubMenuFavoritesConfig} from "../sub-menu-favorites/sub-menu-favorites-config.model";
 
 @Component({
     selector: 'scrm-base-grouped-menu-item',
     templateUrl: './base-grouped-menu-item.component.html',
     styleUrls: []
 })
-export class BaseGroupedMenuItemComponent {
+export class BaseGroupedMenuItemComponent implements OnInit, OnDestroy {
     @Input() item: MenuItem;
     @Input() subNavCollapse: boolean;
-    showDropdown: boolean = true;
+    @Input() index: number = 0;
 
-    constructor() {
+    showDropdown = signal<boolean>(false);
+    showSubDropdown: WritableSignal<boolean>[] = [];
+    hoverEnabled = signal<boolean>(true);
+    recentlyViewedConfig: SubMenuRecentlyViewedConfig;
+    favoritesConfig: SubMenuFavoritesConfig;
+    showRecentlyViewed: Subject<boolean>;
+    showFavorites: Subject<boolean>;
+
+    subs: Subscription[] = [];
+    clickType: string = 'click';
+    private openSubDropdown?: number = null;
+
+    constructor(protected appStateStore: AppStateStore, protected moduleNavigation: ModuleNavigation) {
+    }
+
+    ngOnInit(): void {
+        this.showRecentlyViewed = new Subject<boolean>();
+        this.showFavorites = new Subject<boolean>();
+
+        this.subs.push(this.appStateStore.activeNavbarDropdown$.subscribe(
+            (activeDropdown: number) => {
+                if (this.index !== activeDropdown) {
+                    this.hideDropdown();
+                }
+            }
+        ));
+
+        const submenuItems = this?.item?.submenu ?? [];
+        submenuItems.forEach(() => {
+            this.showSubDropdown.push(signal<boolean>(false));
+        });
+
+        this.recentlyViewedConfig = {
+            onItemClick: (event) => {
+                if (this.clickType === 'touch') {
+                    this.hideDropdown();
+                    this.clickType = 'click';
+                }
+            },
+            onItemTouchStart: (event): void => {
+                this.clickType = 'touch';
+            },
+            onToggleDropdown: (showDropdown): void => {
+                if (showDropdown) {
+                    this.showFavorites.next(false);
+                }
+            },
+            showDropdown$: this.showRecentlyViewed.asObservable()
+        } as SubMenuRecentlyViewedConfig
+
+        this.favoritesConfig = {
+            onItemClick: (event) => {
+                if (this.clickType === 'touch') {
+                    this.hideDropdown();
+                    this.clickType = 'click';
+                }
+            },
+            onItemTouchStart: (event): void => {
+                this.clickType = 'touch';
+            },
+            onToggleDropdown: (showDropdown): void => {
+                if (showDropdown) {
+                    this.showRecentlyViewed.next(false);
+                }
+            },
+            showDropdown$: this.showFavorites.asObservable()
+        } as SubMenuFavoritesConfig
+    }
+
+    ngOnDestroy(): void {
+        this.subs.forEach(sub => sub.unsubscribe());
+        this.showRecentlyViewed.unsubscribe();
+        this.showFavorites.unsubscribe();
     }
 
     hideDropdown() {
-        this.showDropdown = false;
-        setTimeout(() => this.showDropdown = true, 0)
+        this.showDropdown.set(false);
+        this.hoverEnabled.set(true);
+        this.showSubDropdown.forEach(subDropdown => {
+            subDropdown.set(false);
+        })
+    }
+
+    toggleDropdown() {
+        this.showDropdown.set(!this.showDropdown());
+        if (this.showDropdown()) {
+            this.appStateStore.setActiveDropdown(this.index);
+            this.hoverEnabled.set(false);
+        } else {
+            this.appStateStore.resetActiveDropdown();
+            this.hideDropdown();
+        }
+    }
+
+    navigate(): void {
+        this.moduleNavigation.navigateUsingMenuItem(this.item);
+    }
+
+    onSubItemClick($event: PointerEvent, item: MenuItem, index: number): void {
+        if (this.clickType === 'click') {
+            this.navigate();
+            return;
+        }
+
+        this.toggleSubDropdown(index);
+        this.clickType = 'click';
+    }
+
+    toggleSubDropdown(index: number): void {
+
+        const openSubDropdownIndex = this.openSubDropdown ?? -1;
+
+        if (index !== openSubDropdownIndex && openSubDropdownIndex >= 0) {
+            this?.showSubDropdown[openSubDropdownIndex]?.set(false);
+        }
+
+        this.showSubDropdown[index]?.set(!this.showSubDropdown[index]());
+
+        this.openSubDropdown = index;
+        if (!this.showSubDropdown[index]()) {
+            this.openSubDropdown = null;
+        }
+    }
+
+    getConfig(sub: MenuItem, index: number): MenuItemLinkConfig {
+        return {
+            onClick: (event) => {
+                this.onSubItemClick(event, sub, index)
+            },
+            onTouchStart: (event) => {
+                this.clickType = 'touch';
+            }
+        } as MenuItemLinkConfig;
     }
 }

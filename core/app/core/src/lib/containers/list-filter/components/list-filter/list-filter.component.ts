@@ -24,9 +24,9 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Record, ScreenSizeMap} from 'common';
-import {Observable, of} from 'rxjs';
+import {Component, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
+import {Action, ButtonInterface, Record, ScreenSizeMap} from 'common';
+import {Observable, of, Subscription} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
 import {FilterConfig} from './list-filter.model';
 import {RecordGridConfig} from '../../../../components/record-grid/record-grid.model';
@@ -47,8 +47,20 @@ export class ListFilterComponent implements OnInit, OnDestroy {
     vm$: Observable<Record>;
     store: ListFilterStore;
     filterActionsAdapter: SavedFilterActionsAdapter;
-
+    selectedActionButton:ButtonInterface;
+    searchActionButton: ButtonInterface;
+    saveActionButton: ButtonInterface;
     gridConfig: RecordGridConfig;
+
+    protected subs: Subscription[] = [];
+
+    @HostListener('keydown.enter')
+    onEnterKey() {
+        if (!this.selectedActionButton) {
+            return;
+        }
+        this.selectedActionButton.onClick();
+    }
 
     constructor(
         protected storeFactory: ListFilterStoreFactory,
@@ -65,6 +77,16 @@ export class ListFilterComponent implements OnInit, OnDestroy {
             record.fields = savedFilter.criteriaFields;
             return record;
         }));
+
+        this.searchActionButton = this.store.gridButtons.find(button => button.id === "search");
+
+        this.saveActionButton = {
+            id: 'save',
+            onClick: () => {
+                this.filterActionsAdapter.run('save');
+            }
+        }
+
         this.gridConfig = {
             record$: this.store.filterStore.stagingRecord$,
             mode$: this.store.filterStore.mode$,
@@ -90,8 +112,16 @@ export class ListFilterComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        this.subs.forEach(sub => sub.unsubscribe());
         this.store.clear();
         this.store = null;
     }
 
+    onFocusSearch(): void {
+        this.selectedActionButton = this.searchActionButton;
+    }
+
+    onFocusSave(): void {
+        this.selectedActionButton = this.saveActionButton;
+    }
 }

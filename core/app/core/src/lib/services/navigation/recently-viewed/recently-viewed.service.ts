@@ -4,13 +4,17 @@ import {deepClone, RecentlyViewed, ViewMode} from 'common';
 import {ProcessService} from '../../process/process.service';
 import {take} from 'rxjs/operators';
 import {ActivatedRouteSnapshot} from '@angular/router';
+import {GlobalRecentlyViewedStore} from "../../../store/global-recently-viewed/global-recently-viewed.store";
+import {ModuleNameMapper} from "../module-name-mapper/module-name-mapper.service";
 
 @Injectable({providedIn: 'root'})
 export class RecentlyViewedService {
 
     constructor(
         protected metadata: MetadataStore,
-        protected processService: ProcessService
+        protected globalRecentlyViewedStore: GlobalRecentlyViewedStore,
+        protected processService: ProcessService,
+        protected moduleNameMapper: ModuleNameMapper
     ) {
     }
 
@@ -47,6 +51,7 @@ export class RecentlyViewedService {
      * @param view
      */
     public buildRecentlyViewed(module: string, id: string, view = 'detailview'): RecentlyViewed {
+        module = this.moduleNameMapper.toLegacy(module);
         return deepClone({
             module: 'Tracker',
             type: 'Tracker',
@@ -88,7 +93,6 @@ export class RecentlyViewedService {
                     module: viewed.module ?? '',
                     attributes: {...(viewed.attributes ?? {})},
                 };
-
                 const tracker = result?.data?.tracker ?? null;
                 if (tracker === null) {
                     return;
@@ -105,6 +109,8 @@ export class RecentlyViewedService {
                     cleared.unshift(saved);
                     metadata.recentlyViewed = cleared;
                 }
+
+                this.globalRecentlyViewedStore.addToState(saved);
 
                 this.metadata.setModuleMetadata(module, metadata);
             });

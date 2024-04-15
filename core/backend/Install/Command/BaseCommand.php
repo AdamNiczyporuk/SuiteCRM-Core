@@ -188,6 +188,7 @@ abstract class BaseCommand extends Command
         $output->writeln('step: ' . $step . ' | status: ' . $status);
 
         $this->writeFeedbackMessages($output, $feedback);
+        $this->writeFeedbackWarnings($output, $feedback);
         $this->writeFeedbackErrors($output, $feedback);
     }
 
@@ -243,10 +244,17 @@ abstract class BaseCommand extends Command
             }
 
             if ($error['status'] === 'warning') {
-                $message = '<warning>' . $message . '</warning>';
+                $message = '<fg=yellow>' . $message . '</>';
             }
 
             $output->writeln($message);
+        }
+    }
+
+    protected function writeFeedbackWarnings(OutputInterface $output, Feedback $feedback): void {
+        $warnings = $feedback->getWarnings() ?? [];
+        foreach ($warnings as $warning) {
+            $output->writeln('<fg=yellow>' . $warning . '</>');
         }
     }
 

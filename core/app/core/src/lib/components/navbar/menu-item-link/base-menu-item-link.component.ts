@@ -29,6 +29,7 @@ import {MenuItemLink} from 'common';
 import {take} from 'rxjs/operators';
 import {AsyncActionInput, AsyncActionService} from '../../../services/process/processes/async-action/async-action';
 import {AppStateStore} from '../../../store/app-state/app-state.store';
+import {MenuItemLinkConfig} from "./menu-item-link-config.model";
 
 @Component({
     selector: 'scrm-base-menu-item-link',
@@ -39,25 +40,28 @@ export class BaseMenuItemLinkComponent {
     @Input() link: MenuItemLink;
     @Input() icon: string;
     @Input() class: string;
+    @Input() disableRoute: boolean;
+    @Input() config: MenuItemLinkConfig;
 
     constructor(
         protected asyncActionService: AsyncActionService,
         protected appState: AppStateStore
-    ) {}
+    ) {
+    }
 
-     handleProcess(process: string) {
+    handleProcess(process: string) {
 
-         if(!process) {
-             return;
-         }
+        if (!process) {
+            return;
+        }
 
-         const processType = process;
+        const processType = process;
 
         const options = {
             action: processType,
             module: this.appState.getModule(),
         } as AsyncActionInput;
 
-         this.asyncActionService.run(processType, options).pipe(take(1)).subscribe();
+        this.asyncActionService.run(processType, options).pipe(take(1)).subscribe();
     }
 }

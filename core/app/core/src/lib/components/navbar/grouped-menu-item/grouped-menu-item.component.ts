@@ -36,6 +36,7 @@ import {GroupedMenuItemRegistry} from './grouped-menu-item.registry';
 export class GroupedMenuItemComponent {
     @Input() item: MenuItem;
     @Input() subNavCollapse: boolean;
+    @Input() index: number;
 
     constructor(protected registry: GroupedMenuItemRegistry) {
     }

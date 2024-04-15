@@ -27,77 +27,51 @@
 -->
 <ng-container>
     <div [ngClass]="isScrolled ? 'record-view-header-scrolled shadow-md': ''" class="record-view-header">
-        <ng-container *ngIf="displayResponsiveTable">
-            <div class="d-flex flex-nowrap">
-                <div class="row">
-                    <div class="col">
-                        <div class="order-3">
-                        </div>
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col">
-                        <div class="order-2">
-                            <div class="record-view-name d-flex align-items-center">
-                                <scrm-dynamic-label *ngIf="record && record.fields"
-                                                    [fields]="record.fields"
-                                                    [labelKey]="getSummaryTemplate()">
-                                </scrm-dynamic-label>
-                                <div *ngIf="record && record.fields && mode !== 'create'"
-                                     class="pl-1 d-flex align-items-top">
-                                    <scrm-favorite-toggle [record]="record"></scrm-favorite-toggle>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col">
-                        <div *ngIf="record" class="order-1">
-                            <scrm-action-group-menu
-                                [config]="actionsAdapter"
-                                klass="record-view-actions float-right">
-                            </scrm-action-group-menu>
-                        </div>
+        <div *ngIf="loading" class="row mr-0">
+            <div class="col-md-4 d-flex align-items-center">
+                <scrm-module-title [title]="moduleTitle" class="record-view-title title-font"></scrm-module-title>
+                <div class="record-view-name pt-3 pb-3"></div>
+            </div>
+        </div>
+        <div *ngIf="!loading" class="row m-0 d-flex justify-content-between ml-1 mr-1">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7 col-xl-8 record-name-container">
+                <div class="float-left p-0">
+                    <div class="d-flex record-view-back-button justify-content-start" *ngIf="mode === 'detail' || mode === 'edit'">
+                        <scrm-button *ngIf="backButtonConfig" [config]="backButtonConfig"></scrm-button>
                     </div>
                 </div>
-            </div>
-        </ng-container>
-        <ng-template [ngIf]="!displayResponsiveTable">
-            <div *ngIf="loading" class="row mr-0">
-                <div class="col-md-5 d-flex align-items-center justify-content-center justify-content-sm-start">
-                    <scrm-module-title [title]="moduleTitle" class="record-view-title title-font"></scrm-module-title>
-                    <div class="record-view-name pt-3 pb-3"></div>
-                </div>
-            </div>
-            <div *ngIf="!loading" class="row mr-0">
-                <div
-                    [ngClass]="isScrolled ? 'col-md-5 d-flex align-items-center justify-content-center justify-content-sm-start' : 'col-md-5 d-flex align-items-center justify-content-center justify-content-sm-start'">
-                    <div
-                        [ngClass]="isScrolled ? 'record-view-name-scrolled d-flex align-items-center' : 'record-view-name d-flex align-items-center'">
+                <div class="record-view-name-wrapper d-flex justify-content-md-start align-items-center"
+                     [class.justify-content-center]="mode === 'detail' || mode === 'edit'"
+                     [class.justify-content-start]="!(mode === 'detail' || mode === 'edit')"
+                     [class.record-view-name-wrapper-margin-left]="mode === 'detail' || mode === 'edit'"
+                >
+                    <div class="p-0 d-inline-block" [ngClass]="isScrolled ? 'record-view-name-scrolled' : 'record-view-name'">
+                        <div *ngIf="record && record.fields && mode !== 'create'" class="float-right align-items-top d-flex">
+                            <scrm-favorite-toggle [record]="record"
+                                                  class="h-100 lh-100"></scrm-favorite-toggle>
+                        </div>
                         <scrm-dynamic-label *ngIf="record && record.fields"
-                                            class="d-inline-block h-100 lh-100"
+                                            class="record-view-name-label d-block p-0 lh-100"
                                             [fields]="record.fields"
                                             [labelKey]="getSummaryTemplate()">
                         </scrm-dynamic-label>
-                        <div *ngIf="record && record.fields && mode !== 'create'" class="pl-1 d-flex align-items-top">
-                            <scrm-favorite-toggle [record]="record"
-                                                  class="d-inline-block h-100 lh-100"></scrm-favorite-toggle>
-                        </div>
+
                     </div>
                 </div>
-                <div class="col-md-7 d-flex align-items-center justify-content-center justify-content-sm-end">
-                    <div class="row mr-1 ml-1">
-                        <div *ngIf="record" class="w-100">
-                            <scrm-action-group-menu
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-4 align-items-center record-view-action-header">
+                <div class="row mr-1 ml-1 justify-content-center justify-content-md-end">
+                    <div *ngIf="record" class="">
+                        <scrm-action-group-menu
                                 [config]="actionsAdapter"
                                 [actionContext]="getActionContext(record)"
                                 [klass]="isScrolled ?  'record-view-actions-scrolled float-right' : 'record-view-actions float-right'"
                                 buttonClass="settings-button"
-                            >
-                            </scrm-action-group-menu>
-                        </div>
+                        >
+                        </scrm-action-group-menu>
                     </div>
                 </div>
             </div>
-        </ng-template>
+        </div>
     </div>
 </ng-container>

@@ -1,6 +1,6 @@
 /**
  * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
- * Copyright (C) 2021 SalesAgility Ltd.
+ * Copyright (C) 2024 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -24,26 +24,9 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Component, Input} from '@angular/core';
-import {MenuItem} from 'common';
-import {MobileMenuRegistry} from './mobile-menu.registry';
+import {ButtonCallback} from "common";
 
-@Component({
-    selector: 'scrm-mobile-menu',
-    templateUrl: './mobile-menu.component.html',
-    styleUrls: []
-})
-export class MobileMenuComponent {
-    @Input() current: MenuItem;
-    @Input() items: MenuItem[];
-    @Input() all: MenuItem[];
-    @Input() onClose: Function;
-    @Input() navigationType: string = '';
-
-    constructor(protected registry: MobileMenuRegistry) {
-    }
-
-    get getType(): any {
-        return this.registry.get('default', 'default');
-    }
+export interface MenuItemLinkConfig {
+    onClick: ButtonCallback;
+    onTouchStart: ButtonCallback;
 }

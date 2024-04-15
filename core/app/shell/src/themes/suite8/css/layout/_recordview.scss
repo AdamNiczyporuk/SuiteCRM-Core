@@ -65,6 +65,35 @@
   }
 }
 
+@media all and (max-width: 765px) {
+
+  .record-view-name-header,
+  .record-view-back-button-container,
+  .record-view-action-header
+  {
+    justify-content: center;
+  }
+
+  .record-view-name,
+  .record-view-name-scrolled {
+    justify-content:center;
+    position: relative;
+    margin-right:10%;
+  }
+
+}
+
+@media all and (min-width: 766px) {
+  .record-view-action-header {
+    justify-content: end;
+  }
+
+  .record-view-back-button-container {
+    padding-left: 1rem;
+  }
+
+}
+
 .record-view-title {
   color: $shell-grey;
   font-size: 1em;
@@ -81,15 +110,28 @@
 .record-view-name {
   color: $median-grey;
   font-size: 1.5em;
-  margin-left: 1.3rem;
   word-wrap: break-word;
+  word-break: break-all;
 }
 
 .record-view-name-scrolled {
   color: $median-grey;
   font-size: 1.5em;
-  margin-left: 1.3rem;
   word-wrap: break-word;
+  word-break: break-all;
+
+}
+
+.record-view-name-wrapper {
+  margin-top: 0.5em
+}
+
+.record-view-name-wrapper-margin-left {
+  margin-left: 2.7em;
+}
+
+.record-view-name-label {
+  margin-right: 1.8rem;
 }
 
 .record-view-actions {

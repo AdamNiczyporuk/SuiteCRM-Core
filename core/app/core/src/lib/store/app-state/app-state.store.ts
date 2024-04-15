@@ -24,7 +24,7 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Injectable} from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 import {BehaviorSubject, combineLatestWith, Observable, Subscription} from 'rxjs';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {deepClone, isVoid, User} from 'common';
@@ -43,6 +43,9 @@ export interface AppState {
     preLoginUrl?: string;
     currentUser?: User;
     activeRequests?: number;
+    prevRoutes?: string[];
+    isSidebarVisible?: boolean;
+    activeNavbarDropdown?: number;
 }
 
 const initialState: AppState = {
@@ -55,6 +58,9 @@ const initialState: AppState = {
     preLoginUrl: null,
     currentUser: null,
     activeRequests: 0,
+    prevRoutes: [],
+    isSidebarVisible: false,
+    activeNavbarDropdown: 0
 };
 
 let internalState: AppState = deepClone(initialState);
@@ -72,6 +78,8 @@ export class AppStateStore implements StateStore {
     view$: Observable<string>;
     initialAppLoading$: Observable<boolean>;
     activeRequests$: Observable<number>;
+    isSidebarVisible$: Observable<boolean>;
+    activeNavbarDropdown$: Observable<number>;
 
     /**
      * ViewModel that resolves once all the data is ready (or updated)...
@@ -84,6 +92,8 @@ export class AppStateStore implements StateStore {
     protected loadingBuffer: LoadingBuffer;
     protected subs: Subscription[] = [];
 
+    isTouchScreen = signal<boolean>(false);
+
     constructor(
         protected loadingBufferFactory: LoadingBufferFactory,
         protected configs: SystemConfigStore
@@ -94,6 +104,8 @@ export class AppStateStore implements StateStore {
         this.view$ = this.state$.pipe(map(state => state.view), distinctUntilChanged());
         this.initialAppLoading$ = this.state$.pipe(map(state => state.initialAppLoading), distinctUntilChanged());
         this.activeRequests$ = this.state$.pipe(map(state => state.activeRequests), distinctUntilChanged());
+        this.isSidebarVisible$ = this.state$.pipe(map(state => state.isSidebarVisible), distinctUntilChanged());
+        this.activeNavbarDropdown$ = this.state$.pipe(map(state => state.activeNavbarDropdown), distinctUntilChanged());
 
         this.vm$ = this.loading$.pipe(
             combineLatestWith(this.module$, this.view$, this.initialAppLoading$),
@@ -102,9 +114,18 @@ export class AppStateStore implements StateStore {
                 module,
                 view,
                 loaded: internalState.loaded,
-                initialAppLoading
+                initialAppLoading,
+                isSidebarVisible: internalState.isSidebarVisible,
+                activeNavbarDropdown: internalState.activeNavbarDropdown
+
             }))
         );
+
+        if('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            this.isTouchScreen.set(true);
+        } else {
+            this.isTouchScreen.set(false);
+        }
     }
 
     /**
@@ -389,5 +410,51 @@ export class AppStateStore implements StateStore {
      */
     protected updateState(state: AppState): void {
         this.store.next(internalState = state);
+    }
+
+    public toggleSidebar(): void {
+        this.updateState({...internalState, isSidebarVisible: !internalState.isSidebarVisible});
+    }
+
+    public closeSidebar(): void {
+        this.updateState({...internalState, isSidebarVisible: false});
+    }
+    getLatestPrevRoute(): string {
+        return internalState.prevRoutes[internalState.prevRoutes.length - 2];
+    }
+
+    getPrevRoutes(): string[] {
+        return internalState.prevRoutes;
+    }
+
+    addToPrevRoute(route: string): void {
+        const prevRoutes = this.getPrevRoutes();
+        if(prevRoutes.length > 0 && prevRoutes[prevRoutes.length - 1] === route) {
+            return;
+        }
+        prevRoutes.push(route);
+        this.updateState({...internalState});
+    }
+
+    removeLatestPrevRoute(): void {
+        const prevRoutes = this.getPrevRoutes();
+        const newArr = prevRoutes.slice(0, prevRoutes.length - 1);
+        this.updateState({...internalState, prevRoutes: newArr});
+    }
+
+    removeAllPrevRoutes(): void {
+        this.updateState({...internalState, prevRoutes: []});
+    }
+
+    public setActiveDropdown(key: number): void {
+        this.updateState({...internalState, activeNavbarDropdown: key});
+    }
+
+    public getActiveDropdown(): number {
+        return internalState.activeNavbarDropdown;
+    }
+
+    public resetActiveDropdown(): void {
+        this.updateState({...internalState, activeNavbarDropdown: 0});
     }
 }

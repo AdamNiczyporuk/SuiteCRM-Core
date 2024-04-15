@@ -26,6 +26,7 @@
 
 import {Component, Input} from '@angular/core';
 import {SubMenuRecentlyViewedRegistry} from './sub-menu-recently-viewed-registry';
+import {SubMenuRecentlyViewedConfig} from "./sub-menu-recently-viewed-config.model";
 
 @Component({
     selector: 'scrm-sub-menu-recently-viewed',
@@ -34,6 +35,7 @@ import {SubMenuRecentlyViewedRegistry} from './sub-menu-recently-viewed-registry
 })
 export class SubMenuRecentlyViewedComponent {
     @Input() module: string;
+    @Input() config: SubMenuRecentlyViewedConfig;
 
     constructor(protected registry: SubMenuRecentlyViewedRegistry) {
     }

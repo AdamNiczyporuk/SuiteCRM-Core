@@ -24,23 +24,10 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Component, Input} from '@angular/core';
-import {MenuItem} from 'common';
-import {MobileGroupedMenuRegistry} from './mobile-grouped-menu.registry';
-
-@Component({
-    selector: 'scrm-mobile-grouped-menu',
-    templateUrl: './mobile-grouped-menu.component.html',
-    styleUrls: []
-})
-export class MobileGroupedMenuComponent {
-    @Input() items: MenuItem[];
-    @Input() onClose: Function;
-
-    constructor(protected registry: MobileGroupedMenuRegistry) {
+@media all and (min-width: 960px) and (max-width: 1010px) {
+  .quick-filter-button {
+    .settings-button {
+      max-width: 100px;
     }
-
-    get getType(): any {
-        return this.registry.get('default', 'default');
-    }
+  }
 }

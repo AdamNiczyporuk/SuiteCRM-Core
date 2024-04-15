@@ -1,6 +1,6 @@
 /**
  * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
- * Copyright (C) 2021 SalesAgility Ltd.
+ * Copyright (C) 2024 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +15,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see http://www.gnu.org/licenses.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License
  * version 3, these Appropriate Legal Notices must retain the display of the
@@ -24,18 +24,15 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Component, Input} from '@angular/core';
-import {MenuItem} from 'common';
+.view-action-UnifiedSearch {
 
-@Component({
-    selector: 'scrm-base-mobile-module-menu',
-    templateUrl: './base-mobile-module-menu.component.html',
-    styleUrls: []
-})
-export class BaseMobileModuleMenuComponent {
-    @Input() items: MenuItem[];
-    @Input() onClose: Function;
+  #searchFieldMain {
+    max-width: 50vw;
+  }
 
-    constructor() {
-    }
+  .unified-search-table-wrapper {
+    max-width: 95vw;
+    overflow-y: auto;
+    display: block;
+  }
 }

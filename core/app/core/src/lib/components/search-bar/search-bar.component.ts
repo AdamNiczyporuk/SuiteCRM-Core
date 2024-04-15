@@ -24,11 +24,19 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {GlobalSearch} from '../../services/navigation/global-search/global-search.service';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    ViewChild
+} from '@angular/core';
 import {LanguageStore, LanguageStrings} from '../../store/language/language.store';
 import {Observable, Subscription} from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter, map, tap} from 'rxjs/operators';
+import {distinctUntilChanged, filter, map, tap} from 'rxjs/operators';
 import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
@@ -38,10 +46,15 @@ import {FormControl, FormGroup} from '@angular/forms';
 export class SearchBarComponent implements OnInit, OnDestroy {
 
     @ViewChild('searchInput') searchInput: ElementRef;
+    @Input() labelKey: string = '';
+    @Input() klass: string = '';
+    @Input() isMobile: boolean = false;
+    @Input() searchTrigger: 'enter' | 'input' = 'enter';
+    @Output() isSearchVisible = new EventEmitter<boolean>(false);
+    @Output() searchExpression = new EventEmitter<string>();
 
     searchWord: string = '';
     searchForm: FormGroup;
-    searchResults: any[] = [];
 
     isFocused: boolean = false;
     hasSearchTyped: boolean = false;
@@ -57,8 +70,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         })
     );
 
-    constructor(protected globalSearch: GlobalSearch, protected languageStore: LanguageStore) {
-    }
+    constructor(protected languageStore: LanguageStore) {}
 
     ngOnInit(): void {
         this.searchForm = new FormGroup({
@@ -83,19 +95,29 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         this.subs.forEach(sub => sub.unsubscribe());
     }
 
-    search(): void {
+    searchWithEnter(): void {
         if (this.searchWord.length) {
-            this.globalSearch.navigateToSearch(this.searchWord).finally(() => {
-                this.clearSearchTerm();
-                this.searchInput.nativeElement.blur();
-            });
+            this.searchExpression.emit(this.searchWord);
+            this.clearSearchTerm();
+            this.searchInput.nativeElement.blur();
+        } else {
+            if(this.isMobile) {
+                this.onBlur();
+            }
         }
+    }
+
+    searchWithInput(value:string): void {
+            this.searchExpression.emit(value);
     }
 
     clearSearchTerm(): void {
         this.searchForm.reset();
         this.hasSearchTyped = false;
         this.searchWord = '';
+        if(this.searchTrigger === 'input') {
+            this.searchWithInput(this.searchWord);
+        }
     }
 
     onFocus(): void {
@@ -112,5 +134,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
             this.isFocused = false;
             this.hasSearchTyped = false;
         }, 200);
+
+        if(this.isMobile) {
+            setTimeout(() => {
+                this.isSearchVisible.emit(false);
+            },50);
+        }
     }
 }

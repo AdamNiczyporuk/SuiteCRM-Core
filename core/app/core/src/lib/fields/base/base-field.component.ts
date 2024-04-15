@@ -32,10 +32,12 @@ import {DataTypeFormatter} from '../../services/formatters/data-type.formatter.s
 import {debounceTime} from 'rxjs/operators';
 import {FieldLogicManager} from '../field-logic/field-logic.manager';
 import {FieldLogicDisplayManager} from '../field-logic-display/field-logic-display.manager';
+import {isEqual} from "lodash-es";
 
 @Component({template: ''})
 export class BaseFieldComponent implements FieldComponentInterface, OnInit, OnDestroy {
     @Input() mode: string;
+    @Input() originalMode: string = '';
     @Input() field: Field;
     @Input() record: Record;
     @Input() parent: Record;
@@ -53,6 +55,10 @@ export class BaseFieldComponent implements FieldComponentInterface, OnInit, OnDe
 
     ngOnInit(): void {
         this.baseInit();
+
+        if (!this.originalMode) {
+            this.originalMode = this.mode;
+        }
     }
 
     ngOnDestroy(): void {
@@ -276,6 +282,15 @@ export class BaseFieldComponent implements FieldComponentInterface, OnInit, OnDe
 
     protected setFieldValue(newValue): void {
         this.field.value = newValue;
+    }
+
+    protected setFormControlValue(newValue: string | string[]): void {
+        this.field.formControl.markAsDirty();
+
+        if (isEqual(this.field.formControl.value, newValue)) {
+            return;
+        }
+        this.field.formControl.setValue(newValue);
     }
 
     protected unsubscribeAll(): void {

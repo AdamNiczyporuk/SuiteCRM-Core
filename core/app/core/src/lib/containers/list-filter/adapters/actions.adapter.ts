@@ -40,9 +40,12 @@ import {ConfirmationModalService} from '../../../services/modals/confirmation-mo
 import {BaseRecordActionsAdapter} from '../../../services/actions/base-record-action.adapter';
 import {SelectModalService} from "../../../services/modals/select-modal.service";
 import {MetadataStore, RecordViewMetadata} from '../../../store/metadata/metadata.store.service';
+import {AppMetadataStore} from "../../../store/app-metadata/app-metadata.store.service";
 
 @Injectable()
 export class SavedFilterActionsAdapter extends BaseRecordActionsAdapter<SavedFilterActionData> {
+
+    actions: {[key: string]: Action} = {};
 
     constructor(
         protected store: SavedFilterStore,
@@ -53,7 +56,8 @@ export class SavedFilterActionsAdapter extends BaseRecordActionsAdapter<SavedFil
         protected message: MessageService,
         protected confirmation: ConfirmationModalService,
         protected selectModalService: SelectModalService,
-        protected metadata: MetadataStore
+        protected metadata: MetadataStore,
+        protected appMetadataStore: AppMetadataStore
     ) {
         super(
             actionManager,
@@ -62,7 +66,8 @@ export class SavedFilterActionsAdapter extends BaseRecordActionsAdapter<SavedFil
             confirmation,
             language,
             selectModalService,
-            metadata
+            metadata,
+            appMetadataStore
         )
     }
 
@@ -74,9 +79,23 @@ export class SavedFilterActionsAdapter extends BaseRecordActionsAdapter<SavedFil
                     return [];
                 }
 
-                return this.parseModeActions(meta.actions, mode);
+                const actions = this.parseModeActions(meta.actions, mode);
+                actions.forEach((action: Action) => {
+                    this.actions[action.key] = action;
+                });
+
+                return actions;
             })
         );
+    }
+
+    run(actionKey: string): void {
+        const action = this.actions[actionKey];
+        if (!action) {
+            return
+        }
+
+        this.runAction(action)
     }
 
     protected buildActionData(action: Action, context?: ActionContext): SavedFilterActionData {

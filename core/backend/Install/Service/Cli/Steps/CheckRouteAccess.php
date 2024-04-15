@@ -1,6 +1,7 @@
+<?php
 /**
  * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
- * Copyright (C) 2021 SalesAgility Ltd.
+ * Copyright (C) 2024 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -24,23 +25,56 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Component, Input} from '@angular/core';
-import {MenuItem} from 'common';
-import {MobileModuleMenuRegistry} from './mobile-module-menu.registry';
+namespace App\Install\Service\Cli\Steps;
 
-@Component({
-    selector: 'scrm-mobile-module-menu',
-    templateUrl: './mobile-module-menu.component.html',
-    styleUrls: []
-})
-export class MobileModuleMenuComponent {
-    @Input() items: MenuItem[];
-    @Input() onClose: Function;
+use App\Engine\Model\Feedback;
+use App\Engine\Model\ProcessStepTrait;
+use App\Install\LegacyHandler\InstallHandler;
+use App\Install\Service\Cli\CliStepInterface;
+use App\Install\Service\Cli\CliStepTrait;
 
-    constructor(protected registry: MobileModuleMenuRegistry) {
+class CheckRouteAccess implements CliStepInterface {
+
+    use ProcessStepTrait;
+    use CliStepTrait;
+
+    public const HANDLER_KEY = 'check-route-access';
+    public const POSITION = 50;
+
+    /**
+     * @var InstallHandler
+     */
+    protected $handler;
+
+    public function __construct(InstallHandler $handler)
+    {
+        $this->handler = $handler;
     }
 
-    get getType(): any {
-        return this.registry.get('default', 'default');
+    public function getKey(): string
+    {
+        return self::HANDLER_KEY;
+    }
+
+    public function getOrder(): int
+    {
+        return self::POSITION;
+    }
+
+    public function execute(array &$context): Feedback
+    {
+        $inputs = $this->getInputs($context);
+
+        $inputsValid = $this->validateInputs($inputs);
+
+        if (!$inputsValid) {
+            return (new Feedback())->setSuccess(false)->setMessages(['Missing inputs']);
+        }
+
+        if (!isset($inputs['site_host'])){
+            return (new Feedback())->setSuccess(false)->setMessages(['Site URL not set.']);
+        }
+
+        return $this->handler->runCheckRouteAccess($inputs);
     }
 }

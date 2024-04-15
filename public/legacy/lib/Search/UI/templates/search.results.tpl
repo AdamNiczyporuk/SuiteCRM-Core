@@ -35,7 +35,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
-<h2 class="moduleTitle">{$APP.LBL_SEARCH_REAULTS_TITLE}</h2>
+<h2 class="moduleTitle">{$APP.LBL_SEARCH_RESULTS_TITLE}</h2>
 {if !empty($total)}{$APP.LBL_SEARCH_TOTAL}{$total}{/if}
 {if !empty($error)}
     <p class="error">{$APP.ERR_SEARCH_INVALID_QUERY}</p>
@@ -92,6 +92,7 @@
 
     {foreach from=$resultsAsBean item=beans key=module}
     <h3>{$module}</h3>
+    <div class="unified-search-table-wrapper">
     <table class="list view">
         <thead>
             <tr>
@@ -115,6 +116,7 @@
         </tbody>
         </thead>
     </table>
+    </div>
     {foreachelse}
     <p class="error">{$APP.ERR_SEARCH_NO_RESULTS}</p>
     {/foreach}
