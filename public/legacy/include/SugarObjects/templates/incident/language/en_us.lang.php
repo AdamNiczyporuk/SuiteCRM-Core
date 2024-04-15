@@ -74,6 +74,7 @@ $mod_strings = array(
     'LBL_APPLICANTS' => 'Applicant',
     'LBL_PROCESS' => 'Stage',
     'LBL_BASIC' => 'Basic',
+
     //Domyślne
     'LBL_NAME' => 'Name',
     'LBL_NUMBER' => 'Number:',
@@ -92,6 +93,7 @@ $mod_strings = array(
     'LBL_ASSIGNED_USER' => 'Assigned User:',
     'LBL_TYPE' => 'Type:',
     'LBL_SUBJECT' => 'Subject:',
+
     'LBL_EDIT_BUTTON' => 'Edit',
     'LBL_REMOVE' => 'Remove',
 

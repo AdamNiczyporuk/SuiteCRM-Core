@@ -38,9 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$module_name = '<module_name>';
-$_object_name = '<_object_name>';
-$viewdefs[$module_name]['EditView'] = array(
+$module_name = 'it_ServiceNotRegistered';
+$viewdefs[$module_name]['QuickCreate'] = array(
     'templateMeta' => array(
         'maxColumns' => '2',
         'widths' => array(
@@ -50,79 +49,13 @@ $viewdefs[$module_name]['EditView'] = array(
     ),
 
     'panels' => array(
-        'LBL_BASIC' => array(
-            array(
-                array('name' => 'name', 'type' => 'readonly',),
-                array('name' => '_number','type' => 'readonly'),
-            ),
-            array(
-                'service_poi',
-                'service_start_date',
-            ),
-            array(
-                'source_incident',
-                array('name' => 'required_end_date','type' => 'readonly'),
-            ),
-            array(
-                'filing_date',
-                'entry_date',
-            ),
+        'default' => array(
 
             array(
-                'description'
-            ),          
-        ),
-
-        'LBL_APPLICANTS' => array(
-            array(
-                'applicants_name',
-                'applicants_name2',
-            ),
-            array(
-                'applicants_country',
-                'applicants_region',
-            ),
-            array(
-                'applicants_postal_code',
-                'applicants_city',
-            ),
-            array(
-                'applicants_street',
-                'applicants_house_number',
-            ),
-            array(
-                'applicants_local_number',
-                'applicants_city',
-            ),
-            array(
-                'applicants_phone',
-                'applicants_email',
-            ),
-            array(
-                'applicants_signature',
-                'invoice_number',
-            ),
-            array(
-                'applicants_taxid',
-            ),
-
-        ),
-        'LBL_PROCESS' => array(
-            array(
-                'section',
+                'name',
                 'assigned_user_name',
             ),
-            array(
-                'priority',
-                'status',
-            ),
-            array(
-                'response_method',
-                'resolution',
-            ),
-
         ),
-
 
     ),
 
