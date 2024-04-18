@@ -38,42 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app_list_strings['it_test_type_dom']['Administration'] = 'Administration';
-$app_list_strings['it_test_type_dom']['Product'] = 'Product';
-$app_list_strings['it_test_type_dom']['User'] = 'User';
-$app_list_strings['it_test_status_dom']['New'] = 'New';
-$app_list_strings['it_test_status_dom']['Assigned'] = 'Assigned';
-$app_list_strings['it_test_status_dom']['Closed'] = 'Closed';
-$app_list_strings['it_test_status_dom']['Pending Input'] = 'Pending Input';
-$app_list_strings['it_test_status_dom']['Rejected'] = 'Rejected';
-$app_list_strings['it_test_status_dom']['Duplicate'] = 'Duplicate';
-$app_list_strings['it_test_priority_dom']['P1'] = 'High';
-$app_list_strings['it_test_priority_dom']['P2'] = 'Medium';
-$app_list_strings['it_test_priority_dom']['P3'] = 'Low';
-$app_list_strings['it_test_resolution_dom'][''] = '';
-$app_list_strings['it_test_resolution_dom']['Accepted'] = 'Accepted';
-$app_list_strings['it_test_resolution_dom']['Duplicate'] = 'Duplicate';
-$app_list_strings['it_test_resolution_dom']['Closed'] = 'Closed';
-$app_list_strings['it_test_resolution_dom']['Out of Date'] = 'Out of Date';
-$app_list_strings['it_test_resolution_dom']['Invalid'] = 'Invalid';
-$app_list_strings['it_test_type_dom']['Administration'] = 'Administration';
-$app_list_strings['it_test_type_dom']['Product'] = 'Product';
-$app_list_strings['it_test_type_dom']['User'] = 'User';
-$app_list_strings['it_test_status_dom']['New'] = 'New';
-$app_list_strings['it_test_status_dom']['Assigned'] = 'Assigned';
-$app_list_strings['it_test_status_dom']['Closed'] = 'Closed';
-$app_list_strings['it_test_status_dom']['Pending Input'] = 'Pending Input';
-$app_list_strings['it_test_status_dom']['Rejected'] = 'Rejected';
-$app_list_strings['it_test_status_dom']['Duplicate'] = 'Duplicate';
-$app_list_strings['it_test_priority_dom']['P1'] = 'High';
-$app_list_strings['it_test_priority_dom']['P2'] = 'Medium';
-$app_list_strings['it_test_priority_dom']['P3'] = 'Low';
-$app_list_strings['it_test_resolution_dom'][''] = '';
-$app_list_strings['it_test_resolution_dom']['Accepted'] = 'Accepted';
-$app_list_strings['it_test_resolution_dom']['Duplicate'] = 'Duplicate';
-$app_list_strings['it_test_resolution_dom']['Closed'] = 'Closed';
-$app_list_strings['it_test_resolution_dom']['Out of Date'] = 'Out of Date';
-$app_list_strings['it_test_resolution_dom']['Invalid'] = 'Invalid';
+
 $app_list_strings['moduleList']['Home'] = 'Home';
 $app_list_strings['moduleList']['ResourceCalendar'] = 'Resource Calendar';
 $app_list_strings['moduleList']['Contacts'] = 'Contacts';
