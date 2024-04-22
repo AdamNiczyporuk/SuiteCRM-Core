@@ -82,7 +82,7 @@ class it_Complaiants extends Incident
     public $senders_email_address;
     public $senders_city;
     public $senders_nip;
-    public $section;
+    //public $section;
     public $service_POI;
     public $it_Complaiants_number;
     public $type;
