@@ -461,7 +461,6 @@ $dictionary['it_Complaiants'] = array(
     'len' => '100',
     'size' => '20',
   ),
-  
   'service_electronics' => array(
     'name' => 'service_electronics',
     'type' => 'link',
@@ -470,8 +469,7 @@ $dictionary['it_Complaiants'] = array(
     'bean_name' => 'it_serviceElectronic',
     'source' => 'non-db',
     'vname' => 'LBL_SERVICE_ELECTRONICS',
-  ),
-  
+),
 ),
     'relationships' => array (
       'complaiant_service_electronic' => array(
