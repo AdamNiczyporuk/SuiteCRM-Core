@@ -462,8 +462,29 @@ $dictionary['it_Complaiants'] = array(
     'size' => '20',
   ),
   
+  'service_electronics' => array(
+    'name' => 'service_electronics',
+    'type' => 'link',
+    'relationship' => 'complaiant_service_electronic',
+    'module' => 'it_serviceElectronic',
+    'bean_name' => 'it_serviceElectronic',
+    'source' => 'non-db',
+    'vname' => 'LBL_SERVICE_ELECTRONICS',
+  ),
+  
 ),
     'relationships' => array (
+      'complaiant_service_electronic' => array(
+        'lhs_module' => 'it_Complaiants',
+        'lhs_table' => 'it_complaiants',
+        'lhs_key' => 'id',
+        'rhs_module' => 'it_serviceElectronic',
+        'rhs_table' => 'it_serviceelectronic',
+        'rhs_key' => 'parent_id',
+        'relationship_type' => 'one-to-many',
+        'relationship_role_column' => 'parent_type',
+        'relationship_role_column_value' => 'it_Complaiants',
+    ),
 ),
     'optimistic_locking' => true,
     'unified_search' => true,

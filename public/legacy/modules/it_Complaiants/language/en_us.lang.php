@@ -137,4 +137,5 @@ $mod_strings = array (
   'LBL_POSTAL_ADDRESS_POSTAL' => 'Postal address postal code',
   'LBL_POSTAL_ADDRESS_STREET' => 'Postal address street',
   'LBL_POSTAL_ADDRESS_APT_NUMBER' => 'Postal address apartment number',
+  'LBL_SERVICE_ELECTRONICS' => 'Service electronics',
 );
