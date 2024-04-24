@@ -1,0 +1,38 @@
+services:
+  suitecrm:
+    image: "bitnami/suitecrm:latest"
+    ports:
+      - '8080:8080'
+      - '443:443'
+    volumes: 
+      - 'suitecrm_data:/bitnami/suitecrm'
+      - './public/legacy/modules:/bitnami/suitecrm/public/legacy/modules'
+      - './public/legacy/custom/Extension/application/Ext:/bitnami/suitecrm/public/legacy/custom/Extension/application/Ext'
+      - './public/legacy/modules:/bitnami/suitecrm/public/legacy/modules'
+      - './public/legacy/include:/bitnami/suitecrm/public/legacy/include'
+      - './public/legacy/Api:/bitnami/suitecrm/public/legacy/Api'
+
+    environment:
+      - 'SUITECRM_DATABASE_HOST=db'
+      - 'SUITECRM_DATABASE_PORT_NUMBER=3306'
+      - 'SUITECRM_DATABASE_USER=bn_suitecrm'
+      - 'SUITECRM_DATABASE_PASSWORD=bitnami'
+      - 'SUITECRM_DATABASE_NAME=bitnami_suitecrm'
+    depends_on:
+      - db
+
+  db:
+    image: 'bitnami/mariadb:latest'
+    environment:
+      - 'MARIADB_ROOT_PASSWORD=bitnami'
+      - 'MARIADB_DATABASE=bitnami_suitecrm'
+      - 'MARIADB_USER=bn_suitecrm'
+      - 'MARIADB_PASSWORD=bitnami'
+    volumes:
+      - 'db_data:/bitnami/mariadb'
+
+volumes:
+  db_data:
+    driver: local
+  suitecrm_data:
+    driver: local
