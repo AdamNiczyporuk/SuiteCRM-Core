@@ -39,13 +39,14 @@
  */
 
 require_once('include/SugarObjects/templates/incident/Incident.php');
-
+require_once('include/SugarLogger/SugarLogger.php');
 class it_Incidents extends Incident
 {
+    
     public $new_schema = true;
     public $module_dir = 'it_Incidents';
     public $object_name = 'it_Incidents';
-    public $table_name = 'it_incidents';
+    public $table_name = 'it_Incidents';
     public $importable = false;
 
     public $id;
@@ -93,13 +94,52 @@ class it_Incidents extends Incident
 	
     public function bean_implements($interface)
     {
+       
         switch($interface)
         {
             case 'ACL':
                 return true;
         }
-
+        
         return false;
     }
+  
+    public function create_new_list_query(
+        $order_by,
+        $where,
+        $filter = array(),
+        $params = array(),
+        $show_deleted = 0,
+        $join_type = 'UNION ALL',
+        $return_array = false,
+        $parentbean = null,
+        $singleSelect = false,
+        $ifListForExport = false
+    )
+    {
+        
+        
+        
+        $db = DBManagerFactory::getInstance();
+        
+        // Zdefiniuj zapytanie SQL dla pobrania danych z modułu Calim
+        $queryIt_Claim = "SELECT name FROM it_Claims WHERE deleted = 0" ;
+        
+        // Zdefiniuj zapytanie SQL dla pobrania danych z modułu Compaliant
+        $queryIt_Complaiant = "SELECT name FROM it_Complaiants WHERE deleted = 0";
+       
+        // Połącz oba zapytania za pomocą UNION
+        /*$queryUnion = $db->get_union_query([$queryIt_Claim, $queryIt_Complaiant]);*/
+        
+        //Tworzenie tablicy
+        $return_array=array();
+        //Wkładanie zapytania do tablicy
+        $return_array['select'] = "SELECT id,name,_number,status,priority,resolution,assigned_user_id FROM it_Claims WHERE deleted = 0 union SELECT id,name,_number,status,priority,resolution,assigned_user_id FROM it_Complaiants WHERE deleted = 0";
+
+         LoggerManager::getLogger()->error('test2');
+        
+       
+        return $return_array;
+    } 
 	
 }

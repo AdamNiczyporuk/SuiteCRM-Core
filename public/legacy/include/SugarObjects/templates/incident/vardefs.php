@@ -160,7 +160,7 @@ $vardefs = array(
             'cols' => 80,
         ),
 
-        
+ /*       
         'applicants_name' =>
         array(
             'required' => false,
@@ -447,7 +447,7 @@ $vardefs = array(
             'comment' => 'Applicants signature',
             'inline_edit' => false,
         ),
-      
+ */     
         'response_method' => array(
             'required' => false,
             'name' => 'response_method',
@@ -471,7 +471,7 @@ $vardefs = array(
             'studio' => 'visible',
             'dependency' => false,
         ),
-        'section' =>
+/*        'section' =>
         array(
             'required' => false,
             'name' => 'section',
@@ -496,7 +496,7 @@ $vardefs = array(
             'dependency' => false,
         ),
         
-
+*/
 
         'resolution' => array(
             'name' => 'resolution',

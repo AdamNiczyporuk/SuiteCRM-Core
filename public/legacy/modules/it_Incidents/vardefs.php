@@ -38,13 +38,16 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$dictionary['it_Incidents'] = array(
-    'table' => 'it_incidents',
+
+
+ $dictionary['it_Incidents'] = array(
+    'table' => 'it_Incidents',
     'audited' => true,
     'inline_edit' => true,
     'duplicate_merge' => true,
     'fields' => array (
 ),
+
     'relationships' => array (
 ),
     'optimistic_locking' => true,
