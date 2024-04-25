@@ -44,9 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $app_strings;
 
-$dashletMeta['it_serviceElectronicDashlet'] = array(
-    'module' => 'it_serviceElectronic',
-    'title' => translate('LBL_HOMEPAGE_TITLE', 'it_serviceElectronic'),
-    'description' => 'A customizable view into it_serviceElectronic',
+$dashletMeta['it_ComplaiantsDashlet'] = array(
+    'module' => 'it_Complaiants',
+    'title' => translate('LBL_HOMEPAGE_TITLE', 'it_Complaiants'),
+    'description' => 'A customizable view into it_Complaiants',
     'category' => 'Module Views'
 );

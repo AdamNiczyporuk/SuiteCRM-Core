@@ -1,5 +1,6 @@
 <?php
-$module_name = 'it_serviceElectronic';
+$module_name = 'it_Complaiants';
+$_object_name = 'it_Complaiants';
 $viewdefs [$module_name] = 
 array (
   'EditView' => 
@@ -20,15 +21,16 @@ array (
           'field' => '30',
         ),
       ),
-      'useTabs' => true,
+      'useTabs' => false,
       'tabDefs' => 
       array (
         'DEFAULT' => 
         array (
-          'newTab' => true,
+          'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
+      'syncDetailEditViews' => true,
     ),
     'panels' => 
     array (
@@ -38,27 +40,57 @@ array (
         array (
           0 => 
           array (
-            'name' => 'number_parcels',
-            'label' => 'LBL_NUMBER_PARCELS',
+            'name' => 'it_Complaiants_number',
+            'type' => 'readonly',
           ),
-          1 => 
-          array (
-            'name' => 'guid',
-            'label' => 'LBL_GUID',
-          ),
+          1 => 'assigned_user_name',
         ),
         1 => 
         array (
-          0 => 
-          array (
-            'name' => 'who_is_applicant',
-            'studio' => 'visible',
-            'label' => 'LBL_WHO_IS_APPLICANT',
-          ),
+          0 => 'priority',
         ),
         2 => 
         array (
+          0 => 'resolution',
+          1 => 'status',
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'name',
+            'displayParams' => 
+            array (
+              'size' => 60,
+            ),
+          ),
+        ),
+        4 => 
+        array (
           0 => 'description',
+        ),
+        5 => 
+        array (
+          0 => 'work_log',
+        ),
+        6 => 
+        array (
+          0 => 
+          array (
+            'name' => 'claimant',
+            'studio' => 'visible',
+            'label' => 'LBL_CLAIMANT',
+          ),
+          1 => '',
+        ),
+        7 => 
+        array (
+          0 => 
+          array (
+            'name' => 'filing_date',
+            'comment' => 'Date of filing the complaint',
+            'label' => 'LBL_FILING_DATE',
+          ),
         ),
       ),
     ),

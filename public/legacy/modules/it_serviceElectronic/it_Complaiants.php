@@ -38,28 +38,69 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+require_once('include/SugarObjects/templates/incident/Incident.php');
 
-require_once('include/Dashlets/DashletGeneric.php');
-require_once('modules/it_serviceElectronic/it_serviceElectronic.php');
+class it_Complaiants extends Incident
+{
+    public $new_schema = true;
+    public $module_dir = 'it_Complaiants';
+    public $object_name = 'it_Complaiants';
+    public $table_name = 'it_Complaiants';
+    public $importable = false;
 
-class it_serviceElectronicDashlet extends DashletGeneric {
-    function __construct($id, $def = null)
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $assigned_user_link;
+    public $SecurityGroups;
+    public $source_of_the_complaint;
+    public $service_date_start;
+    public $required_end_date;
+    public $filing_date;
+    public $invoice_number;
+    public $sender_signature;
+    public $response_method;
+    public $senders_name;
+    public $senders_street;
+    public $senders_house_number;
+    public $senders_nazwa2;
+    public $senders_premises_number;
+    public $senders_region;
+    public $senders_telephone;
+    public $senders_postal_code;
+    public $senders_email_address;
+    public $senders_city;
+    public $senders_nip;
+    //public $section;
+    public $service_POI;
+    public $it_Complaiants_number;
+    public $type;
+    public $status;
+    public $priority;
+    public $resolution;
+    public $work_log;
+    public $claimant;
+	
+    public function bean_implements($interface)
     {
-        global $current_user, $app_strings;
-        require('modules/it_serviceElectronic/metadata/dashletviewdefs.php');
-
-        parent::__construct($id, $def);
-
-        if (empty($def['title'])) {
-            $this->title = translate('LBL_HOMEPAGE_TITLE', 'it_serviceElectronic');
+        switch($interface)
+        {
+            case 'ACL':
+                return true;
         }
 
-        $this->searchFields = $dashletData['it_serviceElectronicDashlet']['searchFields'];
-        $this->columns = $dashletData['it_serviceElectronicDashlet']['columns'];
-
-        $this->seedBean = new it_serviceElectronic();        
+        return false;
     }
+	
 }

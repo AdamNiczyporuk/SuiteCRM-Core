@@ -14,10 +14,10 @@ class it_IncidentsController extends SugarController
         $queryIt_Claim = "SELECT * FROM it_Claim WHERE deleted = 0" ;
 
         // Zdefiniuj zapytanie SQL dla pobrania danych z modułu Kontahenci
-        $queryIt_Complaiant = "SELECT * FROM it_Complaiant WHERE deleted = 0";
+        $query_it_Complaiants = "SELECT * FROM it_Complaiants WHERE deleted = 0";
 
         // Połącz oba zapytania za pomocą UNION
-        $queryUnion = $db->get_union_all_query([$queryIt_Claim, $queryIt_Complaiant]);
+        $queryUnion = $db->get_union_all_query([$queryIt_Claim, $query_it_Complaiants]);
 
         // Wykonaj zapytanie do bazy danych
         $result = $db->query($queryUnion);

@@ -38,7 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$module_name = 'it_serviceElectronic';
+$module_name = 'it_Complaiants';
+$_object_name = 'it_Complaiants';
 $searchdefs[$module_name] = array(
     'templateMeta' => array(
         'maxColumns' => '3',
@@ -49,13 +50,24 @@ $searchdefs[$module_name] = array(
         'basic_search' => array(
             'name',
             array('name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
+            array(
+                'name' => 'open_only',
+                'label' => 'LBL_OPEN_ITEMS',
+                'type' => 'bool',
+                'default' => false,
+                'width' => '10%'
+            ),
         ),
         'advanced_search' => array(
+            $_object_name . '_number',
             'name',
+            'resolution',
+            'status',
+            'priority',
             array(
                 'name' => 'assigned_user_id',
-                'label' => 'LBL_ASSIGNED_TO',
                 'type' => 'enum',
+                'label' => 'LBL_ASSIGNED_TO',
                 'function' => array('name' => 'get_user_array', 'params' => array(false))
             ),
         ),
