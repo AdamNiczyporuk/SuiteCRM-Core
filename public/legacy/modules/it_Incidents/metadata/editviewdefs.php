@@ -38,92 +38,87 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$module_name = 'it_Incidents';
-$_object_name = 'it_incidents';
-$viewdefs[$module_name]['EditView'] = array(
-    'templateMeta' => array(
-        'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30')
-        ),
-    ),
-
-    'panels' => array(
-        'LBL_BASIC' => array(
-            array(
-                array('name' => 'name', 'type' => 'readonly',),
-                array('name' => '_number','type' => 'readonly'),
-            ),
-            array(
-                'service_poi',
-                'service_start_date',
-            ),
-            array(
-                'source_incident',
-                array('name' => 'required_end_date','type' => 'readonly'),
-            ),
-            array(
-                'filing_date',
-                'entry_date',
-            ),
-
-            array(
-                'description'
-            ),          
-        ),
-
-        'LBL_APPLICANTS' => array(
-            array(
-                'applicants_name',
-                'applicants_name2',
-            ),
-            array(
-                'applicants_country',
-                'applicants_region',
-            ),
-            array(
-                'applicants_postal_code',
-                'applicants_city',
-            ),
-            array(
-                'applicants_street',
-                'applicants_house_number',
-            ),
-            array(
-                'applicants_local_number',
-                'applicants_city',
-            ),
-            array(
-                'applicants_phone',
-                'applicants_email',
-            ),
-            array(
-                'applicants_signature',
-                'invoice_number',
-            ),
-            array(
-                'applicants_taxid',
-            ),
-
-        ),
-        'LBL_PROCESS' => array(
-            array(
-                'section',
-                'assigned_user_name',
-            ),
-            array(
-                'priority',
-                'status',
-            ),
-            array(
-                'response_method',
-                'resolution',
-            ),
-
-        ),
-
-
-    ),
-
-);
+ $module_name = 'it_Incidents';
+ $_object_name = 'it_incidents';
+ $viewdefs[$module_name]['EditView'] = array(
+     'templateMeta' => array(
+         'maxColumns' => '2',
+         'widths' => array(
+             array('label' => '10', 'field' => '30'),
+             array('label' => '10', 'field' => '30')
+         ),
+     ),
+ 
+     'panels' => array(
+         'LBL_BASIC' => array(
+             array(
+                 array('name' => 'name', 'type' => 'readonly',),
+                 array('name' => '_number','type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'service_poi', 'type' => 'readonly'),
+                 array('name' => 'service_start_date', 'type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'source_incident', 'type' => 'readonly'),
+                 array('name' => 'required_end_date','type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'filing_date', 'type' => 'readonly'),
+                 array('name' => 'entry_date', 'type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'description', 'type' => 'readonly')
+             ),          
+         ),
+ 
+         'LBL_APPLICANTS' => array(
+             array(
+                 array('name' => 'applicants_name', 'type' => 'readonly'),
+                 array('name' => 'applicants_name2', 'type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'applicants_country', 'type' => 'readonly'),
+                 array('name' => 'applicants_region', 'type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'applicants_postal_code', 'type' => 'readonly'),
+                 array('name' => 'applicants_city', 'type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'applicants_street', 'type' => 'readonly'),
+                 array('name' => 'applicants_house_number', 'type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'applicants_local_number', 'type' => 'readonly'),
+                 array('name' => 'applicants_city', 'type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'applicants_phone', 'type' => 'readonly'),
+                 array('name' => 'applicants_email', 'type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'applicants_signature', 'type' => 'readonly'),
+                 array('name' => 'invoice_number', 'type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'applicants_taxid', 'type' => 'readonly'),
+             ),
+         ),   
+           
+         'LBL_PROCESS' => array(
+             array(
+                 array('name' => 'section', 'type' => 'readonly'),
+                 array('name' => 'assigned_user_name', 'type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'priority', 'type' => 'readonly'),
+                 array('name' => 'status', 'type' => 'readonly'),
+             ),
+             array(
+                 array('name' => 'response_method', 'type' => 'readonly'),
+                 array('name' => 'resolution', 'type' => 'readonly'),
+             ),
+         ),
+     ),
+ );

@@ -44,9 +44,12 @@
 
 global $mod_strings, $app_strings, $sugar_config;
  
-if(ACLController::checkAccess('it_Incidents', 'edit', true)){
-    $module_menu[]=array('index.php?module=it_Incidents&action=EditView&return_module=it_Incidents&return_action=DetailView', $mod_strings['LNK_NEW_RECORD'], 'Add', 'it_Incidents');
-}
 if(ACLController::checkAccess('it_Incidents', 'list', true)){
     $module_menu[]=array('index.php?module=it_Incidents&action=index&return_module=it_Incidents&return_action=DetailView', $mod_strings['LNK_LIST'],'View', 'it_Incidents');
+}
+if(ACLController::checkAccess('it_Claims', 'edit', true)){
+    $module_menu[]=array('index.php?module=it_Claims&action=EditView&return_module=it_Claims&return_action=DetailView', $mod_strings['LNK_NEW_CLAIM'], 'Add', 'it_Claims');
+}
+if(ACLController::checkAccess('it_Complaiants', 'edit', true)){
+    $module_menu[]=array('index.php?module=it_Complaiants&action=EditView&return_module=it_Complaiants&return_action=DetailView', $mod_strings['LNK_NEW_COMPLAIANT'], 'Add', 'it_Complaints');
 }
