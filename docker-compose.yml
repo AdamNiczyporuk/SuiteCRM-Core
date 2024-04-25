@@ -8,7 +8,6 @@ services:
       - 'suitecrm_data:/bitnami/suitecrm'
       - './public/legacy/modules:/bitnami/suitecrm/public/legacy/modules'
       - './public/legacy/custom/Extension/application/Ext:/bitnami/suitecrm/public/legacy/custom/Extension/application/Ext'
-      - './public/legacy/modules:/bitnami/suitecrm/public/legacy/modules'
       - './public/legacy/include:/bitnami/suitecrm/public/legacy/include'
       - './public/legacy/Api:/bitnami/suitecrm/public/legacy/Api'
 
