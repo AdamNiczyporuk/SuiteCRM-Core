@@ -27,22 +27,26 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RelateEditFieldComponent} from './relate.component';
-import {TagInputModule} from 'ngx-chips';
 import {FormsModule} from '@angular/forms';
-import {InlineLoadingSpinnerModule} from '../../../../components/inline-loading-spinner/inline-loading-spinner.module';
 import {ButtonModule} from '../../../../components/button/button.module';
 import {LabelModule} from '../../../../components/label/label.module';
+import {MultiSelectModule} from "primeng/multiselect";
+import {ImageModule} from "../../../../components/image/image.module";
+import {DropdownModule} from "primeng/dropdown";
+import {InputTextModule} from "primeng/inputtext";
 
 @NgModule({
     declarations: [RelateEditFieldComponent],
     exports: [RelateEditFieldComponent],
     imports: [
         CommonModule,
-        TagInputModule,
         LabelModule,
         FormsModule,
-        InlineLoadingSpinnerModule,
-        ButtonModule
+        ButtonModule,
+        MultiSelectModule,
+        ImageModule,
+        DropdownModule,
+        InputTextModule
     ]
 })
 export class RelateEditFieldModule {

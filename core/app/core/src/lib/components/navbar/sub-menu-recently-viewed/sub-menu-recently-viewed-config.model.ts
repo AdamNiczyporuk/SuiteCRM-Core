@@ -1,6 +1,6 @@
 /**
  * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
- * Copyright (C) 2021 SalesAgility Ltd.
+ * Copyright (C) 2024 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -24,21 +24,12 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Injectable} from '@angular/core';
-import {BaseComponentRegistry} from 'common';
-import {BaseMobileGroupedMenuComponent} from './base-mobile-grouped-menu.component';
+import {ButtonCallback} from "common";
+import {Observable} from "rxjs";
 
-@Injectable({
-    providedIn: 'root'
-})
-export class MobileGroupedMenuRegistry extends BaseComponentRegistry<BaseMobileGroupedMenuComponent> {
-
-    constructor() {
-        super();
-    }
-
-    protected initDefault(): void {
-
-        this.register('default', 'default', BaseMobileGroupedMenuComponent);
-    }
+export interface SubMenuRecentlyViewedConfig {
+    onItemClick: ButtonCallback;
+    onItemTouchStart: ButtonCallback;
+    onToggleDropdown?: ButtonCallback;
+    showDropdown$?: Observable<boolean>;
 }

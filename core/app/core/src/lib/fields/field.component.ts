@@ -26,7 +26,7 @@
 
 import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {viewFieldsMap} from './field.manifest';
-import {DisplayType, Field, Record} from 'common';
+import {Field, Record, ViewMode} from 'common';
 import {FieldRegistry} from './field.registry';
 
 @Component({

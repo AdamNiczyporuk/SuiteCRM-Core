@@ -24,22 +24,25 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Component, ViewChild} from '@angular/core';
-import {TagInputComponent} from 'ngx-chips';
-import {ButtonInterface, Field, Record, deepClone} from 'common';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {AttributeMap, ButtonInterface, deepClone, Field, ObjectMap, Record} from 'common';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModuleNameMapper} from '../../../../services/navigation/module-name-mapper/module-name-mapper.service';
 import {DataTypeFormatter} from '../../../../services/formatters/data-type.formatter.service';
-import {RecordListModalComponent} from '../../../../containers/record-list-modal/components/record-list-modal/record-list-modal.component';
+import {
+    RecordListModalComponent
+} from '../../../../containers/record-list-modal/components/record-list-modal/record-list-modal.component';
 import {BaseRelateComponent} from '../../../base/base-relate.component';
 import {LanguageStore} from '../../../../store/language/language.store';
 import {RelateService} from '../../../../services/record/relate/relate.service';
-import {RecordListModalResult} from '../../../../containers/record-list-modal/components/record-list-modal/record-list-modal.model';
-import {TagModel} from 'ngx-chips/core/tag-model';
+import {
+    RecordListModalResult
+} from '../../../../containers/record-list-modal/components/record-list-modal/record-list-modal.model';
 import {FieldLogicManager} from '../../../field-logic/field-logic.manager';
 import {SavedFilter} from '../../../../store/saved-filters/saved-filter.model';
-import {EMPTY, Observable, of} from 'rxjs';
 import {FieldLogicDisplayManager} from '../../../field-logic-display/field-logic-display.manager';
+import {map, take} from "rxjs/operators";
+import {MultiSelect} from "primeng/multiselect";
 
 @Component({
     selector: 'scrm-relate-filter',
@@ -48,10 +51,17 @@ import {FieldLogicDisplayManager} from '../../../field-logic-display/field-logic
     providers: [RelateService]
 })
 export class RelateFilterFieldComponent extends BaseRelateComponent {
-    @ViewChild('tag') tag: TagInputComponent;
+    @ViewChild('tag') tag: MultiSelect;
+    @ViewChild('dropdownFilterInput') dropdownFilterInput: ElementRef;
     selectButton: ButtonInterface;
-    selectedTags: string[] | TagModel[];
     idField: Field;
+
+    placeholderLabel: string = '';
+    selectedItemsLabel: string = '';
+    emptyFilterLabel: string = '';
+    maxSelectedLabels: number = 20;
+    selectAll: boolean = false;
+    filterValue: string | undefined = '';
 
     /**
      * Constructor
@@ -62,6 +72,7 @@ export class RelateFilterFieldComponent extends BaseRelateComponent {
      * @param {object} moduleNameMapper service
      * @param {object} modalService service
      * @param {object} logic
+     * @param {object} logicDisplay
      */
     constructor(
         protected languages: LanguageStore,
@@ -75,7 +86,7 @@ export class RelateFilterFieldComponent extends BaseRelateComponent {
         super(languages, typeFormatter, relateService, moduleNameMapper, logic, logicDisplay);
 
         this.selectButton = {
-            klass: ['btn', 'btn-sm', 'btn-outline-secondary', 'select-button', 'm-0'],
+            klass: ['btn', 'btn-sm', 'btn-outline-secondary', 'm-0', 'border-0'],
             onClick: (): void => {
                 this.showSelectModal();
             },
@@ -87,34 +98,47 @@ export class RelateFilterFieldComponent extends BaseRelateComponent {
      * On init handler
      */
     ngOnInit(): void {
+        this.selectAll = false;
         const filter = this.record as SavedFilter;
 
         this.field.valueList = [];
 
         this.field.valueObjectArray = [];
 
-        const values = (this.field && this.field.criteria && this.field.criteria.values) || [];
+        let values = (this.field && this.field.criteria && this.field.criteria.values) || [];
+        values = values.filter(value => !value);
 
         if (values.length > 0) {
             this.field.valueList = values;
-            this.selectedTags = values;
         }
 
-        const valueObjectArray = (this.field && this.field.criteria && this.field.criteria.valueObjectArray) || [];
+        let valueObjectArray = (this.field && this.field.criteria && this.field.criteria.valueObjectArray) || [];
+        valueObjectArray = valueObjectArray.map(value => {
+            const mapped = {...value}
+            mapped[this.getRelateFieldName()] = value[this.getRelateFieldName()] ?? value?.name ?? '';
+            return mapped;
+        });
 
         if (valueObjectArray.length > 0) {
             this.field.valueObjectArray = deepClone(valueObjectArray);
-            this.selectedTags = deepClone(valueObjectArray);
+            this.selectedValues = deepClone(valueObjectArray);
         }
 
         super.ngOnInit();
+
+        this.options = this.options ?? [];
+
+        this.getTranslatedLabels();
+
+        this.addCurrentlySelectedToOptions(this.options ?? []);
 
         const idFieldName = this.getRelateIdField();
 
         if (idFieldName && filter && filter.criteriaFields && filter.criteriaFields[idFieldName]) {
             this.idField = filter.criteriaFields[idFieldName];
             this.idField.valueList = [];
-            const idValues = (this.idField && this.idField.criteria && this.idField.criteria.values) || [];
+            let idValues = (this.idField && this.idField.criteria && this.idField.criteria.values) || [];
+            idValues = idValues.filter(value => !!value);
 
             if (idValues.length > 0) {
                 this.idField.valueList = deepClone(idValues);
@@ -124,88 +148,127 @@ export class RelateFilterFieldComponent extends BaseRelateComponent {
 
     /**
      * Handle newly added item
-     *
-     * @param {object} item added
      */
-    onAdd(item): void {
-
-        if (item) {
-
-            this.setValue(item);
-            return;
-        }
-    }
-
-    onAdding(item): Observable<TagModel> {
-
-        if (!item) {
-            return EMPTY;
-        }
-
-        if(this.idField && this.idField.valueList.includes(item.id)){
-            return EMPTY;
-        }
-
-        const relateName = this.getRelateFieldName();
-
-        if(!this.idField && this.field.valueList.includes(item[relateName])){
-            return EMPTY;
-        }
-
-        return of(item);
+    onAdd(): void {
+        this.updateFieldValues();
+        this.calculateSelectAll();
     }
 
     /**
      * Handle item removal
      */
-    onRemove(item): void {
+    onRemove(): void {
+        this.updateFieldValues();
+        this.calculateSelectAll();
+    }
 
-        const id = item.id ?? '';
-        const value = item.name ?? '';
-        this.field.valueList = this.field.valueList.filter(element => element !== value);
+    onClear(): void {
+        this.options = [];
+        this.selectedValues = [];
+        this.selectAll = false;
+        this.filterValue = '';
+        this.onRemove();
+    }
 
-        this.field.valueObjectArray = this.field.valueObjectArray.filter(element => element.id !== id);
+    onSelectAll(): void {
+        this.selectAll = !this.selectAll;
+        if (this.selectAll) {
+            if (this.tag.visibleOptions() && this.tag.visibleOptions().length) {
+                this.selectedValues = this.tag.visibleOptions();
+            } else {
+                this.selectedValues = this.options;
+            }
+            this.onAdd();
+        } else {
+            this.selectedValues = [];
+            this.onRemove();
+        }
+    }
+
+    getTranslatedLabels(): void {
+        this.placeholderLabel = this.languages.getAppString('LBL_SELECT_ITEM') || '';
+        this.selectedItemsLabel = this.languages.getAppString('LBL_ITEMS_SELECTED') || '';
+        this.emptyFilterLabel = this.languages.getAppString('ERR_SEARCH_NO_RESULTS') || '';
+
+    }
+
+    onPanelShow(): void {
+        this.dropdownFilterInput.nativeElement.focus()
+        this.calculateSelectAll();
+    }
+
+    resetFunction(): void {
+        this.filterValue = '';
+        this.options = this.selectedValues;
+    }
+
+    onFilterInput(event: KeyboardEvent): void {
+        event?.stopPropagation();
+        this.selectAll = false;
+        this.tag.onLazyLoad.emit()
+    }
+
+    onFilter(): void {
+        const relateName = this.getRelateFieldName();
+        this.filterValue = this.filterValue ?? '';
+        const matches = this.filterValue.match(/^\s*$/g);
+        if (matches && matches.length) {
+            this.filterValue = '';
+        }
+        let term = this.filterValue;
+        this.search(term).pipe(
+            take(1),
+            map(data => data.filter((item: ObjectMap) => item[relateName] !== '')),
+            map(filteredData => filteredData.map((item: ObjectMap) => ({
+                id: item.id,
+                [relateName]: item[relateName]
+            })))
+        ).subscribe(filteredOptions => {
+            this.options = filteredOptions;
+            this.addCurrentlySelectedToOptions(filteredOptions);
+            this.calculateSelectAll();
+        });
+    }
+
+    protected updateFieldValues(): void {
+        let value = this?.selectedValues?.map(option => option[this.getRelateFieldName()]) ?? null;
+        if (!value) {
+            value = [];
+        }
+        this.field.valueList = value;
+
+        this.field.valueObjectArray = deepClone(this.selectedValues ?? []);
 
         this.updateSearchCriteria(this.field);
 
         this.field.criteria.valueObjectArray = deepClone(this.field.valueObjectArray);
-
-        if(this.idField && id){
-            this.idField.valueList = this.idField.valueList.filter(element => element !== id);
-            this.updateSearchCriteria(this.idField);
-        }
-
-        setTimeout(() => {
-            this.tag.focus(true, true);
-        }, 200);
+        this.updateIdField();
     }
 
-    selectFirstElement(): void {
-        const filteredElements: TagModel = this.tag.dropdown.items;
-        if (filteredElements.length !== 0) {
-            const firstElement = filteredElements[0];
-            this.tag.appendTag(firstElement);
-            this.onAdd(firstElement);
-            this.tag.dropdown.hide();
+    protected updateIdField(): void {
+        if (!this.idField) {
+            return;
         }
+        this.idField.valueList = this?.selectedValues?.map(option => option.id) ?? [];
+        this.updateSearchCriteria(this.idField);
     }
 
     /**
      * Set value on field
      *
-     * @param item: any
+     * @param item
      */
     protected setValue(item: any): void {
 
         const relateName = this.getRelateFieldName();
-        const id = item.id;
+        const id = item?.id ?? '';
         const relateValue = item[relateName];
 
-        if(this.idField && this.idField.valueList.includes(id)){
+        if (this.idField && this.idField.valueList.includes(id)) {
             return;
         }
 
-        if(!this.idField && this.field.valueList.includes(relateValue)){
+        if (!this.idField && this.field.valueList.includes(relateValue)) {
             return;
         }
 
@@ -216,14 +279,14 @@ export class RelateFilterFieldComponent extends BaseRelateComponent {
         this.field.valueObjectArray.push(valueObject);
         this.field.valueList.push(relateValue);
 
-        if (this.idField){
+        if (this.idField) {
             this.idField.valueList.push(id);
             this.updateSearchCriteria(this.idField);
         }
 
         this.updateSearchCriteria(this.field);
 
-        if(!this.field.criteria.valueObjectArray){
+        if (!this.field.criteria.valueObjectArray) {
             this.field.criteria.valueObjectArray = [];
         }
 
@@ -263,6 +326,7 @@ export class RelateFilterFieldComponent extends BaseRelateComponent {
             }
 
             this.setItem(record);
+            this.tag.updateModel(this.selectedValues);
         });
     }
 
@@ -297,8 +361,66 @@ export class RelateFilterFieldComponent extends BaseRelateComponent {
      * @param {object} record to set
      */
     protected setItem(record: Record): void {
-        this.tag.appendTag(record.attributes);
-        this.onAdd(record.attributes);
+        const relateName = this.getRelateFieldName();
+        const newItem = {
+            id: record?.attributes?.id,
+            [relateName]: record?.attributes[relateName]
+        } as ObjectMap;
+
+        const inList = this.isInList(this.selectedValues, newItem);
+        if (inList) {
+            return;
+        }
+
+        this.selectedValues.push(newItem)
+        this.addCurrentlySelectedToOptions(this.options);
+
+        this.onAdd();
     }
 
+    protected addCurrentlySelectedToOptions(filteredOptions) {
+        if (!this?.selectedValues || !this?.selectedValues.length) {
+            return;
+        }
+
+        this.selectedValues.forEach(selectedValue => {
+            let found = this.isInList(filteredOptions, selectedValue);
+
+            if (found === false && selectedValue) {
+                this.options.push(selectedValue);
+            }
+        });
+    }
+
+    protected isInList(filteredOptions: AttributeMap[], selectedValue: AttributeMap): boolean {
+        let found = false
+
+        filteredOptions.some((value: AttributeMap) => {
+
+            if (value?.id === selectedValue?.id) {
+                found = true;
+                return true;
+            }
+            return false;
+        });
+
+        return found;
+    }
+
+    protected calculateSelectAll(): void {
+        const visibleOptions = this?.tag?.visibleOptions() ?? [];
+        const selectedValuesKeys = (this?.selectedValues ?? []).map(item => item.value);
+
+        if (!visibleOptions.length || !selectedValuesKeys.length) {
+            this.selectAll = false;
+            return;
+        }
+
+        if (visibleOptions.length > selectedValuesKeys.length) {
+            this.selectAll = false;
+            return;
+        }
+
+        this.selectAll = visibleOptions.every(item => selectedValuesKeys.includes(item.value));
+    }
 }

@@ -37,6 +37,7 @@ import {
 } from '../../store/language/language.store';
 import {FieldLogicManager} from '../field-logic/field-logic.manager';
 import {FieldLogicDisplayManager} from '../field-logic-display/field-logic-display.manager';
+import {isNull, isObject} from "lodash-es";
 
 @Component({template: ''})
 export class BaseEnumComponent extends BaseFieldComponent implements OnInit, OnDestroy {
@@ -93,6 +94,9 @@ export class BaseEnumComponent extends BaseFieldComponent implements OnInit, OnD
     ngOnDestroy(): void {
         this.isDynamicEnum = false;
         this.subs.forEach(sub => sub.unsubscribe());
+        this.options = [];
+        this.optionsMap = {};
+        this.selectedValues = [];
     }
 
     getInvalidClass(): string {
@@ -150,6 +154,10 @@ export class BaseEnumComponent extends BaseFieldComponent implements OnInit, OnD
         this.options = [];
         Object.keys(this.optionsMap).forEach(key => {
 
+            if (isEmptyString(this.optionsMap[key]) && !this.addEmptyStringOption()) {
+                return;
+            }
+
             this.options.push({
                 value: key,
                 label: this.optionsMap[key]
@@ -161,17 +169,16 @@ export class BaseEnumComponent extends BaseFieldComponent implements OnInit, OnD
         }
     }
 
+    protected addEmptyStringOption(): boolean {
+        return this.field.type !== 'multienum';
+    }
+
     protected initValue(): void {
 
         this.selectedValues = [];
 
-        if (this.field.criteria){
+        if (this.field.criteria) {
             this.initValueLabel();
-            return;
-        }
-
-        if (!this.field.value) {
-            this.initEnumDefault();
             return;
         }
 
@@ -190,7 +197,7 @@ export class BaseEnumComponent extends BaseFieldComponent implements OnInit, OnD
         this.initValueLabel();
     }
 
-    protected initValueLabel () {
+    protected initValueLabel() {
         const fieldValue = this.field.value || this.field.criteria?.target || undefined;
         if (fieldValue !== undefined) {
             this.valueLabel = this.optionsMap[fieldValue];
@@ -210,7 +217,6 @@ export class BaseEnumComponent extends BaseFieldComponent implements OnInit, OnD
     protected initEnumDefault(): void {
 
         if (!isEmptyString(this.record?.id)) {
-
             this.field?.formControl.setValue('');
 
             return;
@@ -224,12 +230,10 @@ export class BaseEnumComponent extends BaseFieldComponent implements OnInit, OnD
             this.field.formControl.setValue('');
             return;
         }
-
         this.selectedValues.push({
             value: defaultVal,
             label: this.optionsMap[defaultVal]
         });
-
         this.initEnumDefaultFieldValues(defaultVal);
     }
 
@@ -283,6 +287,10 @@ export class BaseEnumComponent extends BaseFieldComponent implements OnInit, OnD
                 }
                 this.options = this.filterMatchingOptions(parentValues);
 
+                if (parentValues && parentValues.length) {
+                    this.setValueToAvailableOption();
+                }
+
             }
         }
     }
@@ -323,16 +331,44 @@ export class BaseEnumComponent extends BaseFieldComponent implements OnInit, OnD
                     values = [values];
                 }
 
-                // Reset selected values on Form Control
-                this.field.value = '';
-                this.field.formControl.setValue('');
-
                 // Rebuild available enum options
                 this.options = this.filterMatchingOptions(values);
+                this.setValueToAvailableOption();
 
                 this.initValue();
             }));
         }
+    }
+
+    protected setValueToAvailableOption(): void {
+        if (!this?.options?.length) {
+            this.field.value = '';
+            this.field.formControl.setValue('');
+            return;
+        }
+
+        if (!this.options.some(option => option.value === this.field.value)) {
+            this.field.value = this.options[0].value;
+            this.field.formControl.setValue(this.options[0].value);
+        }
+    }
+
+    protected buildOptionFromValue(value: string): Option {
+        const option: Option = {value: '', label: ''};
+
+        if (isNull(value)) {
+            return option;
+        }
+        option.value = (typeof value !== 'string' ? JSON.stringify(value) : value).trim();
+        option.label = option.value;
+
+        const valueLabel = this.optionsMap[option.value] ?? option.label;
+        if (isObject(valueLabel)) {
+            return option;
+        }
+        option.label = (typeof valueLabel !== 'string' ? JSON.stringify(valueLabel) : valueLabel).trim();
+
+        return option;
     }
 
 }

@@ -1,7 +1,7 @@
 <! --
 /**
 * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
-* Copyright (C) 2021 SalesAgility Ltd.
+* Copyright (C) 2024 SalesAgility Ltd.
 *
 * This program is free software; you can redistribute it and/or modify it under
 * the terms of the GNU Affero General Public License version 3 as published by the
@@ -25,7 +25,31 @@
 * the words "Supercharged by SuiteCRM".
 */
 -->
-<ndc-dynamic *ngIf="getType"
-             [ndcDynamicComponent]="getType"
-             [ndcDynamicInputs]="{'items': items, 'onClose': onClose}">
-</ndc-dynamic>
+<p-sidebar [(visible)]="isSidebarVisible" [showCloseIcon]="false" (onHide)="closeSidebar()">
+    <ng-template pTemplate="header">
+        <div class="d-flex justify-content-start">
+            <div class="flex-shrink-1">
+                <button (click)="toggleSidebar()" class="navbar-toggler" type="button">
+                    <scrm-image class="responsive-menu-toggler" image="hamburger"></scrm-image>
+                </button>
+            </div>
+
+            <div class="d-flex flex-grow-1 justify-content-center">
+                <scrm-search-bar
+                        #searchBarComponent
+                        [labelKey]="'LBL_FILTER_MODULES'"
+                        [klass]="'search-bar-mobile-menu'"
+                        [searchTrigger]="'input'"
+                        (searchExpression)="search($event)">
+                </scrm-search-bar>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <div class="sidebar-container">
+            <ng-container *ngIf="displayedItems()">
+                <scrm-mobile-menu [menuItems]="displayedItems"></scrm-mobile-menu>
+            </ng-container>
+        </div>
+    </ng-template>
+</p-sidebar>

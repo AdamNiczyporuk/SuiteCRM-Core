@@ -28,16 +28,24 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {FormsModule} from '@angular/forms';
-import {TagInputModule} from 'ngx-chips';
 import {MultiEnumEditFieldComponent} from './multienum.component';
+import {MultiSelectModule} from "primeng/multiselect";
+import {ButtonModule} from "../../../../components/button/button.module";
+import {DropdownModule} from "primeng/dropdown";
+import {ImageModule} from "../../../../components/image/image.module";
+import {InputTextModule} from "primeng/inputtext";
 
 @NgModule({
     declarations: [MultiEnumEditFieldComponent],
     exports: [MultiEnumEditFieldComponent],
     imports: [
         CommonModule,
-        TagInputModule,
-        FormsModule
+        FormsModule,
+        MultiSelectModule,
+        ButtonModule,
+        DropdownModule,
+        ImageModule,
+        InputTextModule
     ]
 })
 export class MultiEnumEditFieldModule {

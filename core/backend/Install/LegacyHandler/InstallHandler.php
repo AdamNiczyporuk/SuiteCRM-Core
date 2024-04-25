@@ -32,6 +32,10 @@ use App\Engine\LegacyHandler\LegacyScopeState;
 use App\Engine\Model\Feedback;
 use App\Install\Service\Installation\InstallStatus;
 use App\Install\Service\InstallationUtilsTrait;
+use App\Install\Service\InstallPreChecks;
+use Exception;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use PDO;
 use PDOException;
 use Psr\Log\LoggerInterface;
@@ -78,13 +82,13 @@ class InstallHandler extends LegacyHandler
      * @param LoggerInterface $logger
      */
     public function __construct(
-        string $projectDir,
-        string $legacyDir,
-        string $legacySessionName,
-        string $defaultSessionName,
+        string           $projectDir,
+        string           $legacyDir,
+        string           $legacySessionName,
+        string           $defaultSessionName,
         LegacyScopeState $legacyScopeState,
         SessionInterface $session,
-        LoggerInterface $logger
+        LoggerInterface  $logger
     )
     {
         parent::__construct(
@@ -194,10 +198,80 @@ class InstallHandler extends LegacyHandler
             $feedback->setErrors($result);
         }
 
+        file_put_contents('.installed_checked', 'true');
+
         chdir($this->projectDir);
         $this->switchSession($this->defaultSessionName);
 
         error_reporting($errorLevelStored);
+
+        return $feedback;
+    }
+
+    public function runCheckRouteAccess(array $inputArray): FeedBack
+    {
+        $results = [];
+        $url = $inputArray['site_host'];
+
+        $log = new Logger('install.log');
+        $log->pushHandler(new StreamHandler(__DIR__ . '/../../../../logs/install.log', Logger::DEBUG));
+
+        $feedback = new Feedback();
+        $feedback->setSuccess(true);
+
+        $checkFile = __DIR__ . '/../../../../.curl_check_main_page';
+
+        require_once "core/backend/Install/Service/InstallPreChecks.php";
+        $installChecks = new InstallPreChecks($log);
+
+        try {
+            file_put_contents($checkFile, 'running');
+        } catch (Exception $e) {
+            $feedback->setSuccess(false);
+            $feedback->setErrors([$e->getMessage()]);
+            return $feedback;
+        }
+        $results[] = $installChecks->checkMainPage($url);
+        $results[] = $installChecks->checkGraphQlAPI($url);
+        $modStrings = $installChecks->getLanguageStrings();
+
+        if (file_exists($checkFile)) {
+            unlink($checkFile);
+        }
+
+        $warnings = [];
+        $errorsFound = false;
+
+        foreach ($results as $result) {
+            if (is_array($result['errors'])) {
+                foreach ($result['errors'] as $error) {
+
+                    $errorsFound = true;
+
+                    if (empty($error)){
+                        continue;
+                    }
+
+                    if (in_array($error, $modStrings) && $error !== $modStrings['LBL_EMPTY']) {
+                        $warnings[] = "One or More Failed Checks: " . $error . " Please refer to the logs/install.log";
+                    }
+
+                }
+                continue;
+            }
+
+            if (!empty($result['errors'])) {
+                $warnings[] = $result['errors'];
+            }
+        }
+
+        if ($errorsFound) {
+            $warnings[] = 'One or More Failed Checks: Please refer to the logs/install.log';
+        }
+
+        if (isset($warnings)) {
+            $feedback->setWarnings($warnings);
+        }
 
         return $feedback;
     }
@@ -208,7 +282,7 @@ class InstallHandler extends LegacyHandler
      */
     public function createConfig(array $inputArray): bool
     {
-        $siteURL = $inputArray['site_host'];
+        $siteURL = rtrim($inputArray['site_host'] ?? '', " \t\n\r\0\x0B/");;
         $configArray = [
             'dbUSRData' => 'same',
             'default_currency_iso4217' => 'USD',

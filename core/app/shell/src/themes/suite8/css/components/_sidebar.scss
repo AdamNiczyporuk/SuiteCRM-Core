@@ -1,6 +1,6 @@
 /**
  * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
- * Copyright (C) 2021 SalesAgility Ltd.
+ * Copyright (C) 2024 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -24,21 +24,63 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Injectable} from '@angular/core';
-import {BaseComponentRegistry} from 'common';
-import {BaseMobileModuleMenuComponent} from './base-mobile-module-menu.component';
+.p-sidebar {
+  background-color: $midnight-blue;
+}
 
-@Injectable({
-    providedIn: 'root'
-})
-export class MobileModuleMenuRegistry extends BaseComponentRegistry<BaseMobileModuleMenuComponent> {
+.sidebar-container {
+  background-color: $midnight-blue;
+}
 
-    constructor() {
-        super();
+.sidebar-container li {
+  color: $off-white;
+  margin: 0;
+  border-top: 0.13em solid #625d75;
+  list-style: none;
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.sidebar-container li a {
+  display: inline-block;
+}
+
+.p-sidebar-content {
+  overflow-y: hidden;
+  padding: 0;
+}
+
+.p-sidebar-header {
+  background-color: $midnight-blue;
+  padding: 0.3em 0;
+
+  .search-bar {
+    .input-group {
+      margin: 0;
+      max-width: 100%;
     }
+  }
+}
 
-    protected initDefault(): void {
+.p-sidebar-footer {
+  display: none;
+}
 
-        this.register('default', 'default', BaseMobileModuleMenuComponent);
-    }
+.mobile-menu-container {
+  height: 100vh;
+}
+
+.mobile-menu-items {
+  max-height: calc(100vh - 50px);
+  overflow-y: auto;
+
+  .mobile-menu-item-label {
+    max-width: 16rem;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }

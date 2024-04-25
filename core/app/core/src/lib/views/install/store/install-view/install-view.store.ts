@@ -56,6 +56,7 @@ import {RecordFetchGQL} from '../../../../store/record/graphql/api.record.get';
 import {Params} from '@angular/router';
 import {RecordStoreFactory} from '../../../../store/record/record.store.factory';
 import {LanguageStore} from '../../../../store/language/language.store';
+import { trimEnd } from 'lodash-es';
 
 const initialState: InstallViewState = {
     loading: false,
@@ -85,6 +86,7 @@ export class InstallViewStore implements StateStore {
     vm$: Observable<InstallViewModel>;
     vm: InstallViewModel;
     recordStore: RecordStore;
+    url: string;
 
     /** Internal Properties */
     protected cache$: Observable<any> = null;
@@ -210,6 +212,8 @@ export class InstallViewStore implements StateStore {
     }
 
     getMetadata(): InstallViewMetadata {
+        this.url = window.location.origin + window.location.pathname;
+        this.url = trimEnd(this.url, '/');
         return {
             actions: [],
             templateMeta: {
@@ -238,6 +242,8 @@ export class InstallViewStore implements StateStore {
                                         "vname": "LBL_SITECFG_URL",
                                         "type": "varchar",
                                         "required": true,
+                                        "default": this.url?.toString(),
+                                        "defaultValueModes": ["create", "edit"]
                                     } as FieldDefinition,
                                 } as PanelCell,
                                 {
@@ -250,6 +256,8 @@ export class InstallViewStore implements StateStore {
                                         type: "enum",
                                         options: "__no_options__",
                                         required: true,
+                                        "default": 'no',
+                                        "defaultValueModes": ["create", "edit"],
                                         metadata: {
                                             extraOptions: [
                                                 {
@@ -324,7 +332,9 @@ export class InstallViewStore implements StateStore {
                                                 "vname": "LBL_DBCONF_DB_PORT",
                                                 "labelKey": "LBL_DBCONF_DB_PORT",
                                                 "showLabel": ["*"],
-                                                "required": false
+                                                "required": false,
+                                                "default":'3306',
+                                                "defaultValueModes": ["create", "edit"]
                                             }
                                         },
                                         showLabel: {
@@ -353,6 +363,8 @@ export class InstallViewStore implements StateStore {
                                                 "labelKey": "LBL_SITECFG_ADMIN_Name",
                                                 "showLabel": ["edit"],
                                                 "required": true,
+                                                "default": "admin",
+                                                "defaultValueModes": ["create", "edit"]
                                             },
                                             "site_password": {
                                                 "name": "site_password",
@@ -446,7 +458,8 @@ export class InstallViewStore implements StateStore {
                         "showLabel": ["edit"],
                         "required": false,
                         "value": 'false',
-                        "default": 'false'
+                        "default": 'false',
+                        "defaultValueModes": ["create", "edit"]
                     }
                 } as ViewFieldDefinition
             );

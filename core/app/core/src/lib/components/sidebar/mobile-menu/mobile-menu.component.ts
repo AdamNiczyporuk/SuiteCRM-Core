@@ -1,6 +1,6 @@
 /**
  * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
- * Copyright (C) 2021 SalesAgility Ltd.
+ * Copyright (C) 2024 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -24,21 +24,37 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Injectable} from '@angular/core';
-import {BaseComponentRegistry} from 'common';
-import {BaseMobileMenuComponent} from './base-mobile-menu.component';
+import {Component, Input, OnInit, signal, WritableSignal} from '@angular/core';
+import {MenuItem} from 'common';
+import {Router, RouterModule} from "@angular/router";
+import {CommonModule} from "@angular/common";
+import {SearchBarModule} from "../../search-bar/search-bar.module";
+import {ImageModule} from "../../image/image.module";
+import {LabelModule} from "../../label/label.module";
+import {AppStateStore} from "../../../store/app-state/app-state.store";
 
-@Injectable({
-    providedIn: 'root'
+@Component({
+    selector: 'scrm-mobile-menu',
+    templateUrl: './mobile-menu.component.html',
+    styleUrls: [],
+    standalone: true,
+    imports: [CommonModule, RouterModule, SearchBarModule, ImageModule, LabelModule]
 })
-export class MobileMenuRegistry extends BaseComponentRegistry<BaseMobileMenuComponent> {
+export class MobileMenuComponent implements OnInit {
+    @Input() menuItems: WritableSignal<MenuItem[]> = signal([]);
 
-    constructor() {
-        super();
+
+    constructor(protected router: Router, protected appStateStore: AppStateStore) {
     }
 
-    protected initDefault(): void {
-
-        this.register('default', 'default', BaseMobileMenuComponent);
+    ngOnInit(): void {
     }
+
+
+    navigateRoute(route: string): void {
+        this.router.navigate([route]).then();
+        this.appStateStore.toggleSidebar();
+    }
+
+
 }

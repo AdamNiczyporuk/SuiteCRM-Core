@@ -24,12 +24,13 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Component} from '@angular/core';
+import {Component, Input, signal} from '@angular/core';
 import {ModuleNavigation} from '../../../services/navigation/module-navigation/module-navigation.service';
 import {ModuleNameMapper} from '../../../services/navigation/module-name-mapper/module-name-mapper.service';
 import {SystemConfigStore} from '../../../store/system-config/system-config.store';
 import {MetadataStore} from '../../../store/metadata/metadata.store.service';
 import {BaseFavoritesComponent} from '../menu-favorites/base-favorites.component';
+import {SubMenuFavoritesConfig} from "./sub-menu-favorites-config.model";
 
 @Component({
     selector: 'scrm-base-sub-menu-favorites',
@@ -37,6 +38,10 @@ import {BaseFavoritesComponent} from '../menu-favorites/base-favorites.component
     styleUrls: []
 })
 export class BaseSubMenuFavoritesComponent extends BaseFavoritesComponent {
+
+    @Input() config: SubMenuFavoritesConfig;
+    showDropdown = signal<boolean>(false);
+    clickType: string = 'click';
 
     constructor(
         protected navigation: ModuleNavigation,
@@ -47,4 +52,38 @@ export class BaseSubMenuFavoritesComponent extends BaseFavoritesComponent {
         super(navigation, nameMapper, configs, metadata)
     }
 
+    ngOnInit(): void {
+        super.ngOnInit();
+
+        if (this?.config?.showDropdown$) {
+            this.subs.push(this.config.showDropdown$.subscribe(showDropdown => {
+                this.showDropdown.set(showDropdown);
+            }));
+        }
+    }
+
+    toggleDropdown(): void {
+
+        if (this.clickType === 'touch') {
+            this.showDropdown.set(!this.showDropdown());
+            this.clickType = 'click';
+            this?.config?.onToggleDropdown(this.showDropdown());
+            return;
+        }
+
+    }
+
+    onTouchStart(event): void {
+        this.clickType = 'touch';
+    }
+
+    onItemClick($event: MouseEvent) {
+        this.toggleDropdown();
+        this?.config?.onItemClick($event)
+    }
+
+    onItemTouchStart($event: TouchEvent) {
+        this.onTouchStart($event);
+        this?.config?.onItemTouchStart($event)
+    }
 }

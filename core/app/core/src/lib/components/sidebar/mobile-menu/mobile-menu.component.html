@@ -1,7 +1,7 @@
 <! --
 /**
 * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
-* Copyright (C) 2021 SalesAgility Ltd.
+* Copyright (C) 2024 SalesAgility Ltd.
 *
 * This program is free software; you can redistribute it and/or modify it under
 * the terms of the GNU Affero General Public License version 3 as published by the
@@ -26,15 +26,22 @@
 */
 -->
 
-<ng-container *ngFor="let item of items">
-    <div class="mobile-menu-items">
-        <a (click)="onClose && onClose()" class="">
-            <scrm-menu-item-link
-                [class]="'mobile-nav-link dropdown-item action-link pl-3 pr-3 pt-2 pb-2'"
-                [icon]="item.icon || ''"
-                [link]="item.link">
-            </scrm-menu-item-link>
-        </a>
-    </div>
-</ng-container>
+<div class="mobile-menu-container">
+    <ng-container *ngIf="menuItems() && menuItems().length">
+        <div class="mobile-menu-items scrollbar-thin">
+            <li class="d-flex align-items-center" (click)="navigateRoute(item?.link?.route)" *ngFor="let item of menuItems()">
+                <scrm-image class="sicon mobile-nav-icon pl-3" [image]="item.icon"
+               ></scrm-image>
+                <a class="flex-grow-1 mobile-nav-link px-3 py-2 mobile-menu-item-label">{{ item.link.label }}</a>
+            </li>
+        </div>
+    </ng-container>
+
+    <li class="border-0">
+        <div *ngIf="!menuItems() || !menuItems()?.length" class="d-flex justify-content-center">
+            <scrm-label [labelKey]="'LBL_MODULE_NOT_FOUND'"></scrm-label>
+        </div>
+    </li>
+</div>
+
 

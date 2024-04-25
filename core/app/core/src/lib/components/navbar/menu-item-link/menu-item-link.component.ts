@@ -24,9 +24,10 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MenuItemLink} from 'common';
 import {MenuItemLinkRegistry} from './menu-item-link.registry';
+import {MenuItemLinkConfig} from "./menu-item-link-config.model";
 
 @Component({
     selector: 'scrm-menu-item-link',
@@ -37,6 +38,9 @@ export class MenuItemLinkComponent {
     @Input() link: MenuItemLink;
     @Input() icon: string;
     @Input() class: string;
+    @Input() disableRoute: boolean;
+    @Input() config: MenuItemLinkConfig;
+
 
     constructor(protected registry: MenuItemLinkRegistry) {
     }

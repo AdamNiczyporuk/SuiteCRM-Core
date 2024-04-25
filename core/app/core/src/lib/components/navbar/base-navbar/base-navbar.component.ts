@@ -24,13 +24,13 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, signal, ViewChild} from '@angular/core';
 import {combineLatestWith, Observable, Subscription} from 'rxjs';
 import {map, take} from 'rxjs/operators';
 import {NavbarModel} from '../navbar-model';
 import {NavbarAbstract} from '../navbar.abstract';
 import {transition, trigger, useAnimation} from '@angular/animations';
-import {fadeIn} from 'ng-animate';
+import {backInDown} from 'ng-animate';
 import {ActionNameMapper} from '../../../services/navigation/action-name-mapper/action-name-mapper.service';
 import {SystemConfigStore} from '../../../store/system-config/system-config.store';
 import {ModuleAction, Navigation, NavigationStore} from '../../../store/navigation/navigation.store';
@@ -45,17 +45,21 @@ import {ModuleNavigation} from '../../../services/navigation/module-navigation/m
 import {ModuleNameMapper} from '../../../services/navigation/module-name-mapper/module-name-mapper.service';
 import {AppState, AppStateStore} from '../../../store/app-state/app-state.store';
 import {AuthService} from '../../../services/auth/auth.service';
-import {MenuItem, ready} from 'common';
+import {MenuItem, ready, RecentlyViewed} from 'common';
 import {AsyncActionInput, AsyncActionService} from '../../../services/process/processes/async-action/async-action';
 import {NotificationStore} from "../../../store/notification/notification.store";
+import {GlobalRecentlyViewedStore} from "../../../store/global-recently-viewed/global-recently-viewed.store";
+import {GlobalSearch} from "../../../services/navigation/global-search/global-search.service";
+import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/layout";
+import {SearchBarComponent} from "../../search-bar/search-bar.component";
 
 @Component({
     selector: 'scrm-base-navbar',
     templateUrl: './base-navbar.component.html',
     styleUrls: [],
     animations: [
-        trigger('mobileNavFade', [
-            transition(':enter', useAnimation(fadeIn, {
+        trigger('mobileSearchBarAnm', [
+            transition(':enter', useAnimation(backInDown, {
                 params: {timing: 0.5, delay: 0}
             })),
         ])
@@ -64,15 +68,14 @@ import {NotificationStore} from "../../../store/notification/notification.store"
 export class BaseNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @ViewChild('mobileGlobalLinkTitle') mobileGlobalLinkTitle: ElementRef;
+    @ViewChild('searchTerm', { static: false }) searchTermRef: SearchBarComponent;
 
     protected static instances: BaseNavbarComponent[] = [];
 
     loaded = true;
     isUserLoggedIn: boolean;
-
     mainNavCollapse = true;
     subNavCollapse = true;
-    mobileNavbar = false;
     mobileSubNav = false;
     backLink = false;
     mainNavLink = true;
@@ -86,15 +89,21 @@ export class BaseNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     notificationsEnabled: boolean = false;
     subs: Subscription[] = []
     navigation: Navigation;
+    mobileNavbar = false;
+    isSmallScreen = signal<boolean>(false);
+    isTabletScreen = signal<boolean>(false);
+    dropdownLength: number;
+    recentlyViewedCount: number = 10;
 
     currentQuickActions: ModuleAction[];
+    isSearchBoxVisible = signal<boolean>(false);
 
     languages$: Observable<LanguageStrings> = this.languageStore.vm$;
     userPreferences$: Observable<UserPreferenceMap> = this.userPreferenceStore.userPreferences$;
     currentUser$: Observable<any> = this.authService.currentUser$;
     appState$: Observable<AppState> = this.appState.vm$;
     navigation$: Observable<Navigation> = this.navigationStore.vm$;
-    dropdownLength: number;
+    recentlyViewed$: Observable<RecentlyViewed[]> = this.globalRecentlyViewedStore.globalRecentlyViewed$;
 
     notificationCount$: Observable<number>;
 
@@ -110,6 +119,7 @@ export class BaseNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
             if (screenSize) {
                 this.screen = screenSize;
+                this.onResize();
             }
 
             if (navigation && navigation.modules) {
@@ -149,7 +159,10 @@ export class BaseNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
         protected moduleNavigation: ModuleNavigation,
         protected screenSize: ScreenSizeObserverService,
         protected asyncActionService: AsyncActionService,
-        protected notificationStore: NotificationStore
+        protected notificationStore: NotificationStore,
+        protected globalRecentlyViewedStore: GlobalRecentlyViewedStore,
+        protected globalSearch: GlobalSearch,
+        protected breakpointObserver: BreakpointObserver
     ) {
     }
 
@@ -158,9 +171,14 @@ export class BaseNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
      */
 
     @HostListener('window:resize', ['$event'])
-    onResize(event: any): void {
-        const innerWidth = event.target.innerWidth;
+    onResize(): void {
+        const innerWidth = window.innerWidth;
         this.mobileNavbar = innerWidth <= 768;
+        this.isSmallScreen.set(innerWidth <= 600);
+        this.isTabletScreen.set(innerWidth <= 992);
+        if(!this.isSmallScreen()) {
+            this.isSearchBoxVisible.set(true);
+        }
     }
 
     ngOnInit(): void {
@@ -169,7 +187,8 @@ export class BaseNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
             this.moduleNavigation,
             this.userPreferenceStore,
             this.languageStore,
-            this.appState
+            this.appState,
+            this.moduleNameMapper
         );
         this.setNavbar(navbar);
         this.authService.isUserLoggedIn.subscribe(value => {
@@ -180,8 +199,24 @@ export class BaseNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.notificationCount$ = this.notificationStore.notificationsUnreadTotal$;
 
+        this.recentlyViewedCount = this.systemConfigStore.getUi('global_recently_viewed');
+
         this.subs.push(this.notificationStore.notificationsEnabled$.subscribe(notificationsEnabled => {
             this.notificationsEnabled = notificationsEnabled;
+        }));
+
+        this.subs.push(this.breakpointObserver.observe([
+            Breakpoints.XSmall,
+        ]).subscribe((result: BreakpointState) => {
+            let hasSearchTerm;
+            if(!!this.searchTermRef?.searchForm.get('searchTerm').value) {
+                hasSearchTerm = true;
+            } else {
+                hasSearchTerm = false;
+            }
+            if (result.matches && !hasSearchTerm) {
+                this.isSearchBoxVisible.set(false);
+            }
         }));
     }
 
@@ -203,10 +238,10 @@ export class BaseNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        if (!this.mobileGlobalLinkTitle?.nativeElement?.offsetWidt) {
+        if (!this.mobileGlobalLinkTitle?.nativeElement?.offsetWidth) {
             return;
         }
-        this.dropdownLength = this.mobileGlobalLinkTitle.nativeElement.offsetWidt;
+        this.dropdownLength = this.mobileGlobalLinkTitle.nativeElement.offsetWidth;
     }
 
     /**
@@ -238,10 +273,6 @@ export class BaseNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
      */
     public getHomePage(): string {
         return this.systemConfigStore.getHomePage();
-    }
-
-    public getCloseCallBack(myDrop): Function {
-        return () => myDrop.close();
     }
 
     /**
@@ -319,4 +350,23 @@ export class BaseNavbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.asyncActionService.run(processType, options).pipe(take(1)).subscribe();
     }
+
+    openSearchBox() {
+        if(this.isSmallScreen()) {
+            this.isSearchBoxVisible.set(true);
+        }
+    }
+
+    closeSearchBox(isVisible: boolean) {
+        this.isSearchBoxVisible.set(isVisible);
+    }
+
+    search(searchTerm: string) {
+        this.globalSearch.navigateToSearch(searchTerm).finally();
+    }
+
+    toggleSidebar(): void {
+        this.appState.toggleSidebar();
+    }
+
 }

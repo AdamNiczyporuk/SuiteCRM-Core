@@ -49,12 +49,6 @@ import {BaseMenuRecentlyViewedComponent} from './menu-recently-viewed/base-menu-
 import {BaseMenuItemsListComponent} from './menu-items-list/base-menu-items-list.component';
 import {LogoutUiComponent} from '../logout/logout.component';
 import {LabelModule} from '../label/label.module';
-import {MobileMenuComponent} from './mobile-menu/mobile-menu.component';
-import {BaseMobileMenuComponent} from './mobile-menu/base-mobile-menu.component';
-import {MobileGroupedMenuComponent} from './mobile-grouped-menu/mobile-grouped-menu.component';
-import {BaseMobileGroupedMenuComponent} from './mobile-grouped-menu/base-mobile-grouped-menu.component';
-import {MobileModuleMenuComponent} from './mobile-module-menu/mobile-module-menu.component';
-import {BaseMobileModuleMenuComponent} from './mobile-module-menu/base-mobile-module-menu.component';
 import {SubMenuRecentlyViewedComponent} from './sub-menu-recently-viewed/sub-menu-recently-viewed.component';
 import {BaseSubMenuRecentlyViewedComponent} from './sub-menu-recently-viewed/base-sub-menu-recently-viewed.component';
 import {BaseSubMenuFavoritesComponent} from './sub-menu-favorites/base-sub-menu-favorites.component';
@@ -65,6 +59,8 @@ import {BaseFavoritesComponent} from './menu-favorites/base-favorites.component'
 import {FormsModule} from '@angular/forms';
 import {NotificationsModule} from '../../containers/notifications/notifications.module';
 import {SearchBarModule} from '../search-bar/search-bar.module';
+import {DropdownButtonModule} from "../dropdown-button/dropdown-button.module";
+import {RecentlyViewedComponent} from "./recently-viewed/recently-viewed.component";
 
 
 @NgModule({
@@ -89,13 +85,7 @@ import {SearchBarModule} from '../search-bar/search-bar.module';
         BaseGroupedMenuItemComponent,
         MenuItemsListComponent,
         BaseMenuItemsListComponent,
-        BaseNavbarComponent,
-        MobileMenuComponent,
-        BaseMobileMenuComponent,
-        MobileGroupedMenuComponent,
-        BaseMobileGroupedMenuComponent,
-        MobileModuleMenuComponent,
-        BaseMobileModuleMenuComponent,
+        BaseNavbarComponent
     ],
     exports: [
         NavbarUiComponent,
@@ -118,13 +108,7 @@ import {SearchBarModule} from '../search-bar/search-bar.module';
         MenuItemsListComponent,
         BaseMenuItemsListComponent,
         BaseNavbarComponent,
-        LogoutUiComponent,
-        MobileMenuComponent,
-        BaseMobileMenuComponent,
-        MobileGroupedMenuComponent,
-        BaseMobileGroupedMenuComponent,
-        MobileModuleMenuComponent,
-        BaseMobileModuleMenuComponent
+        LogoutUiComponent
     ],
     imports: [
         CommonModule,
@@ -137,7 +121,9 @@ import {SearchBarModule} from '../search-bar/search-bar.module';
         LabelModule,
         FormsModule,
         NotificationsModule,
-        SearchBarModule
+        SearchBarModule,
+        RecentlyViewedComponent,
+        DropdownButtonModule
     ]
 })
 export class NavbarUiModule {

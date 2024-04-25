@@ -49,3 +49,13 @@
   border: none;
   color: inherit;
 }
+
+pre.detail-pre-styling[readonly] {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  margin-bottom: 0;
+  white-space: break-spaces;
+}
