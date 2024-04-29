@@ -22,6 +22,8 @@ services:
 
   db:
     image: 'bitnami/mariadb:latest'
+    ports:
+      - '3306:3306'  
     environment:
       - 'MARIADB_ROOT_PASSWORD=bitnami'
       - 'MARIADB_DATABASE=bitnami_suitecrm'
