@@ -38,28 +38,44 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 
-require_once('include/Dashlets/DashletGeneric.php');
-require_once('modules/it_Complaiants/it_Complaiants.php');
+class it_serviceElectronic extends Basic
+{
+    public $new_schema = true;
+    public $module_dir = 'it_serviceElectronic';
+    public $object_name = 'it_serviceElectronic';
+    public $table_name = 'it_serviceelectronic';
+    public $importable = false;
 
-class it_ComplaiantsDashlet extends DashletGeneric {
-    function __construct($id, $def = null)
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $assigned_user_link;
+    public $SecurityGroups;
+    public $who_is_applicant;
+    public $number_parcels;
+    public $guid;
+	
+    public function bean_implements($interface)
     {
-        global $current_user, $app_strings;
-        require('modules/it_Complaiants/metadata/dashletviewdefs.php');
-
-        parent::__construct($id, $def);
-
-        if (empty($def['title'])) {
-            $this->title = translate('LBL_HOMEPAGE_TITLE', 'it_Complaiants');
+        switch($interface)
+        {
+            case 'ACL':
+                return true;
         }
 
-        $this->searchFields = $dashletData['it_ComplaiantsDashlet']['searchFields'];
-        $this->columns = $dashletData['it_ComplaiantsDashlet']['columns'];
-
-        $this->seedBean = new it_Complaiants();        
+        return false;
     }
+	
 }

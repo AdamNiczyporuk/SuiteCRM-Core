@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$module_name = 'it_Complaiants';
+$module_name = 'it_serviceElectronic';
 $subpanel_layout = array(
     'top_buttons' => array(
         array('widget_class' => 'SubPanelTopCreateButton'),
@@ -53,28 +53,13 @@ $subpanel_layout = array(
 
     'list_fields' => array(
         'name' => array(
-            'vname' => 'LBL_SUBJECT',
+            'vname' => 'LBL_NAME',
             'widget_class' => 'SubPanelDetailViewLink',
             'width' => '45%',
         ),
-        'status' => array(
-            'vname' => 'LBL_STATUS',
-            'width' => '15%',
-        ),
-        'resolution' => array(
-            'vname' => 'LBL_RESOLUTION',
-            'width' => '15%',
-        ),
-        'priority' => array(
-            'vname' => 'LBL_PRIORITY',
-            'width' => '11%',
-        ),
-        'assigned_user_name' => array(
-            'name' => 'assigned_user_name',
-            'vname' => 'LBL_ASSIGNED_TO_NAME',
-            'widget_class' => 'SubPanelDetailViewLink',
-            'target_record_key' => 'assigned_user_id',
-            'target_module' => 'Employees',
+        'date_modified' => array(
+            'vname' => 'LBL_DATE_MODIFIED',
+            'width' => '45%',
         ),
         'edit_button' => array(
             'vname' => 'LBL_EDIT_BUTTON',

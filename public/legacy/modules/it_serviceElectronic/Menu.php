@@ -44,9 +44,9 @@
 
 global $mod_strings, $app_strings, $sugar_config;
  
-if(ACLController::checkAccess('it_Complaiants', 'edit', true)){
-    $module_menu[]=array('index.php?module=it_Complaiants&action=EditView&return_module=it_Complaiants&return_action=DetailView', $mod_strings['LNK_NEW_RECORD'], 'Add', 'it_Complaiants');
+if(ACLController::checkAccess('it_serviceElectronic', 'edit', true)){
+    $module_menu[]=array('index.php?module=it_serviceElectronic&action=EditView&return_module=it_serviceElectronic&return_action=DetailView', $mod_strings['LNK_NEW_RECORD'], 'Add', 'it_serviceElectronic');
 }
-if(ACLController::checkAccess('it_Complaiants', 'list', true)){
-    $module_menu[]=array('index.php?module=it_Complaiants&action=index&return_module=it_Complaiants&return_action=DetailView', $mod_strings['LNK_LIST'],'View', 'it_Complaiants');
+if(ACLController::checkAccess('it_serviceElectronic', 'list', true)){
+    $module_menu[]=array('index.php?module=it_serviceElectronic&action=index&return_module=it_serviceElectronic&return_action=DetailView', $mod_strings['LNK_LIST'],'View', 'it_serviceElectronic');
 }

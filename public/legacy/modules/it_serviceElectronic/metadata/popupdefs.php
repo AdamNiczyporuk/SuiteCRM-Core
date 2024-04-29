@@ -42,17 +42,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$module_name = 'it_Complaiants';
-$object_name = 'it_Complaiants';
-$_module_name = 'it_Complaiants';
-$_object_name = 'it_Complaiants';
+$module_name = 'it_serviceElectronic';
+$object_name = 'it_serviceElectronic';
+$_module_name = 'it_serviceelectronic';
 $popupMeta = array(
     'moduleMain' => $module_name,
     'varName' => $object_name,
     'orderBy' => $_module_name . '.name',
     'whereClauses' => array(
         'name' => $_module_name . '.name',
-        $_object_name . '_number' => $_module_name . '.' . $_object_name . '_number'
     ),
     'searchInputs' => array($_module_name . '_number', 'name', 'priority', 'status'),
 

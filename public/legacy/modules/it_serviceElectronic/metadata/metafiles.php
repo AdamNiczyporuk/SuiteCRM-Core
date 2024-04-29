@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$module_name = 'it_Complaiants';
+$module_name = 'it_serviceElectronic';
 $metafiles[$module_name] = array(
     'detailviewdefs' => 'modules/' . $module_name . '/metadata/detailviewdefs.php',
     'editviewdefs' => 'modules/' . $module_name . '/metadata/editviewdefs.php',
