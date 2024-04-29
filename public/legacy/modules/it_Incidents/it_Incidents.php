@@ -123,20 +123,20 @@ class it_Incidents extends Incident
         $db = DBManagerFactory::getInstance();
         
         // Zdefiniuj zapytanie SQL dla pobrania danych z modułu Calim
-        $queryIt_Claim = "SELECT name FROM it_Claims WHERE deleted = 0" ;
+        $queryIt_Claim = "SELECT id,name,_number,status,priority,resolution,assigned_user_id FROM it_Claims WHERE deleted = 0" ;
         
         // Zdefiniuj zapytanie SQL dla pobrania danych z modułu Compaliant
-        $queryIt_Complaiant = "SELECT name FROM it_Complaiants WHERE deleted = 0";
+        $queryIt_Complaiant = "SELECT id,name,_number,status,priority,resolution,assigned_user_id FROM it_Complaiants WHERE deleted = 0";
        
         // Połącz oba zapytania za pomocą UNION
-        /*$queryUnion = $db->get_union_query([$queryIt_Claim, $queryIt_Complaiant]);*/
+        $queryUnion =  $queryIt_Claim ." UNION ". $queryIt_Complaiant;
         
         //Tworzenie tablicy
         $return_array=array();
         //Wkładanie zapytania do tablicy
-        $return_array['select'] = "SELECT id,name,_number,status,priority,resolution,assigned_user_id FROM it_Claims WHERE deleted = 0 union SELECT id,name,_number,status,priority,resolution,assigned_user_id FROM it_Complaiants WHERE deleted = 0";
+        $return_array['select'] = $queryUnion;
 
-         LoggerManager::getLogger()->error('test2');
+       //  LoggerManager::getLogger()->error('test2');
         
        
         return $return_array;

@@ -24,5 +24,12 @@ $beanFiles['it_serviceElectronic'] = 'modules/it_serviceElectronic/it_serviceEle
 $moduleList[] = 'it_serviceElectronic';
 
 
+$beanList['it_Services'] = 'it_Services';
+$beanFiles['it_Services'] = 'modules/it_Services/it_Services.php';
+$moduleList[] = 'it_Services';
+
+
+
+
 
 ?>
