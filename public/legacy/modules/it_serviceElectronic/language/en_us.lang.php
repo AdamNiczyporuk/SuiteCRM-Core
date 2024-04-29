@@ -77,4 +77,7 @@ $mod_strings = array (
   'LBL_WHO_IS_APPLICANT' => 'Who is applicant',
   'LBL_NUMBER_PARCELS' => 'number parcels',
   'LBL_GUID' => 'GUID number',
+  'LBL_PARENT_TYPE' => 'Parent type',
+  'LBL_PARENT_ID' => 'Parent id',
+  
 );
