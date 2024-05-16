@@ -41,11 +41,11 @@ node_modules
 /dist/
 
 # Custom
-/extensions/
-!extensions/.gitkeep
-!extensions/defaultExt/app
-!extensions/defaultExt/backend
-!extensions/defaultExt/config
+#/extensions/
+#!extensions/.gitkeep
+#!extensions/defaultExt/app
+#!extensions/defaultExt/backend
+#!extensions/defaultExt/config
 
 # Tests
 tests/_output/
@@ -68,3 +68,18 @@ git2docker.bat
 docker2git.bat
 git2docker.bat
 docker2git.bat
+.gitignore
+package-lock.json
+package.json
+tsconfig.json
+yarn.lock
+extensions/defaultExt/app/tsconfig.app.json
+extensions/defaultExt/app/src/extension.module.ts
+extensions/defaultExt/app/src/containers/sidebar-widget/hello-word/hello-world-sidebar-widget.component.ts
+extensions/defaultExt/app/src/containers/sidebar-widget/hello-word/hello-world-sidebar-widget.module.ts
+extensions/defaultExt/app/src/containers/sidebar-widget/hello-word/hello-word-sidebar-widget.component.html
+extensions/defaultExt/app/src/extension.module.ts
+extensions/defaultExt/app/tsconfig.app.json
+yarn.lock
+tsconfig.json
+package.json
