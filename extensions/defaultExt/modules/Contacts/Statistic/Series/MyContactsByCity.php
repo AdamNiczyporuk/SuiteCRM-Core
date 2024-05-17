@@ -1,8 +1,7 @@
 <?php 
 
-namespace App\Extensions\DefaultExt\Modules\Contacts\Statistic\Series;
+namespace App\Extension\defaultExt\modules\Contacts\Statistic\Series;
 
-use App\Extensions\DefaultExt\Modules\Contacts\Statistic\Series\MyContactsByCity;
 use App\Data\LegacyHandler\ListDataQueryHandler;
 use App\Engine\LegacyHandler\LegacyHandler;
 use App\Engine\LegacyHandler\LegacyScopeState;
@@ -14,15 +13,22 @@ use App\Statistics\StatisticsHandlingTrait;
 use BeanFactory;
 use SugarBean;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 
 
 
-class MyContactsByCity extends LegacyHandler implements StatisticsProviderInterface
+class MyContactsByCity extends LegacyHandler implements StatisticsProviderInterface, LoggerAwareInterface
 { 
-    $GLOBALS['log'] = LoggerManager::getLogger();
-    use StatisticHandlingTrait; 
+    //$GLOBALS['log'] = LoggerManager::getLogger();
+    use StatisticsHandlingTrait; 
 
-    public const Key = 'my_contacts_by_city';
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public const KEY = 'my_contacts_by_city';
      /**
      * @var ListDataQueryHandler
      */
@@ -82,7 +88,6 @@ class MyContactsByCity extends LegacyHandler implements StatisticsProviderInterf
     {
         $this->init();
         $this->startLegacyApp();
-
         global $current_user;
 
         // Validacja
@@ -92,7 +97,9 @@ class MyContactsByCity extends LegacyHandler implements StatisticsProviderInterf
             return $this->getEmptySeriesResponse(self::KEY);
         }
 
-        
+        if (empty($current_user) || empty($current_user->id)) {
+          return $this->getEmptySeriesResponse(self::KEY);
+        }
 
         $legacyName = $this->moduleNameMapper->toLegacy($module);
         $bean = $this->getBean($legacyName);
@@ -104,9 +111,7 @@ class MyContactsByCity extends LegacyHandler implements StatisticsProviderInterf
 
         //Get Base Query
         $query = $this->queryHandler->getQuery($bean, $criteria, $sort);
-
         $query = $this->generateQuery($query,$current_user->id);
-
         $result = $this->runQuery($query, $bean);
 
         // Output Response
@@ -150,14 +155,23 @@ class MyContactsByCity extends LegacyHandler implements StatisticsProviderInterf
      * @param array $query
      * @return array
      */
-    protected function generateQuery(array $query): array
+    protected function generateQuery(array $query, string $current_userId): array
     {
         $query['select'] = 'SELECT contacts.primary_address_city, COUNT(contacts.primary_address_city) as total';
-        $query['where'] .= ' AND contacts.primary_address_city is not null AND contacts.assigned_user_id ='. "'" .$db->quote($current_user->id) . "'";
+        $query['where'] .= ' AND contacts.primary_address_city is not null AND contacts.assigned_user_id ='. "'" .$current_userId . "'";
         $query['order_by'] = '';
         $query['group_by'] = ' GROUP BY  contacts.primary_address_city DESC';
-        LoggerManager::getLogger()->fatal('$query');
+        $this->logger->fatal('XXXXX ' . $query);
         return $query;
     }
+
+     /**
+     * @inheritDoc
+     */
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
+    }
+    
 
 }

@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -6,10 +6,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 return static function(ContainerBuilder $container): void{ 
     $sidebarWidgets = $container->getParameter('module.listview.sidebar_widgets')?? [];
     $modules = $sidebarWidgets['modules']?? [];
-    $contactConfig = $modules['contacts']?? [];
-    $contactWidegets = $contactConfig['widgets']?? [];
+    $contactsConfig = $modules['contacts']?? [];
+    $contactsWidegets = $contactConfig['widgets']?? [];
 
-    $contactWidegets[] = [
+    $contactsWidegets['charts'] = [
         'type' => 'chart',
         'labelKey' => 'LBL_QUICK_CHARTS',
         'option' => [
@@ -32,8 +32,8 @@ return static function(ContainerBuilder $container): void{
                 'Contacts' => ['view','list']
             ]
     ];
-    $contactConfig['widgets'] = $contactWidegets;
-    $modules['contacts'] = $contactConfig;
+    $contactsConfig['widgets'] = $contactsWidegets;
+    $modules['contacts'] = $contactsConfig;
     $sidebarWidgets['modules'] = $modules;
 
     $container->setParameter('module.listview.sidebar_widgets', $sidebarWidgets);

@@ -10,6 +10,7 @@ services:
       - './public/legacy/custom/Extension/application/Ext:/bitnami/suitecrm/public/legacy/custom/Extension/application/Ext'
       - './public/legacy/include:/bitnami/suitecrm/public/legacy/include'
       - './public/legacy/Api:/bitnami/suitecrm/public/legacy/Api'
+      - './extensions:/bitnami/suitecrm/extensions'
 
     environment:
       - 'SUITECRM_DATABASE_HOST=db'
