@@ -41,8 +41,32 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$viewdefs['Contacts'] = [
+ $viewdefs['Contacts'] = [
     'ListView' =>  [
+        'sidebarWidgets' => [
+            'contacts-by-status-count' => [
+                'type' => 'chart',
+                'labelKey' => 'LBL_QUICK_CHARTS',
+                'options' => [
+                    'toggle' => true,
+                    'headerTitle' => false,
+                    'charts' => [
+                        [
+                            'chartKey' => 'contacts-by-status-count',
+                            'chartType' => 'vertical-bar',
+                            'statisticsType' => 'contacts-by-status-count',
+                            'labelKey' => 'LBL_CONTACTS_BY_STATUS',
+                            'chartOptions' => [
+                                'label' => 'LBL_TOTAL',
+                            ]
+                        ]
+                    ]
+                ],
+                'acls' => [
+                    'Contacts' => ['view', 'list']
+                ]
+            ]
+        ],
         'bulkActions' => [
             'actions' => [
                 'records-to-target-list' => [

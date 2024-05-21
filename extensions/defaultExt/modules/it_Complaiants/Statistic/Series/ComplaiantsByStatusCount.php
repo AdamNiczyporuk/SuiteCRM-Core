@@ -1,35 +1,52 @@
-<?php 
+<?php
+/**
+ * SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
+ * Copyright (C) 2021 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SALESAGILITY, SALESAGILITY DISCLAIMS THE
+ * WARRANTY OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License
+ * version 3, these Appropriate Legal Notices must retain the display of the
+ * "Supercharged by SuiteCRM" logo. If the display of the logos is not reasonably
+ * feasible for technical reasons, the Appropriate Legal Notices must display
+ * the words "Supercharged by SuiteCRM".
+ */
 
-namespace App\Extension\defaultExt\modules\Contacts\Statistic\Series;
 
+ namespace App\Extension\defaultExt\modules\it_Complaiants\Statistic\Series;
+
+use App\Statistics\Entity\Statistic;
 use App\Data\LegacyHandler\ListDataQueryHandler;
 use App\Engine\LegacyHandler\LegacyHandler;
 use App\Engine\LegacyHandler\LegacyScopeState;
-use App\Module\Service\ModuleNameMapperInterface;
-use App\Statistics\Entity\Statistic;
-use App\Statistics\Model\ChartOptions;
 use App\Statistics\Service\StatisticsProviderInterface;
 use App\Statistics\StatisticsHandlingTrait;
+use App\Statistics\Model\ChartOptions;
+use App\Module\Service\ModuleNameMapperInterface;
 use BeanFactory;
 use SugarBean;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerInterface;
 
+class ComplaiantsByStatusCount extends LegacyHandler implements StatisticsProviderInterface
+{
+    use StatisticsHandlingTrait;
 
-
-class MyContactsByCity extends LegacyHandler implements StatisticsProviderInterface, LoggerAwareInterface
-{ 
-    //$GLOBALS['log'] = LoggerManager::getLogger();
-    use StatisticsHandlingTrait; 
+    public const KEY = 'complaiants-by-status-count';
 
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public const KEY = 'my_contacts_by_city';
-     /**
      * @var ListDataQueryHandler
      */
     private $queryHandler;
@@ -40,7 +57,7 @@ class MyContactsByCity extends LegacyHandler implements StatisticsProviderInterf
     private $moduleNameMapper;
 
     /**
-     * LeadDaysOpen constructor.
+     * ComplaiantsDaysOpen constructor.
      * @param string $projectDir
      * @param string $legacyDir
      * @param string $legacySessionName
@@ -65,7 +82,7 @@ class MyContactsByCity extends LegacyHandler implements StatisticsProviderInterf
         $this->moduleNameMapper = $moduleNameMapper;
     }
 
-     /**
+    /**
      * @inheritDoc
      */
     public function getHandlerKey(): string
@@ -86,43 +103,37 @@ class MyContactsByCity extends LegacyHandler implements StatisticsProviderInterf
      */
     public function getData(array $query): Statistic
     {
-        $this->init();
-        $this->startLegacyApp();
-        global $current_user;
-
-        // Validacja
         [$module, $id, $criteria, $sort] = $this->extractContext($query);
 
-        if (empty($module) || $module !== 'contacts') {
+        if (empty($module) || $module !== 'it_Complaiants') {
             return $this->getEmptySeriesResponse(self::KEY);
         }
 
-        if (empty($current_user) || empty($current_user->id)) {
-          return $this->getEmptySeriesResponse(self::KEY);
-        }
+        $this->init();
+        $this->startLegacyApp();
 
         $legacyName = $this->moduleNameMapper->toLegacy($module);
+
         $bean = $this->getBean($legacyName);
 
         if (!$bean instanceof SugarBean) {
             return $this->getEmptySeriesResponse(self::KEY);
         }
 
-
-        //Get Base Query
         $query = $this->queryHandler->getQuery($bean, $criteria, $sort);
-        $query = $this->generateQuery($query,$current_user->id);
+        $query['select'] = 'SELECT it_Complaiants.name as name, count(*) as value';
+        $query['order_by'] = '';
+        $query['group_by'] = ' GROUP BY it_Complaiants.name ';
+        
         $result = $this->runQuery($query, $bean);
 
-        // Output Response
-
-        $nameField = 'primary_address_city';
-        $valueField = 'total';
+        $nameField = 'name';
+        $valueField = 'value';
 
         $series = $this->buildSingleSeries($result, $nameField, $valueField);
 
+
         $chartOptions = new ChartOptions();
-        $chartOptions->yAxisTickFormatting = true;
 
         $statistic = $this->buildSeriesResponse(self::KEY, 'int', $series, $chartOptions);
 
@@ -150,28 +161,4 @@ class MyContactsByCity extends LegacyHandler implements StatisticsProviderInterf
         // send limit -2 to not add a limit
         return $this->queryHandler->runQuery($bean, $query, -1, -2);
     }
-
-    /**
-     * @param array $query
-     * @return array
-     */
-    protected function generateQuery(array $query, string $current_userId): array
-    {
-        $query['select'] = 'SELECT contacts.primary_address_city, COUNT(contacts.primary_address_city) as total';
-        $query['where'] .= ' AND contacts.primary_address_city is not null AND contacts.assigned_user_id ='. "'" .$current_userId . "'";
-        $query['order_by'] = '';
-        $query['group_by'] = ' GROUP BY  contacts.primary_address_city DESC';
-        $this->logger->fatal('XXXXX ' . $query);
-        return $query;
-    }
-
-     /**
-     * @inheritDoc
-     */
-    public function setLogger(LoggerInterface $logger): void
-    {
-        $this->logger = $logger;
-    }
-    
-
 }

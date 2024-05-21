@@ -14,21 +14,20 @@ return static function(ContainerBuilder $container): void{
         'labelKey' => 'LBL_QUICK_CHARTS',
         'option' => [
             'toggle' => 'true',
-            'headerTitle' => 'false',
-            'charts' => 
-            [
+            'headerTitle' => 'true',
+            'charts' => [
                 [
-                    'chartKey' => 'my_contacts_by_city',
-                    'statisticType'=> 'my_contacts_by_city',
-                    'chartType' =>'vertical-bar', 
-                    'LabelKey'=>'LBL_MY_CONTACTS_BY_CITY',
-                    'chartOptions'=>[]
-                ]
-                
+                    'chartKey' => 'contacts-by-status-count',
+                    'chartType' => 'vertical-bar',
+                    'statisticsType' => 'contacts-by-status-count',
+                    'labelKey' => 'LBL_CONTACTS_BY_STATUS',
+                    'chartOptions' => [
+                        'label' => 'LBL_TOTAL',
+                    ]
+                ] 
             ]
-        ],
-             
-    'acls'=>[
+        ],     
+        'acls'=>[
                 'Contacts' => ['view','list']
             ]
     ];
@@ -36,7 +35,7 @@ return static function(ContainerBuilder $container): void{
     $modules['contacts'] = $contactsConfig;
     $sidebarWidgets['modules'] = $modules;
 
-    $container->setParameter('module.listview.sidebar_widgets', $sidebarWidgets);
+  //  $container->setParameter('module.listview.sidebar_widgets', $sidebarWidgets);
 
 
 

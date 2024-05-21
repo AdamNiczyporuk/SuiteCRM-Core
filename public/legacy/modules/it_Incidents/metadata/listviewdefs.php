@@ -44,6 +44,37 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'it_Incidents';
 $OBJECT_NAME = 'IT_INCIDENTS';
+
+
+$viewdefs[$module_name] = [
+    'ListView' =>  [
+        'sidebarWidgets' => [
+            'complaiants-by-status' => [
+                'type' => 'chart',
+                'labelKey' => 'LBL_QUICK_CHARTS',
+                'options' => [
+                    'toggle' => true,
+                    'headerTitle' => false,
+                    'charts' => [
+                        [
+                            'chartKey' => 'incidents-by-count',
+                            'chartType' => 'pie-grid',
+                            'statisticsType' => 'incidents-by-count',
+                            'labelKey' => 'LBL_INCIDENTS_BY_COUNT',
+                            'chartOptions' => [
+                                'label' => 'LBL_TOTAL',
+                            ]
+                        ]
+                    ]
+                ],
+                'acls' => [
+                    $module_name => ['view', 'list']
+                ]
+            ]
+        ],
+    ]
+];
+
 $listViewDefs[$module_name] = array(
     'NAME' => array(
         'width' => '32',

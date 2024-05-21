@@ -44,6 +44,38 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'it_Complaiants';
 $OBJECT_NAME = 'it_Complaiants';
+
+$viewdefs[$module_name] = [
+    'ListView' =>  [
+        'sidebarWidgets' => [
+            'complaiants-by-status' => [
+                'type' => 'chart',
+                'labelKey' => 'LBL_QUICK_CHARTS',
+                'options' => [
+                    'toggle' => true,
+                    'headerTitle' => false,
+                    'charts' => [
+                        [
+                            'chartKey' => 'complaiants-by-status-count',
+                            'chartType' => 'pie-grid',
+                            'statisticsType' => 'complaiants-by-status-count',
+                            'labelKey' => 'LBL_COMPLAIANTS_BY_STATUS',
+                            'chartOptions' => [
+                                'label' => 'LBL_TOTAL',
+                            ]
+                        ]
+                    ]
+                ],
+                'acls' => [
+                    $module_name => ['view', 'list']
+                ]
+            ]
+        ],
+    ]
+];
+
+
+
 $listViewDefs[$module_name] = array(
     $OBJECT_NAME . '_NUMBER' => array(
         'width' => '5',

@@ -42,6 +42,14 @@ array (
       ),
       'syncDetailEditViews' => true,
     ),
+    'sidebarWidgets' => [
+     [
+        'type' => 'hello-world',
+        'acls' => [
+            'it_Complaiants' => ['view', 'list']
+        ]
+    ],
+  ],
     'panels' => 
     array (
       'default' => 

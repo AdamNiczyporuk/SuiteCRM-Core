@@ -2206,6 +2206,10 @@ $app_strings = array(
     'PIPELINE_BY_SALES_STAGE' => 'Pipeline By Sales Stage',
     'LEADS_BY_SOURCE' => 'Leads By Source',
     'LEADS_BY_STATUS' => 'Leads By Status',
+    'LBL_COMPLAIANTS_BY_STATUS' => 'Complaiants by Counts',
+    'LBL_INCIDENTS_BY_COUNT' => 'Incidents Counts',
+    'LBL_CONTACTS_BY_STATUS' => 'Contact by Lead Status',
+
     'ACCOUNT_TYPES_PER_MONTH' => 'New Accounts by Month',
 
     'ERR_CONNECTOR_NOT_ARRAY' => 'connector array in {0} been defined incorrectly or is empty and could not be used.',
