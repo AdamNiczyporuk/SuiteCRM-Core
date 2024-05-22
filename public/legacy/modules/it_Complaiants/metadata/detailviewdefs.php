@@ -45,6 +45,7 @@ array (
     'sidebarWidgets' => [
      [
         'type' => 'hello-world',
+        'labelKey' => 'LBL_QUICK_CHARTS',
         'acls' => [
             'it_Complaiants' => ['view', 'list']
         ]

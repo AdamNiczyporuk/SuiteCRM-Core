@@ -1,5 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BaseWidgetComponent} from 'core';
+import {ViewContext} from 'common';
+import {LanguageStore} from '../../../../../../../core/app/core/src/lib/store/language/language.store';
+
+
 
 @Component({
     selector: 'scrm-hello-world-sidebar-widget',
@@ -7,7 +11,7 @@ import {BaseWidgetComponent} from 'core';
     styles: []
 })
 export class HelloWorldSidebarWidgetComponent extends BaseWidgetComponent implements OnInit, OnDestroy {
-    constructor() {
+    constructor(protected language: LanguageStore) {
         super();
     }
     ngOnDestroy(): void {
@@ -17,6 +21,16 @@ export class HelloWorldSidebarWidgetComponent extends BaseWidgetComponent implem
     ngOnInit(): void {
         // Tutaj możesz umieścić logikę, która ma być wykonana przy tworzeniu  komponentu
         console.log('HelloWorldSidebarWidgetComponent Init');
+    }
+
+    getHeaderLabel(): string {
+        return this.getLabel(this.config.labelKey) || '';
+    }
+    getLabel(key: string): string {
+        const context = this.context || {} as ViewContext;
+        const module = context.module || '';
+
+        return this.language.getFieldLabel(key, module);
     }
 
 }
