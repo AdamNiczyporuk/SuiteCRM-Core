@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BaseWidgetComponent} from 'core';
 import {ViewContext} from 'common';
 import {LanguageStore} from '../../../../../../../core/app/core/src/lib/store/language/language.store';
+import { string } from 'mathjs';
 
 
 
@@ -24,7 +25,7 @@ export class HelloWorldSidebarWidgetComponent extends BaseWidgetComponent implem
     }
 
     getHeaderLabel(): string {
-        return "MY widget2"; //this.getLabel(this.config.labelKey) || '';
+        return  "MY widget2";//this.getLabel(this.config.labelKey) || '';
     }
     getLabel(key: string): string {
         const context = this.context || {} as ViewContext;
