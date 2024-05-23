@@ -24,7 +24,7 @@ export class HelloWorldSidebarWidgetComponent extends BaseWidgetComponent implem
     }
 
     getHeaderLabel(): string {
-        return this.getLabel(this.config.labelKey) || '';
+        return "MY widget2"; //this.getLabel(this.config.labelKey) || '';
     }
     getLabel(key: string): string {
         const context = this.context || {} as ViewContext;

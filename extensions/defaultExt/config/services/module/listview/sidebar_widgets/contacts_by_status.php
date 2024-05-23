@@ -1,20 +1,22 @@
 <?php
+
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-return static function(ContainerBuilder $container): void{ 
+return static function(ContainerBuilder $container): void {
+
     $sidebarWidgets = $container->getParameter('module.listview.sidebar_widgets')?? [];
     $modules = $sidebarWidgets['modules']?? [];
     $contactsConfig = $modules['contacts']?? [];
-    $contactsWidegets = $contactConfig['widgets']?? [];
+    $contactsWidgets = $contactsConfig['widgets'] ?? [];
 
-    $contactsWidegets['charts'] = [
+    $contactsWidgets['charts'] = [
         'type' => 'chart',
         'labelKey' => 'LBL_QUICK_CHARTS',
-        'option' => [
-            'toggle' => 'true',
-            'headerTitle' => 'true',
+        'options' => [
+            'toggle' => true,
+            'headerTitle' => false,
             'charts' => [
                 [
                     'chartKey' => 'contacts-by-status-count',
@@ -24,19 +26,17 @@ return static function(ContainerBuilder $container): void{
                     'chartOptions' => [
                         'label' => 'LBL_TOTAL',
                     ]
-                ] 
+                ]
             ]
-        ],     
-        'acls'=>[
-                'Contacts' => ['view','list']
+        ],
+        'acls' => [
+                  'Contacts' => ['view', 'list']
             ]
-    ];
-    $contactsConfig['widgets'] = $contactsWidegets;
+    ];  
+    $contactsConfig['widgets'] = $contactsWidgets;
     $modules['contacts'] = $contactsConfig;
     $sidebarWidgets['modules'] = $modules;
-
-  //  $container->setParameter('module.listview.sidebar_widgets', $sidebarWidgets);
-
-
-
+    
+        
+        $container->setParameter('module.listview.sidebar_widgets', $sidebarWidgets);
 };
