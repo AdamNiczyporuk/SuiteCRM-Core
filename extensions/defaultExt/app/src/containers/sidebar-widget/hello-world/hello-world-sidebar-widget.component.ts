@@ -25,13 +25,22 @@ export class HelloWorldSidebarWidgetComponent extends BaseWidgetComponent implem
     }
 
     getHeaderLabel(): string {
-        return  "MY widget2";//this.getLabel(this.config.labelKey) || '';
+        if (this.config.labelKey) {
+           return  this.getLabel(this.config.labelKey) || '';
+        }
+        else 
+           return  "My widget";
     }
     getLabel(key: string): string {
         const context = this.context || {} as ViewContext;
         const module = context.module || '';
+        if (this.language.getFieldLabel(key, module)) {
+            return this.language.getFieldLabel(key, module); 
+         }
+         else 
+            return  "No language for " +key;
 
-        return this.language.getFieldLabel(key, module);
+        
     }
 
 }
