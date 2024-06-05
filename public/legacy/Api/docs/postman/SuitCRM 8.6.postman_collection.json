@@ -1,0 +1,482 @@
+{
+	"info": {
+		"_postman_id": "d2fffb45-8956-4628-b758-936b6a06b290",
+		"name": "SuitCRM 8.6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "9412183"
+	},
+	"item": [
+		{
+			"name": "API v8",
+			"item": [
+				{
+					"name": "Work",
+					"item": [
+						{
+							"name": "Get module It_Complaiant",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{access_token}}"
+									}
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{suitecrm.url}}/V8/module/it_Complaiants/{{it_Complaiants_id}}?fields[it_Complaiants]=name,description",
+									"host": [
+										"{{suitecrm.url}}"
+									],
+									"path": [
+										"V8",
+										"module",
+										"it_Complaiants",
+										"{{it_Complaiants_id}}"
+									],
+									"query": [
+										{
+											"key": "fields[it_Complaiants]",
+											"value": "name,description"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "access_token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = pm.response.json();\r",
+											"pm.environment.set('access_token', res.access_token);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true,
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"grant_type\": \"client_credentials\",\r\n    \"client_id\": \"{{client_id}}\",\r\n    \"client_secret\": \"{{client_secret}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{suitecrm.url}}/access_token"
+							},
+							"response": []
+						},
+						{
+							"name": "access_token PassGrant",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var res = pm.response.json();\r",
+											"pm.environment.set('access_token', res.access_token);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true,
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.api+json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.api+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"grant_type\": \"password\",\r\n    \"client_id\": \"{{password_client_id}}\",\r\n    \"client_secret\": \"{{client_secret}}\",\r\n    \"username\": \"{{user}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{suitecrm.url}}/access_token"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get module",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"accessToken": "",
+								"tokenType": "Bearer",
+								"addTokenTo": "header"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{suitecrm.url}}/V8/module/Accounts/{ID}?fields[Accounts]=name,account_type",
+							"host": [
+								"{{suitecrm.url}}"
+							],
+							"path": [
+								"V8",
+								"module",
+								"Accounts",
+								"{ID}"
+							],
+							"query": [
+								{
+									"key": "fields[Accounts]",
+									"value": "name,account_type"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get modules",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"accessToken": "",
+								"tokenType": "Bearer",
+								"addTokenTo": "header"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{suitecrm.url}}/V8/module/Accounts?fields[Accounts]=name,account_type&page[size]=4&page[number]=4&sort=name&filter[operator]=and&filter[account_type][eq]=Customer",
+							"host": [
+								"{{suitecrm.url}}"
+							],
+							"path": [
+								"V8",
+								"module",
+								"Accounts"
+							],
+							"query": [
+								{
+									"key": "fields[Accounts]",
+									"value": "name,account_type"
+								},
+								{
+									"key": "page[size]",
+									"value": "4"
+								},
+								{
+									"key": "page[number]",
+									"value": "4"
+								},
+								{
+									"key": "sort",
+									"value": "name"
+								},
+								{
+									"key": "filter[operator]",
+									"value": "and"
+								},
+								{
+									"key": "filter[account_type][eq]",
+									"value": "Customer"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create module",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"accessToken": "",
+								"tokenType": "Bearer",
+								"addTokenTo": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"Accounts\",\n    \"id\": \"{ID}\",\n    \"attributes\": {\n      \"name\": \"Muhahaha\"\n    }\n  }\n}"
+						},
+						"url": "{{suitecrm.url}}/V8/module"
+					},
+					"response": []
+				},
+				{
+					"name": "Update module",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"accessToken": "",
+								"tokenType": "Bearer",
+								"addTokenTo": "header"
+							}
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"Accounts\",\n    \"id\": \"{ID}\",\n    \"attributes\": {\n      \"name\": \"hapff111fff\"\n    }\n  }\n}"
+						},
+						"url": "{{suitecrm.url}}/V8/module"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete module",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"accessToken": "",
+								"tokenType": "Bearer",
+								"addTokenTo": "header"
+							}
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{suitecrm.url}}/V8/module/Accounts/{ID}"
+					},
+					"response": []
+				},
+				{
+					"name": "Get relationship",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"accessToken": "",
+								"tokenType": "Bearer",
+								"addTokenTo": "header"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": "{{suitecrm.url}}/V8/module/Accounts/{ID}/relationships/contacts"
+					},
+					"response": []
+				},
+				{
+					"name": "Create relationship",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"accessToken": "",
+								"tokenType": "Bearer",
+								"addTokenTo": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"Contacts\",\n    \"id\": \"{ID}\"\n  }\n}"
+						},
+						"url": "{{suitecrm.url}}/V8/module/Accounts/{ID}/relationships"
+					},
+					"response": []
+				},
+				{
+					"name": "Create relationship by link",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"accessToken": "",
+								"tokenType": "Bearer",
+								"addTokenTo": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"Contacts\",\n    \"id\": \"{ID}\"\n  }\n}"
+						},
+						"url": "{{suitecrm.url}}/V8/module/Accounts/{ID}/relationships/{linkName}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete relationship",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"accessToken": "",
+								"tokenType": "Bearer",
+								"addTokenTo": "header"
+							}
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{suitecrm.url}}/V8/module/Accounts/{ID}/relationships/contacts/{ID}"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"accessToken": "",
+								"tokenType": "Bearer",
+								"addTokenTo": "header"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n}"
+						},
+						"url": "{{suitecrm.url}}/V8/logout"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

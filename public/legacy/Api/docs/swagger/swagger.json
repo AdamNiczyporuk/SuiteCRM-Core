@@ -14,7 +14,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost/forkedSuite/Api/V8"
+      "url": "http://localhost:8080/Api/V8"
     }
   ],
   "paths": {
@@ -478,7 +478,7 @@
         "type": "oauth2",
         "flows": {
           "password": {
-            "tokenUrl": "http://localhost/forkedSuite/Api/access_token",
+            "tokenUrl": "http://localhost:8080/Api/access_token",
             "scopes": {}
           }
         }
