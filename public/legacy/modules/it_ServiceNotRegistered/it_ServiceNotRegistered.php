@@ -63,11 +63,15 @@ class it_ServiceNotRegistered extends Basic
     public $assigned_user_name;
     public $assigned_user_link;
     public $SecurityGroups;
-    public $type;
-    public $howmuch;
-    public $nameofservice;
-    public $additonalservices;
+
+    public $servicecode;
+    public $servicename;
+    public $servicesadditional;
     public $reasonforreporting;
+    public $amount;
+    public $content;
+    public $servicefee;
+    public $externalnumber;
 	
     public function bean_implements($interface)
     {

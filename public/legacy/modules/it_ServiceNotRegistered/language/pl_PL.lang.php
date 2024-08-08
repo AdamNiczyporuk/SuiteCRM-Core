@@ -38,9 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 $mod_strings = array (
-  'LBL_TYPE' => 'Type',
-  'LBL_LIST_FORM_TITLE' => 'ServiceNotRegistered List',
-  'LBL_MODULE_NAME' => 'ServiceNotRegistered',
+  'LBL_SERVICECODE' => 'Kod usługi',
+  'LBL_SERVICENAME' => 'Nazwa usługi',
+  'LBL_LIST_FORM_TITLE' => 'Lista usług nie rejestrowanych',
+  'LBL_MODULE_NAME' => 'Usługa nie rejestrowana',
   'LBL_MODULE_TITLE' => 'ServiceNotRegistered',
   'LBL_HOMEPAGE_TITLE' => 'My ServiceNotRegistered',
   'LNK_NEW_RECORD' => 'Create ServiceNotRegistered',
