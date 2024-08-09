@@ -16,7 +16,7 @@ array (
           3 => 'FIND_DUPLICATES',
         ),
       ),
-      'maxColumns' => '2',
+      'maxColumns' => '3',
       'widths' => 
       array (
         0 => 
@@ -25,6 +25,11 @@ array (
           'field' => '30',
         ),
         1 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+        2 => 
         array (
           'label' => '10',
           'field' => '30',
@@ -48,53 +53,56 @@ array (
         array (
           0 => 
           array (
-            'name' => 'servicecode',
-            'label' => 'LBL_SERVICECODE',
-          ),
-          1 => 
-          array (
             'name' => 'servicename',
             'label' => 'LBL_SERVICENAME',
           ),
-          
+          1 => 
+          array (
+            'name' => 'servicecode',
+            'label' => 'LBL_SERVICECODE',
+            'type'=>'readonly',
+          ),
+          2 => 
+          array (
+            'name' => 'servicesadditional',
+            'label' => 'LBL_SERVICESADDITIONAL',
+          ),
         ),
         1 => 
         array (
           0 => 
           array (
-            'name' => 'servicesadditional',
-            'label' => 'LBL_SERVICESADDITIONAL',
+            'name' => 'reasonforreporting',
+            'label' => 'LBL_REASONFORREPORTING',
           ),
           1 => 
           array (
-            'name' => 'reasonforreporting',
-            'label' => 'LBL_REASONFORREPORTING',
+            'name' => 'amount',
+            'label' => 'LBL_AMOUNT',
+          ),
+          2 =>
+          array (
+            'name' => 'content',
+            'label' => 'LBL_CONTENT',
           ),
         ),
         2 => 
         array (
           0 => 
           array (
-            'name' => 'amount',
-            'label' => 'LBL_AMOUNT',
+            'name' => 'externalnumber',
+            'label' => 'LBL_EXTERNALNUMBER',
           ),
           1 => 
-          array (
-            'name' => 'content',
-            'label' => 'LBL_CONTENT',
-          ),
-        ),
-        3 => 
-        array (
-          0 => 
           array (
             'name' => 'servicefee',
             'label' => 'LBL_SERVICEFEE',
+            'type'=>'readonly',
           ),
-          1 => 
+          2 => 
           array (
-            'name' => 'externalnumber',
-            'label' => 'LBL_EXTERNALNUMBER',
+            'name' => 'description',
+            'label' => 'LBL_DESCRIPTION',
           ),
         ),
       ),
