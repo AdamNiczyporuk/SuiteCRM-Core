@@ -44,43 +44,7 @@ $dictionary['it_ServiceNotRegistered'] = array(
     'inline_edit' => false,
     'duplicate_merge' => true,
     'fields' => array (
-  'servicecode' => 
-  array (
-    'required' => true,
-    'name' => 'servicecode',
-    'vname' => 'LBL_SERVICECODE',
-    'type' => 'enum',
-    'massupdate' => 1,
-    'no_default' => false,
-    'comments' => '',
-    'help' => '',
-    'importable' => 'true',
-    'duplicate_merge' => 'disabled',
-    'duplicate_merge_dom_value' => '0',
-    'audited' => true,
-    'inline_edit' => false,
-    'reportable' => true,
-    'unified_search' => true,
-    'merge_filter' => 'disabled',
-    'options' => 'service_code_NREG',
-    'len' => '6',
-    'size' => '6',
-    'logic' => [
-      'update-value' => [
-          'key' => 'updateValue',
-          'modes' => ['detail', 'edit', 'create'],
-          'params' => [
-              'fieldDependencies' => [
-                  'servicename',
-              ],
-              'targetValue' => '760',
-              'activeOnFields' => [
-                    'servicename' => ['760'],
-                ]
-              ]
-          ]
-      ],
-  ),
+  
   'servicename' => 
   array (
     'required' => true,
@@ -98,7 +62,8 @@ $dictionary['it_ServiceNotRegistered'] = array(
     'inline_edit' => false,
     'reportable' => true,
     'unified_search' => true,
-    'options' => 'service_code_NREG_name',
+    'dbType' => 'enum',
+    'options' => 'service_NREG_name',
     'merge_filter' => 'disabled',
     'len' => '255',
     'size' => '20',
@@ -121,10 +86,10 @@ $dictionary['it_ServiceNotRegistered'] = array(
     'reportable' => true,
     'unified_search' => false,
     'merge_filter' => 'disabled',
-    'options' => 'service_code_NREG_add',
+    'options' => 'service_NREG_add',
     'studio' => 'visible',
     'dbType' => 'enum',
-    'parentenum' => 'service_code_NREG_name',
+    'parentenum' => 'service_NREG_name',
     'len' => '255',
     'size' => '20',
   ),
@@ -146,10 +111,10 @@ $dictionary['it_ServiceNotRegistered'] = array(
     'reportable' => true,
     'unified_search' => false,
     'merge_filter' => 'disabled',
-    'options' => 'service_code_NREG_reason',
+    'options' => 'service_NREG_reason',
     'studio' => 'visible',
     'dbType' => 'enum',
-    'parentenum' => 'service_code_NREG_name',
+    'parentenum' => 'service_NREG_name',
     'len' => '255',
     'size' => '20',
   ),

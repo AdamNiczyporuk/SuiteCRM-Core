@@ -44,9 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'it_ServiceNotRegistered';
 $listViewDefs[$module_name] = array(
-    'NAME' => array(
+    'SERVICENAME' => array(
         'width' => '32',
-        'label' => 'LBL_NAME',
+        'label' => 'LBL_SERVICENAME',
         'default' => true,
         'link' => true
     ),

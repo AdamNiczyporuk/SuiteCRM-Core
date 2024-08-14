@@ -48,48 +48,42 @@ array (
           ),
           1 => 
           array (
-            'name' => 'servicecode',
-            'label' => 'LBL_SERVICECODE',
-            'type'=>'readonly',
-          ),
-          2 => 
-          array (
             'name' => 'servicesadditional',
             'label' => 'LBL_SERVICESADDITIONAL',
           ),
-        ),
-        1 => 
-        array (
-          0 => 
+          2 => 
           array (
             'name' => 'reasonforreporting',
             'label' => 'LBL_REASONFORREPORTING',
           ),
-          1 => 
+        ),  
+        1 => 
+        array (
+          0 => 
           array (
             'name' => 'amount',
             'label' => 'LBL_AMOUNT',
           ),
-          2 =>
+          1 => 
           array (
             'name' => 'content',
             'label' => 'LBL_CONTENT',
+          ),
+          2 =>
+          array (
+            'name' => 'externalnumber',
+            'label' => 'LBL_EXTERNALNUMBER',
           ),
         ),
         2 => 
         array (
           0 => 
           array (
-            'name' => 'externalnumber',
-            'label' => 'LBL_EXTERNALNUMBER',
-          ),
-          1 => 
-          array (
             'name' => 'servicefee',
             'label' => 'LBL_SERVICEFEE',
             'type'=>'readonly',
           ),
-          2 => 
+          1 =>       
           array (
             'name' => 'description',
             'label' => 'LBL_DESCRIPTION',

@@ -4000,3 +4000,57 @@ $app_strings['LBL_NEW_NOTIFICATION'] = "You have {{context.unread}} new notifica
 $app_strings['LBL_NOTIFICATION_ITEM_DATE'] = 'Due: {{fields.date_start.value}}';
 $app_strings['LBL_NOTIFICATION_ITEM_DATE_ENTERED'] = 'Notified: {{fields.snooze.value}}';
 $app_strings['LBL_QUICK_ACTIONS'] = 'Quick Actions';
+
+
+
+// it_ 
+$app_list_strings['service_NREG_name']['842'] = 'przesyłka marketingowa [842]';
+$app_list_strings['service_NREG_name']['840E'] = 'przesyłka firmowa nierejestrowana [840E]';
+$app_list_strings['service_NREG_name']['840'] = 'przesyłka hybrydowa nierejestrowana [840]';
+$app_list_strings['service_NREG_name']['843'] = 'druki bezadresowe [843]';
+$app_list_strings['service_NREG_name']['760'] = 'poczta firmowa [760]';
+$app_list_strings['service_NREG_name']['ZZZ1'] = 'mailing profilowany [ZZZ1]';
+$app_list_strings['service_NREG_name']['849'] = 'przesyłka reklamowa [849]';
+$app_list_strings['service_NREG_name']['ZZZ2'] = 'list biznesowy [ZZZ2]';
+$app_list_strings['service_NREG_name']['ZZZ3'] = 'przesyłka handlowa [ZZZ3]';
+$app_list_strings['service_NREG_name']['ZZZ4'] = 'kampania bezadresowa [ZZZ4]';
+
+
+$app_list_strings['service_NREG_add'][''] = '';
+$app_list_strings['service_NREG_add']['840_ADDE'] = 'elektroniczna archiwizacja korespondencji';
+$app_list_strings['service_NREG_add']['840_ADDA'] = 'automatyczne kopertowanie dodatkowych insertów';
+$app_list_strings['service_NREG_add']['843_ADDD'] = 'sprawdzenie doręczenia druków bezadresowych przy udziale Klienta';
+$app_list_strings['service_NREG_add']['843_ADDR'] = 'sporządzenie raportu z wykonania zlecenia';
+$app_list_strings['service_NREG_add']['843_ADDO'] = 'odbiór druków z miejsca wskazanego przez nadawcę';
+$app_list_strings['service_NREG_add']['843_ADDP'] = 'przygotowanie i adresowanie pakietów z drukami bezadresowymi';
+
+$app_list_strings['service_NREG_reason']['842_U'] = 'ubytek';
+$app_list_strings['service_NREG_reason']['842_S'] = 'uszkodzenie';
+$app_list_strings['service_NREG_reason']['842_N'] = 'niewykonanie(utrata)';
+$app_list_strings['service_NREG_reason']['840E_O'] = 'opóźnienie';
+$app_list_strings['service_NREG_reason']['840E_Z'] = 'zaginięcie';
+$app_list_strings['service_NREG_reason']['840_Z'] = 'zaginięcie';
+$app_list_strings['service_NREG_reason']['840_U'] = 'uszkodzenie';
+$app_list_strings['service_NREG_reason']['840_O'] = 'opóźnienie';
+$app_list_strings['service_NREG_reason']['840_D'] = 'dostarczenie pod niewłaściwy adres';
+$app_list_strings['service_NREG_reason']['840_B'] = 'błędny zwrot przesyłki';
+$app_list_strings['service_NREG_reason']['843_NU'] = 'niewykonanie usługi';
+$app_list_strings['service_NREG_reason']['843_NW'] = 'nienależyte wykonanie usługi';
+$app_list_strings['service_NREG_reason']['760_NU'] = 'niewykonanie usługi';
+$app_list_strings['service_NREG_reason']['760_NW'] = 'nienależyte wykonanie usługi';
+$app_list_strings['service_NREG_reason']['ZZZ1_NU'] = 'niewykonanie usługi';
+$app_list_strings['service_NREG_reason']['ZZZ1_NW'] = 'nienależyte wykonanie usługi';
+$app_list_strings['service_NREG_reason']['849_NU'] = 'niewykonanie usługi';
+$app_list_strings['service_NREG_reason']['849_NW'] = 'nienależyte wykonanie usługi';
+$app_list_strings['service_NREG_reason']['ZZZ4_NU'] = 'niewykonanie usługi';
+$app_list_strings['service_NREG_reason']['ZZZ4_NW'] = 'nienależyte wykonanie usługi';
+
+
+$app_list_strings['service_NREG_reason2'][''] = '';
+$app_list_strings['service_NREG_reason2']['842_U'] = 'ubytek';
+$app_list_strings['service_NREG_reason2']['842_S'] = 'uszkodzenie';
+$app_list_strings['service_NREG_reason2']['842_N'] = 'niewykonanie(utrata)';
+$app_list_strings['service_NREG_reason2']['840E_O'] = 'opóźnienie';
+$app_list_strings['service_NREG_reason2']['840E_Z'] = 'zaginięcie';
+$app_list_strings['service_NREG_reason2']['843_NU'] = 'niewykonanie usługi';
+$app_list_strings['service_NREG_reason2']['843_NW'] = 'nienależyte wykonanie usługi';
