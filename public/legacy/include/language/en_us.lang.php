@@ -4016,9 +4016,10 @@ $app_list_strings['service_NREG_name']['ZZZ3'] = 'przesyłka handlowa [ZZZ3]';
 $app_list_strings['service_NREG_name']['ZZZ4'] = 'kampania bezadresowa [ZZZ4]';
 
 
-$app_list_strings['service_NREG_add'][''] = '';
+$app_list_strings['service_NREG_add']['840_'] = '';
 $app_list_strings['service_NREG_add']['840_ADDE'] = 'elektroniczna archiwizacja korespondencji';
 $app_list_strings['service_NREG_add']['840_ADDA'] = 'automatyczne kopertowanie dodatkowych insertów';
+$app_list_strings['service_NREG_add']['843_'] = '';
 $app_list_strings['service_NREG_add']['843_ADDD'] = 'sprawdzenie doręczenia druków bezadresowych przy udziale Klienta';
 $app_list_strings['service_NREG_add']['843_ADDR'] = 'sporządzenie raportu z wykonania zlecenia';
 $app_list_strings['service_NREG_add']['843_ADDO'] = 'odbiór druków z miejsca wskazanego przez nadawcę';
@@ -4040,6 +4041,10 @@ $app_list_strings['service_NREG_reason']['760_NU'] = 'niewykonanie usługi';
 $app_list_strings['service_NREG_reason']['760_NW'] = 'nienależyte wykonanie usługi';
 $app_list_strings['service_NREG_reason']['ZZZ1_NU'] = 'niewykonanie usługi';
 $app_list_strings['service_NREG_reason']['ZZZ1_NW'] = 'nienależyte wykonanie usługi';
+$app_list_strings['service_NREG_reason']['ZZZ2_NU'] = 'niewykonanie usługi';
+$app_list_strings['service_NREG_reason']['ZZZ2_NW'] = 'nienależyte wykonanie usługi';
+$app_list_strings['service_NREG_reason']['ZZZ3_NU'] = 'niewykonanie usługi';
+$app_list_strings['service_NREG_reason']['ZZZ3_NW'] = 'nienależyte wykonanie usługi';
 $app_list_strings['service_NREG_reason']['849_NU'] = 'niewykonanie usługi';
 $app_list_strings['service_NREG_reason']['849_NW'] = 'nienależyte wykonanie usługi';
 $app_list_strings['service_NREG_reason']['ZZZ4_NU'] = 'niewykonanie usługi';
