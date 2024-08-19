@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 $mod_strings = array (
-  'LBL_SERVICECODE' => 'Kod usługi',
+  'LBL_SERVICETYPE' => 'Typ usługi',
   'LBL_SERVICENAME' => 'Nazwa usługi',
   'LBL_LIST_FORM_TITLE' => 'Lista usług nie rejestrowanych',
   'LBL_MODULE_NAME' => 'Usługa nie rejestrowana',

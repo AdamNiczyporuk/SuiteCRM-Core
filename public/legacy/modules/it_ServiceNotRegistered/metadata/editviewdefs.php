@@ -28,7 +28,12 @@ array (
       'useTabs' => false,
       'tabDefs' => 
       array (
-        'LBL_NOTREGISTERED' => 
+        'DEFAULT' => 
+        array (
+          'newTab' => false,
+          'panelDefault' => 'collapsed',
+        ),
+        'LBL_CONTENT' => 
         array (
           'newTab' => false,
           'panelDefault' => 'expanded',
@@ -37,13 +42,13 @@ array (
     ),
     'panels' => 
     array (
-      'LBL_NotRegistered' => 
+      'lbl_content' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            'name' => 'servicename',
+            'name' => 'name',
             'label' => 'LBL_SERVICENAME',
           ),
           1 => 
@@ -88,6 +93,30 @@ array (
             'name' => 'description',
             'label' => 'LBL_DESCRIPTION',
           ),
+        ),
+      ),
+      'default' => 
+      array (
+        0 =>       
+        array (
+          0 =>
+          array (
+            'name' => 'servicetype',
+            'label' => 'LBL_SERVICETYPE',
+            'type'=>'readonly',
+          ),
+        ),
+        1 =>
+        array (
+          'name' => 'date_entered',
+          'label' => 'LBL_DATE_ENTERED',
+          'type'=>'readonly',
+        ),
+        2 =>
+        array (
+          'name' => 'date_modified',
+          'label' => 'LBL_DATE_MODIFIED',
+          'type'=>'readonly',
         ),
       ),
     ),

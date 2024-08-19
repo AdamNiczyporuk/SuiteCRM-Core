@@ -64,11 +64,7 @@ composer.phar
 /public/legacy/themes/suite8/css/Noon/style.css
 docker2git.bat
 git2docker.bat
-.gitignore
 docker2git.bat
-git2docker.bat
-docker2git.bat
-.gitignore
 package-lock.json
 package.json
 tsconfig.json

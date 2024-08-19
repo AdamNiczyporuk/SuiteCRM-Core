@@ -44,9 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'it_ServiceNotRegistered';
 $listViewDefs[$module_name] = array(
-    'SERVICENAME' => array(
+    'NAME' => array(
         'width' => '32',
-        'label' => 'LBL_SERVICENAME',
+        'label' => 'LBL_NAME',
         'default' => true,
         'link' => true
     ),
@@ -57,5 +57,44 @@ $listViewDefs[$module_name] = array(
         'id' => 'ASSIGNED_USER_ID',
         'default' => true
     ),
-
+    'SERVICETYPE' => array(
+        'width' => '12',
+        'label' => 'LBL_SERVICETYPE',
+        'default' => false,
+    ),
+    'SERVICESADDITIONAL' => array(
+        'width' => '12',
+        'label' => 'LBL_SERVICESADDITIONAL',
+        'default' => false,
+    ),
+    'REASONFORREPORTING' => array(
+        'width' => '12',
+        'label' => 'LBL_REASONFORREPORTING',
+        'default' => false,
+    ),
+    'AMOUNT' => array(
+        'width' => '6',
+        'label' => 'LBL_AMOUNT',
+        'default' => false,
+    ),
+    'CONTENT' => array(
+        'width' => '16',
+        'label' => 'LBL_CONTENT',
+        'default' => false,
+    ),
+    'SERVICEFEE' => array(
+        'width' => '16',
+        'label' => 'LBL_SERVICEFEE',
+        'default' => false,
+    ),
+    'EXTERNALNUMBER' => array(
+        'width' => '16',
+        'label' => 'LBL_EXTERNALNUMBER',
+        'default' => false,
+    ),
+    'DESCRIPTION' => array(
+        'width' => '64',
+        'label' => 'LBL_DESCRIPTION',
+        'default' => false,
+    ),
 );
