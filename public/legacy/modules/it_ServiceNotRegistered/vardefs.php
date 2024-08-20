@@ -234,9 +234,26 @@
   'min' => false,
   'max' => false,
 ),
-
+'claims' => array(
+  'name' => 'claims',
+  'type' => 'link',
+  'relationship' => 'service_NREG_Claims',
+  'module' => 'it_Claims',
+  'bean_name' => 'it_Claims',
+  'source' => 'non-db',
+  'vname' => 'LBL_PROCES__CLAIM_TITLE',
+),
 ),
   'relationships' => array (
+    'service_NREG_Claims' => array(
+      'lhs_module' => 'it_Claims',
+      'lhs_table' => 'it_Claims',
+      'lhs_key' => 'service_id',
+      'rhs_module' => 'it_ServiceNotRegistered',
+      'rhs_table' => 'it_servicenotregistered',
+      'rhs_key' => 'id',
+      'relationship_type' => 'one-to-one',
+  ),
 ),
   'optimistic_locking' => true,
   'unified_search' => true,

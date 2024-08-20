@@ -113,6 +113,8 @@ $mod_strings = array(
     'LBL_ACCEPT_THIS' => 'Accept?',
     'LBL_DEFAULT_SUBPANEL_TITLE' => 'Open Services',
     'LBL_LIST_ASSIGNED_TO_NAME' => 'Assigned User',
+    'LBL_SERVICE_SUBPANEL_TITLE' => 'Services',
+    'LBL_SERVICE_TITLE' => 'Services',
 
     'LBL_ACCEPT' => 'Accept' /*for 508 compliance fix*/,
 );

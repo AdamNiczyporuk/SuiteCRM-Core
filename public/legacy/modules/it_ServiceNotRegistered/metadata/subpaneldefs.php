@@ -12,3 +12,20 @@ $layout_defs[$module_name]['subpanel_setup']['securitygroups'] = array(
     'add_subpanel_data' => 'securitygroup_id',
     'title_key' => 'LBL_SECURITYGROUPS_SUBPANEL_TITLE',
 );
+
+$layout_defs[$module_name]['subpanel_setup']['claims'] = array(
+    'top_buttons' => array(
+         array('widget_class' => 'SubPanelTopButtonQuickCreate', 'popup_module' => 'it_Claims', 'mode' => 'QuickCreate'),
+         array('widget_class' => 'SubPanelTopSelectButton')
+     ),
+     'order' => 100,
+     'sort_by' => 'name',
+     'sort_order' => 'asc',
+     'module' => 'it_Claims',
+     'refresh_page' => 1,
+     'subpanel_name' => 'default',
+     'get_subpanel_data' => 'claims',
+     'add_subpanel_data' => 'service_id',
+     'title_key' => 'LBL_PROCESS_TITLE',
+
+ );

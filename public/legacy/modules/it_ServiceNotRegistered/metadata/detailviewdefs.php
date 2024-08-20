@@ -49,6 +49,7 @@ array (
           'panelDefault' => 'expanded',
         ),
       ),
+      'syncDetailEditViews' => true,
     ),
     'panels' => 
     array (
@@ -127,7 +128,11 @@ array (
             'label' => 'LBL_DATE_MODIFIED',
             'type'=>'readonly',
           ),
-        )
+        ),
+        1 =>       
+        array (
+          0 => 'assigned_user_name',
+        ),
       ),
     ),
   ),

@@ -82,4 +82,5 @@ $mod_strings = array (
   'LBL_SERVICESADDITIONAL' => 'Additional Services',
   'LBL_REASONFORREPORTING' => 'Reason For Reporting',
   'LBL_EXTERNALNUMBER' => 'Number from external register',
+  'LBL_PROCESS_TITLE' => 'Proceses',
 );

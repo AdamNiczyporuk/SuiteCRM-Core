@@ -125,4 +125,5 @@ $mod_strings = array (
   'LBL_EDITVIEW_PANEL1' => 'Applicant',
   'LBL_EDITVIEW_PANEL2' => 'New Panel 2',
   'LBL_EDITVIEW_PANEL3' => 'New Panel 3',
+  'LBL_SERVICE_TITLE' => 'Services', 
 );
