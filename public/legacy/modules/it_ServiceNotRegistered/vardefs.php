@@ -237,15 +237,15 @@
 'claims' => array(
   'name' => 'claims',
   'type' => 'link',
-  'relationship' => 'service_NREG_Claims',
+  'relationship' => 'service_nreg_claims',
   'module' => 'it_Claims',
   'bean_name' => 'it_Claims',
   'source' => 'non-db',
-  'vname' => 'LBL_PROCES__CLAIM_TITLE',
+  'vname' => 'LBL_PROCESS_TITLE',
 ),
 ),
   'relationships' => array (
-    'service_NREG_Claims' => array(
+    'service_nreg_claims' => array(
       'rhs_module' => 'it_Claims',
       'rhs_table' => 'it_Claims',
       'rhs_key' => 'service_id',

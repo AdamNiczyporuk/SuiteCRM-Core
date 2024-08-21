@@ -585,15 +585,4 @@ $vardefs = array(
             'fields' => array('_number')
         )
     ),
-    'relationships' => array(
-        strtolower($module) . '_assigned_to' => array(
-            'lhs_module' => 'Users',
-            'lhs_table' => 'users',
-            'lhs_key' => 'id',
-            'rhs_module' => $module,
-            'rhs_table' => $table_name,
-            'rhs_key' => 'assigned_to',
-            'relationship_type' => 'one-to-many',
-        ),
-    ),
 );

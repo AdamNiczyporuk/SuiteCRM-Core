@@ -327,7 +327,7 @@ $dictionary['it_Claims'] = array(
   'services' => array(
     'name' => 'services',
     'type' => 'link',
-    'relationship' => 'claims_service_NREG',
+    'relationship' => 'claims_service_nreg',
     'module' => 'it_ServiceNotRegistered',
     'bean_name' => 'it_ServiceNotRegistered',
     'source' => 'non-db',
@@ -335,13 +335,13 @@ $dictionary['it_Claims'] = array(
 ),
 ),
     'relationships' => array (
-      'claims_service_NREG' => array(
-        'lhs_module' => 'it_Claims',
-        'lhs_table' => 'it_Claims',
-        'lhs_key' => 'service_id',
-        'rhs_module' => 'it_ServiceNotRegistered',
-        'rhs_table' => 'it_servicenotregistered',
-        'rhs_key' => 'id',
+      'claims_service_nreg' => array(
+        'rhs_module' => 'it_Claims',
+        'rhs_table' => 'it_Claims',
+        'rhs_key' => 'service_id',
+        'lhs_module' => 'it_ServiceNotRegistered',
+        'lhs_table' => 'it_servicenotregistered',
+        'lhs_key' => 'id',
         'relationship_type' => 'one-to-one',
     ),
 ),
