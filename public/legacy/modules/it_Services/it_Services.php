@@ -38,8 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-class it_Services
+ require_once('include/SugarObjects/templates/basic/Basic.php');
+class it_Services extends Basic
 {
     public function bean_implements($interface)
     {
@@ -50,4 +50,42 @@ class it_Services
         }
         return false;
     }
+
+    public function create_new_list_query(
+        $order_by,
+        $where,
+        $filter = array(),
+        $params = array(),
+        $show_deleted = 0,
+        $join_type = 'UNION ALL',
+        $return_array = false,
+        $parentbean = null,
+        $singleSelect = false,
+        $ifListForExport = false
+    )
+    {
+        
+        
+        
+        $db = DBManagerFactory::getInstance();
+        
+        // Zdefiniuj zapytanie SQL dla pobrania danych z modułu Calim
+        $query1 = "SELECT id,name FROM it_serviceElectronic WHERE deleted = 0" ;
+        
+        // Zdefiniuj zapytanie SQL dla pobrania danych z modułu Compaliant
+        $query2 = "SELECT id,name FROM it_ServiceNotRegistered WHERE deleted = 0";
+       
+        // Połącz oba zapytania za pomocą UNION
+        $queryUnion =  $query1 ." UNION ". $query2;
+        
+        //Tworzenie tablicy
+        $return_array=array();
+        //Wkładanie zapytania do tablicy
+        $return_array['select'] = $queryUnion;
+
+              
+       
+        return $return_array;
+    } 
+
 }

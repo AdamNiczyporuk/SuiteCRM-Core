@@ -45,7 +45,7 @@ class it_ServicesViewList extends ViewList
 {
     public function display()
     {
-        $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'it_serviceElectronic');
-        require_once('modules/it_serviceElectronic/it_serviceElectronic.php');
+        $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'it_Services');
+        require_once('modules/it_Services/it_Services.php');
     }
 }

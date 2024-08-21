@@ -1,8 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -42,9 +38,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
 
- */
 
-//defines the call and meeting status.  Values are keys, not translated strings
-$open_status[] = "Planned";
+ $dictionary['it_Services'] = array(
+    'table' => 'it_Services',
+    'audited' => true,
+    'inline_edit' => true,
+    'duplicate_merge' => true,
+    'fields' => array (
+),
+
+    'relationships' => array (
+),
+    'optimistic_locking' => true,
+    'unified_search' => true,
+);
+if (!class_exists('VardefManager')) {
+        require_once('include/SugarObjects/VardefManager.php');
+}
+VardefManager::createVardef('it_Services', 'it_Services', array('basic','assignable','security_groups'));
