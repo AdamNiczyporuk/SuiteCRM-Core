@@ -46,7 +46,7 @@ class it_Incidents extends Incident
     public $new_schema = true;
     public $module_dir = 'it_Incidents';
     public $object_name = 'it_Incidents';
-    public $table_name = 'it_Incidents';
+    public $table_name = 'it_incidents';
     public $importable = false;
 
     public $id;
@@ -123,10 +123,10 @@ class it_Incidents extends Incident
         $db = DBManagerFactory::getInstance();
         
         // Zdefiniuj zapytanie SQL dla pobrania danych z modułu Calim
-        $queryIt_Claim = "SELECT id,name,_number,status,priority,resolution,assigned_user_id FROM it_Claims WHERE deleted = 0" ;
+        $queryIt_Claim = "SELECT id,name,_number,status,priority,resolution,assigned_user_id FROM it_claims WHERE deleted = 0" ;
         
         // Zdefiniuj zapytanie SQL dla pobrania danych z modułu Compaliant
-        $queryIt_Complaiant = "SELECT id,name,_number,status,priority,resolution,assigned_user_id FROM it_Complaiants WHERE deleted = 0";
+        $queryIt_Complaiant = "SELECT id,name,_number,status,priority,resolution,assigned_user_id FROM it_complaiants WHERE deleted = 0";
        
         // Połącz oba zapytania za pomocą UNION
         $queryUnion =  $queryIt_Claim ." UNION ". $queryIt_Complaiant;

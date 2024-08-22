@@ -39,7 +39,7 @@
  */
 
 $dictionary['it_Complaiants'] = array(
-    'table' => 'it_Complaiants',
+    'table' => 'it_complaiants',
     'audited' => true,
     'inline_edit' => true,
     'duplicate_merge' => true,

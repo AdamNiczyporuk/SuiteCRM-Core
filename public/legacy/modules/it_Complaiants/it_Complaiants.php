@@ -45,7 +45,7 @@ class it_Complaiants extends Incident
     public $new_schema = true;
     public $module_dir = 'it_Complaiants';
     public $object_name = 'it_Complaiants';
-    public $table_name = 'it_Complaiants';
+    public $table_name = 'it_complaiants';
     public $importable = false;
 
     public $id;

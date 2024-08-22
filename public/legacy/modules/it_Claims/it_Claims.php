@@ -45,7 +45,7 @@ class it_Claims extends Incident
     public $new_schema = true;
     public $module_dir = 'it_Claims';
     public $object_name = 'it_Claims';
-    public $table_name = 'it_Claims';
+    public $table_name = 'it_claims';
     public $importable = false;
 
     public $id;
