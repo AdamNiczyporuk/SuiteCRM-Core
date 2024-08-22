@@ -38,77 +38,23 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
- require_once('include/SugarObjects/templates/basic/Basic.php');
-class it_Services extends Basic
-{
-    public $new_schema = true;
-    public $module_dir = 'it_Services';
-    public $object_name = 'it_Services';
-    public $table_name = 'it_services';
-    public $importable = false;
-
-    public $id;
-    public $name;
-    public $date_entered;
-    public $date_modified;
-    public $modified_user_id;
-    public $modified_by_name;
-    public $created_by;
-    public $created_by_name;
-    public $description;
-    public $deleted;
-    public $created_by_link;
-    public $modified_user_link;
-    public $assigned_user_id;
-    public $assigned_user_name;
-    public $assigned_user_link;
-    public $SecurityGroups;
-
-    public function bean_implements($interface)
-    {
-        switch($interface)
-        {
-            case 'ACL':
-                return true;
-        }
-        return false;
-    }
-
-    public function create_new_list_query(
-        $order_by,
-        $where,
-        $filter = array(),
-        $params = array(),
-        $show_deleted = 0,
-        $join_type = 'UNION ALL',
-        $return_array = false,
-        $parentbean = null,
-        $singleSelect = false,
-        $ifListForExport = false
-    )
-    {
-        
-        
-        
-        $db = DBManagerFactory::getInstance();
-        
-        // Zdefiniuj zapytanie SQL dla pobrania danych z modułu Calim
-        $query1 = "SELECT id,name,assigned_user_id FROM it_serviceelectronic WHERE deleted = 0" ;
-        
-        // Zdefiniuj zapytanie SQL dla pobrania danych z modułu Compaliant
-        $query2 = "SELECT id,name,assigned_user_id FROM it_servicenotregistered WHERE deleted = 0";
-       
-        // Połącz oba zapytania za pomocą UNION
-        $queryUnion =  $query1 ." UNION ". $query2;
-        
-        //Tworzenie tablicy
-        $return_array=array();
-        //Wkładanie zapytania do tablicy
-        $return_array['select'] = $queryUnion;
-
-              
-       
-        return $return_array;
-    } 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
+
+$module_name = 'it_Services';
+$listViewDefs[$module_name] = array(
+    'NAME' => array(
+        'width' => '32',
+        'label' => 'LBL_NAME',
+        'default' => true,
+        'link' => true
+    ),
+    'ASSIGNED_USER_NAME' => array(
+        'width' => '9',
+        'label' => 'LBL_ASSIGNED_USER',
+        'module' => 'Employees',
+        'id' => 'ASSIGNED_USER_ID',
+        'default' => true
+    ),
+);
