@@ -8,6 +8,10 @@ services:
       - 'suitecrm_data:/bitnami/suitecrm'
       - './public/legacy/modules:/bitnami/suitecrm/public/legacy/modules'
       - './public/legacy/custom/Extension/application/Ext:/bitnami/suitecrm/public/legacy/custom/Extension/application/Ext'
+
+      - './public/legacy/custom/Extension/modules/AOS_Products/Ext:/bitnami/suitecrm/public/legacy/custom/Extension/modules/AOS_Products/Ext' # dodatkowa definicja Vardef i Etykiet do modułu corowego  
+      - './public/legacy/custom/modules/AOS_Products/metadata:/bitnami/suitecrm/public/legacy/custom/modules/AOS_Products/metadata' # dodatkowa definicja pólwidoków do modułu corowego       
+
       - './public/legacy/include:/bitnami/suitecrm/public/legacy/include'
       - './public/legacy/Api:/bitnami/suitecrm/public/legacy/Api'
       - './extensions:/bitnami/suitecrm/extensions'
