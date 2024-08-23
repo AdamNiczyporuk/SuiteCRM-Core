@@ -247,7 +247,7 @@
   'relationships' => array (
     'service_nreg_claims' => array(
       'rhs_module' => 'it_Claims',
-      'rhs_table' => 'it_Claims',
+      'rhs_table' => 'it_claims',
       'rhs_key' => 'service_id',
       'lhs_module' => 'it_ServiceNotRegistered',
       'lhs_table' => 'it_servicenotregistered',

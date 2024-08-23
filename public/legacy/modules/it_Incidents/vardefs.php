@@ -41,7 +41,7 @@
 
 
  $dictionary['it_Incidents'] = array(
-    'table' => 'it_Incidents',
+    'table' => 'it_incidents',
     'audited' => true,
     'inline_edit' => true,
     'duplicate_merge' => true,
