@@ -28,7 +28,9 @@ $beanList['it_Services'] = 'it_Services';
 $beanFiles['it_Services'] = 'modules/it_Services/it_Services.php';
 $moduleList[] = 'it_Services';
 
-
+$beanList['dict_ProdAdd'] = 'dict_ProdAdd';
+$beanFiles['dict_ProdAdd'] = 'modules/dict_ProdAdd/dict_ProdAdd.php';
+$moduleList[] = 'dict_ProdAdd';
 
 
 
