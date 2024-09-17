@@ -32,6 +32,10 @@ $beanList['dict_ProdAdd'] = 'dict_ProdAdd';
 $beanFiles['dict_ProdAdd'] = 'modules/dict_ProdAdd/dict_ProdAdd.php';
 $moduleList[] = 'dict_ProdAdd';
 
+$beanList['dict_ProdClaimDesc'] = 'dict_ProdClaimDesc';
+$beanFiles['dict_ProdClaimDesc'] = 'modules/dict_ProdClaimDesc/dict_ProdClaimDesc.php';
+$moduleList[] = 'dict_ProdClaimDesc';
+
 
 
 ?>

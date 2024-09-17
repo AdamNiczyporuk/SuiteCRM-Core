@@ -187,6 +187,7 @@ $app_list_strings['moduleList']['it_Complaiants'] = 'Reklamacje';
 $app_list_strings['moduleList']['it_Claims'] = 'Skargi';
 $app_list_strings['moduleList']['it_serviceElectronic'] = 'Usługa Elektroniczna';
 $app_list_strings['moduleList']['dict_ProdAdd'] = 'Produkt Usługi dodatkowe';
+$app_list_strings['moduleList']['dict_ProdClaimDesc '] = 'Produkt Usługi Reklamacje';
 $app_list_strings['moduleListSingular']['Home'] = 'Home';
 $app_list_strings['moduleListSingular']['Dashboard'] = 'Dashboard';
 $app_list_strings['moduleListSingular']['Contacts'] = 'Contact';

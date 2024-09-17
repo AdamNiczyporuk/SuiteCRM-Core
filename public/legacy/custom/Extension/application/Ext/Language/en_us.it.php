@@ -149,6 +149,7 @@ $app_list_strings['moduleList']['it_Claims'] = 'Claims';
 $app_list_strings['moduleList']['it_serviceElectronic'] = 'Service Electronic';
 $app_list_strings['moduleList']['it_Services'] = 'Services';
 $app_list_strings['moduleList']['dict_ProdAdd'] = 'Product Additional Services';
+$app_list_strings['moduleList']['dict_ProdClaimDesc'] = 'Product Claim Description';
 $app_list_strings['moduleListSingular']['Home'] = 'Home';
 $app_list_strings['moduleListSingular']['Dashboard'] = 'Dashboard';
 $app_list_strings['moduleListSingular']['Contacts'] = 'Contact';

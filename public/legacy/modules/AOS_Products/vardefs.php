@@ -334,14 +334,32 @@ $dictionary['AOS_Products'] = array(
             'vname' => 'LBL_AOS_PRODUCT_CATEGORY',
         ),
     ),
+    'addservices' => array(
+    'name' => 'addservices',
+    'type' => 'link',
+    'relationship' => 'product_claim',
+    'module' => 'dict_ProdClaimDesc',
+    'bean_name' => 'dict_ProdClaimDesc',
+    'source' => 'non-db',
+    'vname' => 'LBL_SERVICE_ADDCLAIM'
+    ),
     'relationships' => array(
-        "product_categories" => array(
+        "claims_service" => array(
             'lhs_module' => 'AOS_Product_Categories',
             'lhs_table' => 'aos_product_categories',
             'lhs_key' => 'id',
             'rhs_module' => 'AOS_Products',
             'rhs_table' => 'aos_products',
             'rhs_key' => 'aos_product_category_id',
+            'relationship_type' => 'one-to-many',
+        ),
+        "product_claim" => array(
+            'rhs_module' => 'AOS_Products',
+            'rhs_table' => 'aos_products',
+            'rhs_key' => 'id',
+            'lhs_module' => 'dict_ProdClaimDesc',
+            'lhs_table' => 'dict_prodclaimdesc',
+            'lhs_key' => 'aos_product_id',
             'relationship_type' => 'one-to-many',
         ),
     ),
