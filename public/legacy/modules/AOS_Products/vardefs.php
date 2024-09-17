@@ -333,16 +333,17 @@ $dictionary['AOS_Products'] = array(
             'reportable' => false,
             'vname' => 'LBL_AOS_PRODUCT_CATEGORY',
         ),
+        'addservices' => array(
+            'name' => 'addservices',
+            'type' => 'link',
+            'relationship' => 'product_claim',
+            'module' => 'dict_ProdClaimDesc',
+            'bean_name' => 'dict_ProdClaimDesc',
+            'source' => 'non-db',
+            'vname' => 'LBL_SERVICE_ADDCLAIM'
     ),
-    'addservices' => array(
-    'name' => 'addservices',
-    'type' => 'link',
-    'relationship' => 'product_claim',
-    'module' => 'dict_ProdClaimDesc',
-    'bean_name' => 'dict_ProdClaimDesc',
-    'source' => 'non-db',
-    'vname' => 'LBL_SERVICE_ADDCLAIM'
     ),
+    
     'relationships' => array(
         "claims_service" => array(
             'lhs_module' => 'AOS_Product_Categories',
